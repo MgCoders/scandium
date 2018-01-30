@@ -2,6 +2,6 @@
 #/bin/bash
 set -x
 cd /home/ubuntu/wp-scandium-deploy
-cp ../conf/wp-scandium-scandium.env /home/ubuntu/wp-scandium-deploy/.env
+cp ../conf/wp-scandium-deploy.env /home/ubuntu/wp-scandium-deploy/.env
 echo docker-compose up
 docker-compose build && docker-compose up -d
