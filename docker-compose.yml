@@ -16,8 +16,8 @@ services:
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     volumes:
       - ./themes:/var/www/html/wp-content/themes
-      - ../wp-calcium-files/plugins:/var/www/html/wp-content/plugins
-      - ../wp-calcium-files/uploads:/var/www/html/wp-content/uploads
+      - ../wp-scandium-files/plugins:/var/www/html/wp-content/plugins
+      - ../wp-scandium-files/uploads:/var/www/html/wp-content/uploads
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
 
 networks:
