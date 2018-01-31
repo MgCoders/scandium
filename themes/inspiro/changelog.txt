@@ -1,0 +1,103 @@
+Inspiro Theme
+http://www.wpzoom.com/themes/inspiro
+
+CHANGELOG
+---------
+
+v 2.2.1 - November 19, 2015
+
+    - Header image will be shown in individual pages only if current page has a Featured Image.
+    - modified files:
+        - content-page.php
+
+
+v 2.2 - October 12, 2015
+
+    - Numerous improvements to responsive design
+    - Featured Image in single pages appears in the header
+    - modified files:
+        - /css/media-queries
+        - /js/functions.js
+        - content-page.php
+        - style.css
+
+    - new folder:
+        - /fonts
+
+
+v 2.1 - October 12, 2015
+
+    - Videos from Slideshow now can be played on mobile devices.
+    - Added new styling options for slideshow button (see Theme Options > Styling)
+    - Added arrows to Portfolio Scroller widget
+    - modified files:
+        - /functions/theme/widgets/portfolio-scroller.php
+        - /functions/theme/options.php
+        - /js/functions.js
+        - style.css
+        - wpzoom-slider.php
+
+
+v 2.0.2 - July 16, 2015
+
+    - Bug fix with portfolio slideshow from portfolio posts not showing on mobile devices.
+    - modified files:
+        - /functions/theme/functions.php
+        - /js/functions.js
+        - /portfolio/single.php
+
+
+v 2.0.1 - May 18, 2015
+
+    - The Sidebar Panel won't be visible if there are no widgets added in the "Sidebar".
+    - modified files:
+        - /css/media-queries.css
+        - /functions/theme/functions.php
+        - style.css
+
+
+v 2.0 - May 16, 2015
+
+    - New Feature: Sidebar Panel
+    - Added Sidebar in WooCommerce Pages (see Theme Options > Layouts for more details)
+    - New option that allows to disable the slideshow shadow overlay (see Theme Options > Homepage Slideshow)
+    - New Feature in "WPZOOM: Single Page" widget that allows to display the Featured Image as background.
+    - Numerous bug fixes and improvements in source code. Many file of the theme were modified
+    - Instagram, Twitter, Social widgets removed in favor of plugins: http://www.wpzoom.com/plugins/
+
+
+v 1.2 - January 20, 2015
+
+    - Added Video Support in Fullscreen Slideshow on Homepage
+    - modified files:
+        - functions/theme/post-options.php
+        - js/admin-video-background.js
+        - js/functions.js
+        - style.css
+        - wpzoom-slider.php
+
+
+v 1.1.0 - October 22, 2014
+
+    - Added Fullscreen Slideshow in individual portfolio posts.
+    - Added new styling options in Theme Options, that allows to change fonts in slider.
+    - Minor bug fixes.
+    - modified files:
+        - functions/theme/functions.php
+        - functions/theme/options.php
+        - functions/theme/widgets/portfolio-showcase.php
+        - portfolio/content.php
+        - portfolio/single.php
+        - style.css
+
+
+v 1.0.1 - September 12, 2014
+
+    - Fixed a bug with responsive design in ZOOM Builder template
+    - modified file:
+        - style.css
+
+
+v 1.0  - August 7, 2014
+
+	- initial release
