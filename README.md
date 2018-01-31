@@ -10,9 +10,9 @@ Cada sitio debe configurar su virtual host en el docker-compose.yml y datos para
 
 En env del docker-compose.yml
 
-    VIRTUAL_HOST: silicon.mgcoders.com
-    LETSENCRYPT_HOST: silicon.mgcoders.com
-    LETSENCRYPT_EMAIL: info@mgcoders.com
+    VIRTUAL_HOST: scandium.magnesium.coop 
+    LETSENCRYPT_HOST: scandium.magnesium.coop
+    LETSENCRYPT_EMAIL: scandium.magnesium.coop
 
 ### Servidor
 
