@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #/bin/bash
 set -x
-cd /home/ubuntu/wp-scandium-deploy
-cp ../conf/wp-scandium-deploy.env /home/ubuntu/wp-scandium-deploy/.env
-echo docker-compose up
-docker-compose build && docker-compose up -d
+$(aws ecr get-login --region us-east-1  | sed 's/\-e none//g')
+docker stack deploy --compose-file=/home/ubuntu/REPLACE_PROJECT_NAME-deploy/docker-compose.testing.yml REPLACE_PROJECT_NAME --with-registry-auth
+
+
