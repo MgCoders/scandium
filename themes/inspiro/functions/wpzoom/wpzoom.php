@@ -3,7 +3,7 @@
 Plugin Name: ZOOM Framework
 Plugin URI: https://www.wpzoom.com/framework-tour
 Description: ZOOM Framework is a platform which comes packaged with every WPZOOM Theme.
-Version: 1.7.0
+Version: 1.7.3
 Author: WPZOOM
 Author URI: https://www.wpzoom.com
 Text Domain: wpzoom
@@ -16,7 +16,7 @@ License: GPLv3 or later
  * @package WPZOOM
  */
 class WPZOOM {
-    public static $wpzoomVersion = '1.7.0';
+    public static $wpzoomVersion = '1.7.3';
     public static $wpzoomPath;
 
     public static $assetsPath;

@@ -7,7 +7,7 @@ class ZOOM_Demo_Importer {
     public $imported_demo;
     public $imported_demo_timestamp;
 
-    public $xml_url;
+    public $xml_data;
 
     public function __construct()
     {
@@ -20,8 +20,8 @@ class ZOOM_Demo_Importer {
 
         $demos = get_demos_details();
 
-        $this->xml_url = get_demo_xml_url();
-        $this->demos = $demos['demos'];
+        $this->xml_data      = get_demo_xml_data();
+        $this->demos         = $demos['demos'];
         $this->selected_demo = $demos['selected'];
         $this->imported_demo = $demos['imported'];
         $this->imported_demo_timestamp = $demos['imported_date'];
@@ -270,7 +270,7 @@ class ZOOM_Demo_Importer {
                 }
             }
 
-            $text_plural = sprintf( _n( 'Begin activate plugin', 'Begin activate plugins', count($inactive_plugins), 'your_textdomain' ), count($inactive_plugins) );
+            $text_plural = sprintf( _n( 'Begin activate plugin', 'Begin activate plugins', count($inactive_plugins), 'wpzoom' ), count($inactive_plugins) );
 
             echo '</ul><a href="'. admin_url('admin.php?page='. $tgmpa->menu) .'" target="_blank">'. $text_plural .'</a></div>';
 
@@ -298,6 +298,14 @@ class ZOOM_Demo_Importer {
         $logger = new WPZOOM_Importer_Logger();
         $logger->min_level = 'info';
 
+        $xml_data = get_demo_xml_data();
+
+        if ( $xml_data['remote']['response'] ) {
+            $xml_url = $xml_data['remote']['url'];
+        } elseif ( $xml_data['local']['response'] ) {
+            $xml_url = $xml_data['local']['url'];
+        }
+
         $importer = new WPZOOM_Importer(array('fetch_attachments' => true));
         $importer->set_logger($logger);
 
@@ -309,7 +317,7 @@ class ZOOM_Demo_Importer {
                   type="text/css" media="all"/>
         </head>
         <body>
-        <pre><strong><?php _e("Loading demo content&hellip;\n", 'wpzoom'); ?></strong><?php $importer->import(get_demo_xml_url()); ?>
+        <pre><strong><?php _e("Loading demo content&hellip;\n", 'wpzoom'); ?></strong><?php $importer->import( $xml_url ); ?>
             <strong><?php _e('All done!', 'wpzoom'); ?></strong></pre>
         <script type="text/javascript">window.setTimeout(parent.wpzoom_load_demo_content_done, 500);</script>
         </body>
@@ -328,6 +336,14 @@ class ZOOM_Demo_Importer {
         $logger = new WPZOOM_Importer_Logger();
         $logger->min_level = 'info';
 
+        $xml_data = get_demo_xml_data();
+
+        if ( $xml_data['remote']['response'] ) {
+            $xml_url = $xml_data['remote']['url'];
+        } elseif ( $xml_data['local']['response'] ) {
+            $xml_url = $xml_data['local']['url'];
+        }
+
         $importer = new WPZOOM_Importer(array('fetch_attachments' => true));
         $importer->set_logger($logger);
 
@@ -339,7 +355,7 @@ class ZOOM_Demo_Importer {
                   type="text/css" media="all"/>
         </head>
         <body>
-        <pre><strong><?php _e("Deleting demo content&hellip;\n", 'wpzoom'); ?></strong><?php $importer->erase(get_demo_xml_url()); ?>
+        <pre><strong><?php _e("Deleting demo content&hellip;\n", 'wpzoom'); ?></strong><?php $importer->erase( $xml_url ); ?>
             <strong><?php _e('All done!', 'wpzoom'); ?></strong></pre>
         <script type="text/javascript">window.setTimeout(parent.wpzoom_delete_demo_content_done, 500);</script>
         </body>

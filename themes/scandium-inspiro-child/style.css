@@ -1,0 +1,106 @@
+/*
+ Theme Name:   Scandium
+ Theme URI:    http://scandium.magnesium.coop
+ Description:  Scandium a Inspiro Child Theme
+ Author:       Magnesium Coop
+ Author URI:   http://magnesium.coop
+ Template:     inspiro
+ Version:      1.0.0
+ License:      GNU General Public License v2.0
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags: ecommerce, fullscreen slider, responsive, theme-options, portfolio
+ Text Domain:  scandium-inspiro-child
+*/
+
+.navbar {
+    background-color: #FFFFFF;
+}
+
+#slider {
+    background-color: #FFFFFF;
+}
+
+.really-full-width {
+  padding-left: 0rem;
+  padding-right: 0rem;
+  overflow: hidden;
+}
+
+/**
+ Language icons
+ **/
+
+
+#lang-icons ul {
+  display: table;
+  white-space: nowrap;
+}
+
+#lang-icons li {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 10px;
+  position: relative;
+
+}
+
+#lang-icons a {
+  text-decoration: none;
+  color: rgba(0,0,0,1);
+  position: relative;
+  padding: 16px 7px;
+  border-top: 2px solid rgba(0,0,0,0);
+  border-bottom: 2px solid rgba(0,0,0,0);
+    transition: max-height .3s,border-color 0s;
+  border-radius: 30px;
+}
+
+#lang-icons a:focus,
+#lang-icons a:hover {
+    text-decoration: none;
+  padding: 5px 7px;
+  border-color: rgba(0,0,0,1);
+  outline: none;
+  border-radius: 30px;
+}
+
+#lang-icons a::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-height: 0;
+  color: rgba(0,0,0,0);
+  border-left: 2px solid rgba(0,0,0,0);
+  content: attr(data-text);
+  transition: max-height .3s,border-color 0s;
+  border-radius: 30px;
+}
+
+#lang-icons a::after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+  max-height: 0;
+  color: rgba(0,0,0,0);
+  border-right: 2px solid rgba(0,0,0,0);
+  content: attr(data-text);
+  transition: max-height .3s,border-color 0s;
+  border-radius: 30px;
+}
+
+#lang-icons a:focus::before,
+#lang-icons a:hover::before,
+#lang-icons a:focus::after,
+#lang-icons a:hover::after {
+  max-height: 100%;
+
+  border-color: rgba(0,0,0,1);
+}
+
+/**
+End Language icons
+ */

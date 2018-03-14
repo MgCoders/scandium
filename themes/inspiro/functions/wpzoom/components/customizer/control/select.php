@@ -12,7 +12,7 @@
  *
  * @see WP_Customize_Control
  */
-class WPZOOM_Customizer_Control_Select extends WP_Customize_Control {
+class WPZOOM_Customizer_Control_Select extends WPZOOM_Customize_Control {
     /**
      * The control type.
      *
@@ -21,15 +21,6 @@ class WPZOOM_Customizer_Control_Select extends WP_Customize_Control {
      * @var string
      */
     public $type = 'zoom_select';
-
-    /**
-     * The control contextual dependency.
-     *
-     * @since 1.7.0.
-     *
-     * @var string
-     */
-    public $dependency = false;
 
     /**
      * WPZOOM_Customizer_Control_Select constructor.
@@ -59,23 +50,19 @@ class WPZOOM_Customizer_Control_Select extends WP_Customize_Control {
     }
 
     /**
-     * Add extra properties to JSON array.
+     * Refresh the parameters passed to the JavaScript via JSON.
      *
-     * @since 1.7.0.
-     *
-     * @return array
+     * @since 1.7.1.
+     * @uses WP_Customize_Control::to_json()
      */
-    public function json() {
-        $json = parent::json();
+    public function to_json() {
+        parent::to_json();
 
-        $json['id'] = $this->id;
-        $json['choices'] = $this->choices;
-        $json['value'] = $this->value();
-        $json['datalink'] = $this->get_link();
-        $json['defaultValue'] = $this->setting->default;
-        $json['dependency'] = $this->dependency;
-
-        return $json;
+        $this->json['id'] = $this->id;
+        $this->json['choices'] = $this->choices;
+        $this->json['value'] = $this->value();
+        $this->json['datalink'] = $this->get_link();
+        $this->json['defaultValue'] = $this->setting->default;
     }
 
     /**

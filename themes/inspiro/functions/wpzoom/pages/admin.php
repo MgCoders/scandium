@@ -16,27 +16,14 @@
         <div id="zoomTheme">
             <?php
                 $name = 'Demo Content';
-                $xmlUrl = get_demo_xml_url();
-                $has_access = true;
+                $xml_data = get_demo_xml_data();
+                $has_access = false;
                 $link_href = 'wpz_' . substr(md5($name), 0, 8);
 
-                // Check for local file
-                if ( ! file_exists($xmlUrl) ) {
-                    $has_access = false;
-
-                    $response = wp_remote_get( esc_url_raw( $xmlUrl ) );
-                    $response_code = wp_remote_retrieve_response_code( $response );
-                }
-                
-                // Check for remote file
-                // Don't show demo content importer icon if the current theme does not have a demo content xml file to load
-                if ( isset( $response, $response_code ) ) {
-
+                if ( $xml_data['remote']['response'] ) {
                     $has_access = true;
-
-                    if ( ! file_exists($xmlUrl) && ( is_wp_error($response) || $response_code != 200 ) ) {
-                        $has_access = false;
-                    }
+                } elseif( $xml_data['local']['response'] ) {
+                    $has_access = true;
                 }
             ?>
             <h5>

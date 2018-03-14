@@ -12,7 +12,7 @@
  *
  * @see WP_Customize_Control
  */
-class WPZOOM_Customizer_Control_Sortable extends WP_Customize_Control {
+class WPZOOM_Customizer_Control_Sortable extends WPZOOM_Customize_Control {
     /**
      * The control type.
      *
@@ -50,43 +50,40 @@ class WPZOOM_Customizer_Control_Sortable extends WP_Customize_Control {
     }
 
     /**
-     * Add extra properties to JSON array.
+     * Refresh the parameters passed to the JavaScript via JSON.
      *
-     * @since 1.7.0.
-     *
-     * @return array
+     * @since 1.7.1.
+     * @uses WP_Customize_Control::to_json()
      */
-    public function json() {
-        $json = parent::json();
+    public function to_json() {
+        parent::to_json();
 
-        $json['id'] = $this->id;
-        $json['choices'] = $this->choices;
-        $json['value'] = $this->value();
-        $json['datalink'] = $this->get_link();
-        $json['defaultValue'] = $this->setting->default;
+        $this->json['id'] = $this->id;
+        $this->json['choices'] = $this->choices;
+        $this->json['value'] = $this->value();
+        $this->json['datalink'] = $this->get_link();
+        $this->json['defaultValue'] = $this->setting->default;
 
-        if ( ! empty( $json['defaultValue'] ) && empty( $json['value'] ) ) {
-            $json['value'] = $json['defaultValue'];
+        if ( ! empty( $this->json['defaultValue'] ) && empty( $this->json['value'] ) ) {
+            $this->json['value'] = $this->json['defaultValue'];
         }
 
-        if ( ! empty( $json['value'] ) ) {
+        if ( ! empty( $this->json['value'] ) ) {
 
-            $value = str_split($json['value']);
+            $value = str_split($this->json['value']);
             $newarray = array();
 
             foreach ($value as $key) {
-                $newarray[ $key ] = $json['choices'][ $key ];
+                $newarray[ $key ] = $this->json['choices'][ $key ];
             }
 
-            $json['choices'] = $newarray;
+            $this->json['choices'] = $newarray;
 
         } else {
-            foreach ($json['choices'] as $key => $value) {
-                $json['value'] .= $key;
+            foreach ($this->json['choices'] as $key => $value) {
+                $this->json['value'] .= $key;
             }
         }
-
-        return $json;
     }
 
     /**

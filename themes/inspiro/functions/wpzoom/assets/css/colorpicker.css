@@ -166,7 +166,8 @@
     width: 27px;
     height: 27px;
     background: url(../images/colorpicker/select.png);
-    float:left;
+    display: inline-block;
+    vertical-align: middle;
 }
 .colorSelector div {
     position: absolute;

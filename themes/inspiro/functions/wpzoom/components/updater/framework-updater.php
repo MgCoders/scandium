@@ -291,7 +291,7 @@ class WPZOOM_Framework_Updater {
             $warning_count = 1;
         }
 
-        $bubble = sprintf( __( '%s' ), "<span class='awaiting-mod count-$warning_count'><span class='pending-count'>" . number_format_i18n($warning_count) . "</span></span>" );
+        $bubble = sprintf( __( '%s', 'wpzoom' ), "<span class='awaiting-mod count-$warning_count'><span class='pending-count'>" . number_format_i18n($warning_count) . "</span></span>" );
 
         foreach ($submenu as $key => $items) {
 

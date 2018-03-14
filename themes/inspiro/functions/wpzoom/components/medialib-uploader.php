@@ -79,7 +79,7 @@ class WPZOOM_Medialib_Uploader {
         $query .= ' LIMIT 1';
         $posts = $wpdb->get_row( $query );
 
-        if (count($posts)) {
+        if ( ! empty( $posts ) ) {
             $id = $posts->ID;
         } else {
             $words = explode('_', $token);

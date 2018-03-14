@@ -9,42 +9,22 @@
  * Specialized checkbox control to enable multiple value choices.
  *
  *
- * @since 1.7.0.
+ * @since 1.7.1.
  */
-class WPZOOM_Customizer_Control_Checkbox extends WP_Customize_Control {
+class WPZOOM_Customizer_Control_Checkbox extends WPZOOM_Customize_Control {
     /**
      * The control type.
      *
-     * @since 1.7.0.
+     * @since 1.7.1.
      *
      * @var string
      */
     public $type = 'zoom_checkbox';
 
     /**
-     * The control mode.
-     *
-     * Possible values are 'buttonset', 'checkbox'.
-     *
-     * @since 1.7.0.
-     *
-     * @var string
-     */
-    public $mode = 'checkbox';
-
-    /**
-     * The control contextual dependency.
-     *
-     * @since 1.7.0.
-     *
-     * @var string
-     */
-    public $dependency = false;
-
-    /**
      * WPZOOM_Customizer_Control_Checkbox constructor.
      *
-     * @since 1.7.0.
+     * @since 1.7.1.
      *
      * @param WP_Customize_Manager $manager
      * @param string               $id
@@ -60,66 +40,62 @@ class WPZOOM_Customizer_Control_Checkbox extends WP_Customize_Control {
     /**
      * Enqueue necessary scripts for this control.
      *
-     * @since 1.7.0.
+     * @since 1.7.1.
      *
      * @return void
      */
     public function enqueue() {
-        if ( 'buttonset' === $this->mode ) {
-            wp_enqueue_script( 'jquery-ui-button' );
-        }
+        
     }
 
     /**
-     * Add extra properties to JSON array.
+     * Refresh the parameters passed to the JavaScript via JSON.
      *
-     * @since 1.7.0.
-     *
-     * @return array
+     * @since 1.7.1.
+     * @uses WP_Customize_Control::to_json()
      */
-    public function json() {
-        $json = parent::json();
+    public function to_json() {
+        parent::to_json();
 
-        $json['id'] = $this->id;
-        $json['mode'] = $this->mode;
-        $json['choices'] = $this->choices;
-        $json['value'] = $this->value();
-        $json['link'] = $this->get_link();
-        $json['dependency'] = $this->dependency;
+        $this->json['id'] = $this->id;
+        $this->json['value'] = $this->value();
+        $this->json['link'] = $this->get_link();
 
-        return $json;
+        if ( empty($this->json['value']) || "off" === $this->json['value'] ) {
+            $this->json['value'] = '0';
+        }
+
+        if ( 1 == $this->json['value'] || "on" === $this->json['value'] ) {
+            $this->json['input_attrs']['checked'] = 'checked';
+        }
     }
 
     /**
      * Define the JS template for the control.
      *
-     * @since 1.7.0.
+     * @since 1.7.1.
      *
      * @return void
      */
     protected function content_template() { ?>
-        <# if (data.label) { #>
-            <span class="customize-control-title">{{ data.label }}</span>
-        <# } #>
-        <# if (data.description) { #>
-            <span class="description customize-control-description">{{{ data.description }}}</span>
-        <# } #>
-
-        <div id="input_{{ data.id }}" class="zoom-checkbox-container<# if (0 <= ['buttonset'].indexOf( data.mode )) { #> zoom-checkbox-{{ data.mode }}-container<# } #>">
-            <# if ('buttonset' === data.mode) { #>
-                <# for (key in data.choices) { #>
-                    <input id="{{ data.id }}{{ key }}" name="_customize-checkbox-{{ key }}" type="checkbox" value="{{ key }}" <# if ( (typeof data.value == 'string' && key == data.value) || (jQuery.isArray(data.value) && 0 <= data.value.indexOf( key )) ) { #> checked="checked" <# } #> />
-                    <label for="{{ data.id }}{{ key }}">{{ data.choices[ key ] }}</label>
-                <# } #>
-            <# } else { #>
-                <# for (key in data.choices) { #>
-                    <label for="{{ data.id }}{{ key }}" class="customizer-checkbox">
-                        <input id="{{ data.id }}{{ key }}" name="_customize-checkbox-{{ key }}" type="checkbox" value="{{ key }}" <# if ( (typeof data.value == 'string' && key == data.value) || (jQuery.isArray(data.value) && 0 <= data.value.indexOf( key )) ) { #> checked="checked" <# } #> />
-                        {{ data.choices[ key ] }}<br />
-                    </label>
-                <# } #>
+        <#
+            data.input_id = '_customize-input-' + data.id;
+            data.description_id = '_customize-description-' + data.id;
+        #>
+        <span class="customize-inside-control-row zoom-checkbox-container">
+            <input
+                id="{{ data.input_id }}"
+                type="checkbox"
+                <# for (key in data.input_attrs) { #> {{ key }}="{{ data.input_attrs[ key ] }}" <# } #>
+                value="{{ data.value }}"
+                {{{ data.link }}}
+            />
+            <label for="{{ data.input_id }}">{{{ data.label }}}</label>
+            
+            <# if (data.description) { #>
+                <span id="{{{ data.description_id }}}" class="description customize-control-description">{{{ data.description }}}</span>
             <# } #>
-        </div>
+        </span>
     <?php
     }
 

@@ -14,7 +14,7 @@
  * @since 1.5.0.
  * @since 1.7.0. Converted to content_template().
  */
-class WPZOOM_Customizer_Control_Range extends WP_Customize_Control {
+class WPZOOM_Customizer_Control_Range extends WPZOOM_Customize_Control {
     /**
      * The control type.
      *
@@ -52,21 +52,18 @@ class WPZOOM_Customizer_Control_Range extends WP_Customize_Control {
     }
 
     /**
-     * Add extra properties to JSON array.
+     * Refresh the parameters passed to the JavaScript via JSON.
      *
-     * @since 1.7.0.
-     *
-     * @return array
+     * @since 1.7.1.
+     * @uses WP_Customize_Control::to_json()
      */
-    public function json() {
-        $json = parent::json();
+    public function to_json() {
+        parent::to_json();
 
-        $json['id'] = $this->id;
-        $json['value'] = $this->value();
-        $json['link'] = $this->get_link();
-        $json['input_attrs'] = $this->input_attrs;
-
-        return $json;
+        $this->json['id'] = $this->id;
+        $this->json['value'] = $this->value();
+        $this->json['link'] = $this->get_link();
+        $this->json['input_attrs'] = $this->input_attrs;
     }
 
     /**

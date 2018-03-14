@@ -21,18 +21,16 @@
 
         <?php if ($isUpdated) : ?>
 
-            <div style="border: 1px solid #E6DB55;background-color: #FFFBCC;color: #424242;padding: 10px;margin-top: 20px;border-radius:4px;">
-                <?php _e('A new ZOOM Framework update is available.', 'wpzoom'); ?>
-                <p><?php _e('<strong>Important:</strong> Backup your theme and modified files before updating. For help visit <a href="https://www.wpzoom.com/docs/using-the-zoom-framework-automatic-updates/">Using the ZOOM Framework automatic updates</a>.', 'wpzoom'); ?></p>
+            <div style="border: 1px solid #E6DB55;background-color: #FFFBCC;color: #424242;padding: 20px;margin-top: 20px;border-radius:4px;">
+                <?php _e('A new update for the framework of your <strong>WPZOOM</strong> theme is available!', 'wpzoom'); ?>
+                <p><?php _e('<strong>NOTICE:</strong> <em>Updating the framework will not affect any of the changes or customization you have made to the theme or to your website. For more information visit this <a href="https://www.wpzoom.com/docs/using-the-zoom-framework-automatic-updates/" target="_blank">tutorial</a></em>.', 'wpzoom'); ?></p>
 
                 <form method="post" id="wpzoom-update">
                     <input type="hidden" name="wpzoom-update-do" value="update" />
                     <?php printf(
-                        __('We recommend that you %sUpdate Automatically%s, or you can %sDownload the Update%s and install it manually in the <code>functions/wpzoom/</code> folder.', 'wpzoom'),
+                        __('%sUpdate Framework Automatically%s ', 'wpzoom'),
                         '<input type="submit" class="button button-primary" value="',
-                        '" />',
-                        '<a href="http://framework.wpzoom.com/wpzoom-framework.zip" class="button">',
-                        '</a>'
+                        '" />'
                     ); ?>
                 </form>
             </div>

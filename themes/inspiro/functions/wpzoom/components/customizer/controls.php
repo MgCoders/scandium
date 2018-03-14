@@ -164,8 +164,8 @@ class WPZOOM_Customizer_Controls {
             'fontParams'    => zoom_customizer_get_all_fonts(),
             'fontSettings'  => $this->get_typography_settings(),
             'l10n'          => array(
-                'chosen_loading'          => esc_html__( 'Loading&hellip;', 'make' ),
-                'chosen_no_results_fonts' => esc_html__( 'No matching fonts', 'make' ),
+                'chosen_loading'          => esc_html__( 'Loading&hellip;', 'wpzoom' ),
+                'chosen_no_results_fonts' => esc_html__( 'No matching fonts', 'wpzoom' ),
             ),
         );
 
@@ -252,9 +252,13 @@ class WPZOOM_Customizer_Controls {
         // The control types
         $types = array(
             'WPZOOM_Customizer_Control_Select',
+            'WPZOOM_Customizer_Control_Color',
+            'WPZOOM_Customizer_Control_Background_Gradient',
             'WPZOOM_Customizer_Control_Sortable',
             'WPZOOM_Customizer_Control_Range',
+            'WPZOOM_Customizer_Control_Text',
             'WPZOOM_Customizer_Control_Checkbox',
+            'WPZOOM_Customizer_Control_Checkbox_Multiple',
             'WPZOOM_Customizer_Control_Radio',
             'WPZOOM_Customizer_Control_HTML',
         );
@@ -288,6 +292,13 @@ class WPZOOM_Customizer_Controls {
      */
     private function get_custom_controls()
     {
+        /**
+         * Included dependency to Color, Image and Upload controls.
+         * Created new customizer control Background Gradient
+         *
+         * @since 1.7.1.
+         *
+         */
         return apply_filters('wpzoom_customizer_get_custom_controls', array(
             'WP_Customize_Control',
             'WP_Customize_Color_Control',
@@ -295,11 +306,18 @@ class WPZOOM_Customizer_Controls {
             'WP_Customize_Image_Control',
             'WP_Customize_Background_Image_Control',
             'WP_Customize_Header_Image_Control',
+            'WPZOOM_Customize_Control',
             'WPZOOM_Customizer_Control_Select',
+            'WPZOOM_Customizer_Control_Color',
+            'WPZOOM_Customizer_Control_Background_Gradient',
+            'WPZOOM_Customizer_Control_Image',
+            'WPZOOM_Customizer_Control_Upload',
             'WPZOOM_Customizer_Control_Sortable',
             'WPZOOM_Customizer_Control_Range',
             'WPZOOM_Customizer_Control_Radio',
             'WPZOOM_Customizer_Control_Checkbox',
+            'WPZOOM_Customizer_Control_Text',
+            'WPZOOM_Customizer_Control_Checkbox_Multiple',
             'WPZOOM_Customizer_Control_HTML',
         ));
     }
@@ -317,11 +335,20 @@ class WPZOOM_Customizer_Controls {
      */
     public function load_definitions( WP_Customize_Manager $wp_customize )
     {
-        // Panels
+        /**
+         * Load panels Layouts, Header.
+         *
+         * @since 1.7.1.
+         *
+         */
         $this->panels = array(
             'general' => array(
                 'title'     => __('General', 'wpzoom'),
                 'priority'  => 10
+            ),
+            'layout' => array(
+                'title'     => __('Layouts', 'wpzoom'),
+                'priority'  => 25
             ),
             'typography' => array(
                 'title'     => __('Typography', 'wpzoom'),
@@ -330,6 +357,10 @@ class WPZOOM_Customizer_Controls {
             'color-scheme' => array(
                 'title'     => __('Colors', 'wpzoom'),
                 'priority'  => 40
+            ),
+            'header' => array(
+                'title'     => __('Header', 'wpzoom'),
+                'priority'  => 50
             ),
         );
     }
@@ -347,8 +378,15 @@ class WPZOOM_Customizer_Controls {
      */
     public function load_controls( WP_Customize_Manager $wp_customize ) {
         $file_bases = array(
+            'wpzoom-customize-control',
+            'text',
             'checkbox',
+            'checkbox-multiple',
             'radio',
+            'color',
+            'background-gradient',
+            'image',
+            'upload',
             'range',
             'select',
             'sortable',
@@ -618,7 +656,7 @@ class WPZOOM_Customizer_Controls {
                         $collector[$option_id]['style'] = $option_data['style'];
                     }
 
-                    if ( isset( $option_data['setting']['default'] ) ) {
+                    if ( ! isset( $option_data['dom'] ) && isset( $option_data['setting']['default'] ) ) {
                         $collector[$option_id]['default'] = $option_data['setting']['default'];
                     }
                 }
@@ -684,3 +722,4 @@ class WPZOOM_Customizer_Controls {
         }
     }
 }
+

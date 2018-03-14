@@ -1055,6 +1055,9 @@ img.demo-importer-select:hover {
 .zoom-typography label,
 .zoom-typography p {
     float: none;
+    font-weight: 600;
+   display: block;
+   margin-bottom: 5px;
 }
 
 .zoom-typography p {

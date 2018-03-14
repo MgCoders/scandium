@@ -233,6 +233,49 @@ if (!function_exists('maybe_hash_hex_color')) :
 endif;
 
 
+if ( ! function_exists('hex2rgba') ) {
+    /* Convert hexdec color string to rgb(a) string */
+     
+    function hex2rgba($color, $opacity = false) {
+     
+        $default = 'rgb(0,0,0)';
+     
+        //Return default if no color provided
+        if(empty($color))
+              return $default; 
+     
+            //Sanitize $color if "#" is provided 
+            if ($color[0] == '#' ) {
+                $color = substr( $color, 1 );
+            }
+     
+            //Check if color has 6 or 3 characters and get values
+            if (strlen($color) == 6) {
+                    $hex = array( $color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5] );
+            } elseif ( strlen( $color ) == 3 ) {
+                    $hex = array( $color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2] );
+            } else {
+                    return $default;
+            }
+     
+            //Convert hexadec to rgb
+            $rgb =  array_map('hexdec', $hex);
+     
+            //Check if opacity is set(rgba or rgb)
+            if( $opacity !== false ){
+                if(abs($opacity) > 1)
+                    $opacity = 1.0;
+                $output = 'rgba('.implode(",",$rgb).','.$opacity.')';
+            } else {
+                $output = 'rgb('.implode(",",$rgb).')';
+            }
+     
+            //Return rgb(a) color string
+            return $output;
+    }
+}
+
+
 if (!function_exists('sanitize_hex_color')) :
     /**
      * Sanitizes a hex color.
@@ -397,14 +440,47 @@ function zoom_customizer_get_filtered_value($rule, $value)
     return $value;
 }
 
-function zoom_customizer_display_gradient($color)
+function zoom_customizer_display_gradient( $options )
 {
 
-    return 'background: -moz-linear-gradient(left,  rgba(239,244,247,0) 27%, ' . maybe_hash_hex_color($color) . ' 63%); /* FF3.6+ */
-   background: -webkit-linear-gradient(left,  rgba(239,244,247,0) 27%, ' . maybe_hash_hex_color($color) . ' 63%); /* Chrome10+,Safari5.1+ */
-   background: -o-linear-gradient(left,  rgba(239,244,247,0) 27%, ' . maybe_hash_hex_color($color) . ' 63%); /* Opera 11.10+ */
-   background: -ms-linear-gradient(left,  rgba(239,244,247,0) 27%, ' . maybe_hash_hex_color($color) . ' 63%); /* IE10+ */
-   background: linear-gradient(to right,  rgba(239,244,247,0) 27%, ' . maybe_hash_hex_color($color) . '  63%); /* W3C */;';
+    if ( ! is_string($options) ) return false;
+
+    $json_decode = json_decode($options, true);
+    
+    $options = $json_decode[0];
+
+    $gradient = $gradient2 = '';
+
+    $directions = array(
+        'user-agent' => array(
+            'horizontal'    => 'left',
+            'vertical'      => 'top',
+            'diagonal-lt'   => '45deg',
+            'diagonal-lb'   => '-45deg'
+        ),
+        'w3c' => array(
+            'horizontal'    => 'to right',
+            'vertical'      => 'to bottom',
+            'diagonal-lt'   => '135deg',
+            'diagonal-lb'   => '45deg'
+        ),
+    );
+
+    $direction = $directions['user-agent'][ $options['direction'] ];
+    $direction2 = $directions['w3c'][ $options['direction'] ];
+    $start_color = hex2rgba( $options['start_color'], $options['start_opacity'] );
+    $end_color = hex2rgba( $options['end_color'], $options['end_opacity'] );
+    $start_location = $options['start_location'];
+    $end_location = $options['end_location'];
+
+    $gradient = $direction . ', ' . $start_color . ' ' . $start_location . '%, ' . $end_color . ' ' . $end_location . '%';
+    $gradient2 = $direction2 . ', ' . $start_color . ' ' . $start_location . '%, ' . $end_color . ' ' . $end_location . '%';
+
+    return 'background: -moz-linear-gradient('. $gradient .'); /* FF3.6+ */
+           background: -webkit-linear-gradient('. $gradient .'); /* Chrome10+,Safari5.1+ */
+           background: -o-linear-gradient('. $gradient .'); /* Opera 11.10+ */
+           background: -ms-linear-gradient('. $gradient .'); /* IE10+ */
+           background: linear-gradient('. $gradient2 .'); /* W3C */;';
 }
 
 function zoom_customizer_get_font_size($size)
@@ -414,7 +490,13 @@ function zoom_customizer_get_font_size($size)
 
 function zoom_customizer_display_element($value)
 {
-    return !empty($value) ? 'block' : 'none';
+    return ($value == 1 || $value === 'on' || $value === '1' || $value === 'block') ? 'block' : 'none';
+}
+
+if ( ! function_exists('is_JSON') ) {
+    function is_JSON( $string ){
+       return is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
+    }
 }
 
 if (!function_exists('zoom_customizer_get_font_stack')) :
@@ -930,7 +1012,7 @@ function zoom_customizer_typography_callback($key, $option)
                 ),
                 'control' => array(
                     'label' => __('Font Languages', 'wpzoom'),
-                    'control_type'  => 'WPZOOM_Customizer_Control_Checkbox',
+                    'control_type'  => 'WPZOOM_Customizer_Control_Checkbox_Multiple',
                     'mode' => 'buttonset',
                     'choices' => zoom_customizer_get_google_font_subsets()
                 )
@@ -1035,7 +1117,13 @@ function zoom_customizer_get_default_option_value($option_id, $data)
  */
 function zoom_customizer_partial_blogname()
 {
-    bloginfo('name');
+    //In future must remove it is for backward compatibility.
+    if(get_theme_mod('logo')){
+        set_theme_mod('custom_logo',  zoom_get_attachment_id_from_url(get_theme_mod('logo')));
+        remove_theme_mod('logo');
+    }
+
+    has_custom_logo() ? the_zoom_custom_logo() : printf('<h1><a href="%s" title="%s">%s</a></h1>', home_url(), get_bloginfo('description'), get_bloginfo('name'));
 }
 
 /**
