@@ -6,6 +6,28 @@
  * Time: 05:39 PM
  */
 
+function scandium_remove_menu_pages() {
+    remove_menu_page('edit.php');
+    remove_menu_page('edit-comments.php');
+}
+add_action('admin_menu','scandium_remove_menu_pages');
+
+
+function scandium_remove_widget_areas() {
+    unregister_sidebar('sidebar');
+    unregister_sidebar('sidebar-shop');
+
+}
+add_action ('widgets_init', 'scandium_remove_widget_areas');
+
+
+function register_header_menu() {
+    register_nav_menu('header-menu',__( 'Header Menu' ));
+}
+add_action( 'init', 'register_header_menu' );
+
+
+
 function my_theme_enqueue_styles() {
 
     $parent_style = 'inspiro-style';
@@ -14,12 +36,11 @@ function my_theme_enqueue_styles() {
     wp_enqueue_style( 'bootstrap_css', get_stylesheet_directory_uri() . '/css/bootstrap.css' );
     wp_enqueue_style( 'bootstrap-grid_css', get_stylesheet_directory_uri() . '/css/bootstrap-grid.css' );
     wp_enqueue_style( 'bootstrap-reboot_css', get_stylesheet_directory_uri() . '/css/bootstrap-reboot.css' );
-    wp_enqueue_style( 'child-style',
+    wp_enqueue_style( 'scandium-inspiro-child',
         get_stylesheet_directory_uri() . '/style.css',
         array( $parent_style ),
         wp_get_theme()->get('Version')
     );
-
 
 
 
