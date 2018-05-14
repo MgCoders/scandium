@@ -16,6 +16,11 @@ span.description {
 	margin: 14px 0 6px;
 }
 
+.zoom-background-gradient-container {
+	padding: 15px;
+	background-color: #fff;
+}
+
 /* Radio control styles */
 .customize-control-zoom_radio {
 	padding: 0;
@@ -88,10 +93,16 @@ li .image.ui-buttonset label.ui-button {
 }
 
 /* Checkbox control styles */
+.customize-control-zoom_checkbox_multiple {
+	padding: 0;
+}
 .customize-control-zoom_checkbox {
 	padding: 0;
 }
-.customize-control-zoom_checkbox .customize-control-title {
+.customize-control-zoom_checkbox .customize-inside-control-row {
+	margin-left: 0;
+}
+.customize-control-zoom_checkbox_multiple .customize-control-title {
 	line-height: 24px;
 	margin-bottom: 5px;
 }
@@ -131,16 +142,24 @@ li .image.ui-buttonset label.ui-button {
 }
 
 /* Range control styles */
-li.customize-control.customize-control-zoom_range .zoom-range-input {
+.range-opacity-container::after {
+	content: '';
+	clear: both;
+	display: table;
+}
+li.customize-control.customize-control-zoom_range .zoom-range-input,
+.range-opacity-container .zoom-range-input[type="number"] {
 	float: left;
 	width: 25%;
 }
-li.customize-control.customize-control-zoom_range .zoom-range-slider {
+li.customize-control.customize-control-zoom_range .zoom-range-slider,
+.range-opacity-container .zoom-range-slider {
 	float: right;
 	width: 70%;
 	margin-top: 8px;
 }
-li.customize-control.customize-control-zoom_range .ui-slider-handle {
+li.customize-control.customize-control-zoom_range .ui-slider-handle,
+.range-opacity-container .ui-slider-handle {
 	top: -.4em;
 	border-color: #0085ba;
 	background: #0085ba;
@@ -150,11 +169,18 @@ li.customize-control.customize-control-zoom_range .ui-slider-horizontal {
 	border-color: #fff;
 	background: #fff;
 }
+.range-opacity-container .ui-slider-horizontal {
+	height: .6em;
+	border-color: #ededed;
+	background: #ededed;
+}
 
-li.customize-control.customize-control-zoom_range .ui-slider-handle {
+li.customize-control.customize-control-zoom_range .ui-slider-handle,
+.range-opacity-container .ui-slider-handle {
 	border-radius: 100%;
 }
-li.customize-control.customize-control-zoom_range .ui-slider-handle:hover {
+li.customize-control.customize-control-zoom_range .ui-slider-handle:hover,
+.range-opacity-container .ui-slider-handle:hover {
 	cursor: pointer;
 }
 
@@ -238,7 +264,9 @@ li.customize-control.customize-control-zoom_range .ui-slider-handle:hover {
 
 /* Add icons to panels */
 li#accordion-section-title_tagline > h3.accordion-section-title:before,
+li#accordion-panel-layout > h3.accordion-section-title:before,
 li#accordion-panel-typography > h3.accordion-section-title:before,
+li#accordion-panel-general > h3.accordion-section-title:before,
 li#accordion-panel-color-scheme > h3.accordion-section-title:before,
 li#accordion-section-color-palettes-container > h3.accordion-section-title:before,
 li#accordion-section-slider-container > h3.accordion-section-title:before,
@@ -266,8 +294,14 @@ li.control-section:not(.control-subsection) > h3.accordion-section-title:before 
 li#accordion-section-title_tagline > h3.accordion-section-title:before {
 	content: "\f175";
 }
+li#accordion-panel-layout > h3.accordion-section-title:before {
+	content: "\f538";
+}
 li#accordion-panel-typography > h3.accordion-section-title:before {
 	content: "\f201";
+}
+li#accordion-panel-general > h3.accordion-section-title:before {
+	content: "\f319";
 }
 li#accordion-panel-color-scheme > h3.accordion-section-title:before {
 	content: "\f309";

@@ -131,9 +131,26 @@ if( ! function_exists('get_deprecated_themes')) {
     }
 }
 
-if(! function_exists('get_demo_xml_url')) {
-    function get_demo_xml_url()
+if(! function_exists('get_demo_xml_data')) {
+    function get_demo_xml_data()
     {
+
+        $xml_data = array(
+            'remote' => array(
+                'url' => '',
+                'response' => false
+            ),
+            'local' => array(
+                'url' => '',
+                'response' => false
+            ),
+            'is_child_theme' => is_child_theme(),
+        );
+
+        // Stop when child theme is active
+        if ( is_child_theme() )
+            return $xml_data;
+
         $demos = get_demos_details();
 
         $url        = 'https://www.wpzoom.com/downloads/xml/' . $demos['selected'] . '.xml';
@@ -141,20 +158,51 @@ if(! function_exists('get_demo_xml_url')) {
 
         // Check for local file
         if ( is_file($local_url) ) {
-            $url = $local_url;
+            $xml_data['local']['url'] = $local_url;
+            $xml_data['local']['response'] = true;
+
+        }
+        // Check for remote file
+        else {
+
+            $transient = get_site_transient( 'get_demo_xml_transient_' . $demos['theme'] );
+
+            if ( ! $transient ) {
+
+                $response = wp_remote_get( esc_url_raw( $url ) );
+                $response_code = wp_remote_retrieve_response_code( $response );
+
+                if ( ! is_wp_error( $response ) && $response_code === 200 ) {
+                    $xml_data['remote']['url'] = $url;
+                    $xml_data['remote']['response'] = true;
+
+                    set_site_transient( 'get_demo_xml_transient_' . $demos['theme'], $xml_data, YEAR_IN_SECONDS );
+
+                    $transient = $xml_data;
+                }
+
+            }
+
+            if ( is_array( $transient ) ) {
+                $xml_data = array_merge($xml_data, $transient);
+            }
         }
 
-        return $url;
+        return $xml_data;;
     }
 }
 
 if ( ! function_exists('get_demos_details') ) {
     function get_demos_details()
     {
+
+        $themeName = str_replace(array('_', ' '), '-', strtolower(WPZOOM::$themeName));
+
         $data = array(
             'demos'         => array(),
-            'selected'      => str_replace(array('_', ' '), '-', strtolower(WPZOOM::$themeName)),
-            'default'       => str_replace(array('_', ' '), '-', strtolower(WPZOOM::$themeName)),
+            'theme'         => $themeName,
+            'selected'      => $themeName,
+            'default'       => $themeName,
             'imported'      => get_theme_mod('wpz_demo_imported'),
             'imported_date' => get_theme_mod('wpz_demo_imported_timestamp'),
             'multiple-demo' => false,
@@ -174,7 +222,7 @@ if ( ! function_exists('get_demos_details') ) {
                     unset($demos['demos'][$key]);
 
                     $demos['demos'][$key][$arr_keys[0]] = $demo; // name
-                    $demos['demos'][$key][$arr_keys[1]] = strtolower(WPZOOM::$themeName) .'-'. $demo; // id
+                    $demos['demos'][$key][$arr_keys[1]] = $themeName .'-'. $demo; // id
                     $demos['demos'][$key][$arr_keys[2]] = ''; // thumbnail
                 }
             }
@@ -186,7 +234,7 @@ if ( ! function_exists('get_demos_details') ) {
 
             $data['demos']          = $demos['demos'];
             $data['multiple-demo']  = true;
-            $data['selected']       = str_replace(array('_', ' '), '-', strtolower(WPZOOM::$themeName)) . '-' . $selected;
+            $data['selected']       = $themeName . '-' . $selected;
         }
 
         return $data;

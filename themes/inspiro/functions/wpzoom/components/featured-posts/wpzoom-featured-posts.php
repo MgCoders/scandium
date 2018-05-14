@@ -19,9 +19,9 @@ class WPZOOM_Featured_Posts {
 		$this->featured_metakey = isset( $args['name'] ) ? $args['name'] : '';
 		$this->posts_limit      = isset( $args['posts_limit'] ) ? $args['posts_limit'] : '';
 
-		add_action( 'admin_menu', array( $this, 'add_featured_page_in_menu' ) );
-
 		add_action( 'current_screen', array( $this, 'check_current_screen' ) );
+
+		add_action( 'admin_menu', array( $this, 'add_featured_page_in_menu' ) );
 
 		add_filter( 'wp_insert_post_data', array( $this, 'insert_post_data' ), 10, 2 );
 
@@ -116,7 +116,9 @@ class WPZOOM_Featured_Posts {
 				</slot>
 			</draggable>
 			<div class="wpzoom-featured-posts-description">
-				<?php $this->render_description() ?>
+				<template v-if="showRemoveControl">
+					<?php $this->render_description(); ?>
+				</template>
 				<button type="button" class="button button-primary" :class="hasChangedPosts" @click.prevent="save">{{
 					buttonLabel }}
 				</button>
@@ -192,8 +194,12 @@ class WPZOOM_Featured_Posts {
 				"showRemoveControl"  => ! empty( $this->featured_metakey ),
 				"buttonLabel"        => __( 'Save list order', 'wpzoom' ),
 				"headingTitle"       => $this->menu_title,
-				"nonce_set_featured" => wp_create_nonce( 'set_featured' ),
-				"nonce_save_order"   => wp_create_nonce( 'save_order' )
+				"nonce_set_featured" => wp_create_nonce( $this->prefix_action('set_featured') ),
+				"nonce_save_order"   => wp_create_nonce( $this->prefix_action('save_order') ),
+				'callbacks'=> array(
+					'set_featured' => $this->prefix_action('set_featured'),
+					'save_order' => $this->prefix_action('save_order')
+				)
 			)
 		);
 	}
@@ -201,13 +207,21 @@ class WPZOOM_Featured_Posts {
 	function check_current_screen() {
 		$current_screen = get_current_screen();
 
-		if ( $current_screen->id === $this->menu_names[ $this->post_type ] ) {
+		if ( isset($this->menu_names[ $this->post_type ]) && $current_screen->id === $this->menu_names[ $this->post_type ] ) {
 
 			$this->set_menu_order_on_first_run();
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 			add_action( 'admin_print_footer_scripts', array( $this, 'admin_js_templates' ) );
 		}
+	}
+
+	public function prefix_action($action){
+		return str_replace("-","_", $this->post_type).'_'.$action;
+	}
+
+	public function get_ajax_action_name( $action ) {
+		return sprintf( 'wp_ajax_%s', $this->prefix_action($action) );
 	}
 
 	public function get_css_uri( $name = '' ) {
@@ -222,10 +236,6 @@ class WPZOOM_Featured_Posts {
 		return $this->get_assets_uri( 'js' ) . $name;
 	}
 
-	public function get_ajax_action_name( $action ) {
-		return sprintf( 'wp_ajax_%s', $action );
-	}
-
 	public function set_featured() {
 
 		$sliced = wp_array_slice_assoc( $_POST, array( 'post_id', 'value', 'nonce_set_featured' ) );
@@ -237,7 +247,7 @@ class WPZOOM_Featured_Posts {
 			)
 		);
 
-		if ( wp_verify_nonce( $sliced['nonce_set_featured'], 'set_featured' ) ) {
+		if ( wp_verify_nonce( $sliced['nonce_set_featured'], $this->prefix_action('set_featured') ) ) {
 
 			$msg = sprintf( 'The menu_order is set to 0.' );
 			if ( ! empty( $this->featured_metakey ) ) {
@@ -262,19 +272,19 @@ class WPZOOM_Featured_Posts {
 	public function get_post_time( $post ) {
 
 		if ( '0000-00-00 00:00:00' === $post->post_date ) {
-			$t_time    = $h_time = __( 'Unpublished' );
+			$t_time    = $h_time = __( 'Unpublished', 'wpzoom' );
 			$time_diff = 0;
 		} else {
-			$t_time = get_the_time( __( 'Y/m/d g:i:s a' ), $post );
+			$t_time = get_the_time( 'Y/m/d g:i:s a', $post );
 			$m_time = $post->post_date;
 			$time   = get_post_time( 'G', true, $post );
 
 			$time_diff = time() - $time;
 
 			if ( $time_diff > 0 && $time_diff < DAY_IN_SECONDS ) {
-				$h_time = sprintf( __( '%s ago' ), human_time_diff( $time ) );
+				$h_time = sprintf( __( '%s ago', 'wpzoom' ), human_time_diff( $time ) );
 			} else {
-				$h_time = mysql2date( __( 'Y/m/d' ), $m_time );
+				$h_time = mysql2date( 'Y/m/d', $m_time );
 			}
 		}
 
@@ -294,7 +304,7 @@ class WPZOOM_Featured_Posts {
 		);
 
 		if (
-			wp_verify_nonce( $sliced['nonce_save_order'], 'save_order' ) &&
+			wp_verify_nonce( $sliced['nonce_save_order'], $this->prefix_action('save_order') ) &&
 			! empty( $sliced['posts'] ) &&
 			is_array( $sliced )
 		) {

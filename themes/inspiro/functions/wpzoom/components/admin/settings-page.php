@@ -2,7 +2,9 @@
 
 class WPZOOM_Admin_Settings_Page {
 
-    public static $remote_access = true;
+    public static $remote_access = false;
+
+    private static $xml_data = array();
 
     public static function init() {
         if (isset($_POST['action']) && $_POST['action'] == 'reset') {
@@ -20,26 +22,15 @@ class WPZOOM_Admin_Settings_Page {
         add_filter('wpzoom_field_misc_export',          array('option', 'export_options'));
         add_filter('wpzoom_field_misc_export_widgets',  array('option', 'export_widgets'));
 
-        $xmlUrl = get_demo_xml_url();
+        self::$xml_data = get_demo_xml_data();
 
-        if ( ! file_exists($xmlUrl) ) {
-            self::$remote_access = false;
-
-            $response = wp_remote_get( esc_url_raw( $xmlUrl ) );
-            $response_code = wp_remote_retrieve_response_code( $response );
-        }
-        
-        // Check for remote file
-        // Don't show demo content importer icon if the current theme does not have a demo content xml file to load
-        if ( isset( $response, $response_code ) ) {
-
+        if ( self::$xml_data['remote']['response'] ) {
             self::$remote_access = true;
-
-            if ( ! file_exists($xmlUrl) && ( is_wp_error($response) || $response_code != 200 ) ) {
-                self::$remote_access = false;
-            }
         }
-        
+        elseif( self::$xml_data['local']['response'] ) {
+            self::$remote_access = true;
+        }
+
     }
 
     public static function load_assets() {
@@ -65,15 +56,20 @@ class WPZOOM_Admin_Settings_Page {
 
         switch ($notice_type) {
             case 'server':
-                    $content = '<strong>'. __( 'Something wrong with demo content file!', 'wpzoom' ) .'</strong>
+                    $content = '<strong>'. __( 'Error: Demo Content can\'t be imported.', 'wpzoom' ) .'</strong>
                                 <p>'. __( 'WPZOOM servers are currently unavailable. Please try again later.', 'wpzoom' ) . '</p>';
+                break;
+
+            case 'child-theme':
+                    $content = '<strong>'. __( 'Error: This feature doesn\'t work when a Child Theme is active!', 'wpzoom' ) .'</strong>
+                                <p>'. __( 'The importer works only with new copies of our themes. It doesn’t support Child Themes or themes which folders were renamed to something different.', 'wpzoom' ) . '</p>';
                 break;
         }
 
         if ( $echo ) {
-            echo '<div class="notice notice-'. esc_attr($status) .' is-dismissible">'. $content .'</div>';
+            echo '<div class="notice notice-'. esc_attr($status) .'">'. $content .'</div>';
         } else {
-            return '<div class="notice notice-'. esc_attr($status) .' is-dismissible">'. $content .'</div>';
+            return '<div class="notice notice-'. esc_attr($status) .'">'. $content .'</div>';
         }
     }
 
@@ -153,7 +149,14 @@ class WPZOOM_Admin_Settings_Page {
                 }
 
                 if ( $args['id'] == 'misc_load_demo_content' ) {
-                    if ( ! self::$remote_access ) {
+                    // Show error notice when is child theme
+                    if ( self::$xml_data['is_child_theme'] ) {
+                        $type = 'notice';
+                        $args['type'] = 'notice';
+                        $args['desc'] = self::message_notice('child-theme', 'error');
+                    }
+                    // Show error notice when server not responding
+                    elseif ( ! self::$remote_access ) {
                         $type = 'notice';
                         $args['type'] = 'notice';
                         $args['desc'] = self::message_notice('server', 'error');

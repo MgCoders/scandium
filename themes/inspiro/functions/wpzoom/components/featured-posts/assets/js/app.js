@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         },
         methods: {
             styleObject: function (key) {
-                console.log(arguments);
                 var value = this.isAjax ? "hidden" : "visible";
                 var styles = {visibility: value};
                 if (key >= this.postsLimit) {
@@ -74,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 var that = this;
                 wp.ajax.post(
-                    'set_featured',
+                    hashData.callbacks.set_featured,
                     {
                         'nonce_set_featured': hashData.nonce_set_featured,
                         'post_id': that.posts[key].ID,
@@ -96,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 var that = this;
                 if (this.changedPosts.length > 0) {
                     wp.ajax.post(
-                        'save_order',
+                        hashData.callbacks.save_order,
                         {
                             'nonce_save_order': hashData.nonce_save_order,
                             'posts': that.changedPosts,

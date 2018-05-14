@@ -13,7 +13,7 @@
  *
  * @since 1.7.0.
  */
-class WPZOOM_Customizer_Control_Radio extends WP_Customize_Control {
+class WPZOOM_Customizer_Control_Radio extends WPZOOM_Customize_Control {
     /**
      * The control type.
      *
@@ -42,15 +42,6 @@ class WPZOOM_Customizer_Control_Radio extends WP_Customize_Control {
      * @var string
      */
     public $styles = array();
-
-    /**
-     * The control contextual dependency.
-     *
-     * @since 1.7.0.
-     *
-     * @var string
-     */
-    public $dependency = false;
 
     /**
      * WPZOOM_Customizer_Control_Radio constructor.
@@ -82,14 +73,13 @@ class WPZOOM_Customizer_Control_Radio extends WP_Customize_Control {
     }
 
     /**
-     * Add extra properties to JSON array.
+     * Refresh the parameters passed to the JavaScript via JSON.
      *
-     * @since 1.7.0.
-     *
-     * @return array
+     * @since 1.7.1.
+     * @uses WP_Customize_Control::to_json()
      */
-    public function json() {
-        $json = parent::json();
+    public function to_json() {
+        parent::to_json();
 
         // Define styles
         if ( strpos( $this->id, 'font-weight' ) ) {
@@ -121,15 +111,12 @@ class WPZOOM_Customizer_Control_Radio extends WP_Customize_Control {
             );
         }
 
-        $json['id'] = $this->id;
-        $json['mode'] = $this->mode;
-        $json['choices'] = $this->choices;
-        $json['styles'] = $this->styles;
-        $json['value'] = $this->value();
-        $json['link'] = $this->get_link();
-        $json['dependency'] = $this->dependency;
-
-        return $json;
+        $this->json['id'] = $this->id;
+        $this->json['mode'] = $this->mode;
+        $this->json['choices'] = $this->choices;
+        $this->json['styles'] = $this->styles;
+        $this->json['value'] = $this->value();
+        $this->json['link'] = $this->get_link();
     }
 
     /**

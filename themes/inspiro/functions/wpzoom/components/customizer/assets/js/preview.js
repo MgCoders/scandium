@@ -18,15 +18,17 @@
     $(document).ready(function () {
 
         var $customCssSelector = $('#' + themeName+'-custom-css');
+        var $wpCustomCssSelector = $('#wp-custom-css');
 
-        var styleSheet = $customCssSelector.length ? $customCssSelector[0].sheet : undefined;
+        var styleSheet = $customCssSelector.length ? $customCssSelector[0].sheet : $wpCustomCssSelector[0].sheet;
 
         var utils = {
             fontSize: function (current, value) {
 
                 return parseFloat(value) + 'px';
             },
-            display: function (current, value) {
+            display: function (current, value, display_type) {
+                display_type = display_type || 'block';
                 
                 if ( value == 'yes' || value == 'on' )
                     value = true;
@@ -34,17 +36,46 @@
                 if ( value == 'no' || value == 'off' )
                     value = false;
 
-                return value ? 'block' : 'none';
+                return value ? display_type : 'none';
             },
             backgroundGradient : function (current, value) {
+                value = JSON.parse(value)[0];
+
+                var gradient = '', gradient2 = '';
+
+                var directions = {
+                    'user-agent': {
+                        'horizontal': 'left',
+                        'vertical': 'top',
+                        'diagonal-lt': '45deg',
+                        'diagonal-lb': '-45deg'
+                    },
+                    'w3c': {
+                        'horizontal': 'to right',
+                        'vertical': 'to bottom',
+                        'diagonal-lt': '135deg',
+                        'diagonal-lb': '45deg'
+                    },
+                };
+
+                var direction = directions['user-agent'][ value['direction'] ],
+                    direction2 = directions['w3c'][ value['direction'] ],
+                    start_color = hexToRgbA( value['start_color'], value['start_opacity'] ),
+                    end_color = hexToRgbA( value['end_color'], value['end_opacity'] ),
+                    start_location = value['start_location'],
+                    end_location = value['end_location'];
+
+                gradient = direction + ', ' + start_color + ' ' + start_location + '%, ' + end_color + ' ' + end_location + '%';
+                gradient2 = direction2 + ', ' + start_color + ' ' + start_location + '%, ' + end_color + ' ' + end_location + '%';
 
                 var gradients = [
-                    {'background': '-moz-linear-gradient(left,  rgba(239,244,247,0) 27%, ' + value + ' 63%)'}, /* FF3.6+ */
-                    {'background': '-webkit-linear-gradient(left,  rgba(239,244,247,0) 27%, ' + value + ' 63%)'}, /* Chrome10+,Safari5.1+ */
-                    {'background': '-o-linear-gradient(left,  rgba(239,244,247,0) 27%, ' + value + ' 63%)'}, /* Opera 11.10+ */
-                    {'background': '-ms-linear-gradient(left,  rgba(239,244,247,0) 27%, ' + value + ' 63%)'}, /* IE10+ */
-                    {'background': 'linear-gradient(to right,  rgba(239,244,247,0) 27%, ' + value + '  63%)}'} /* W3C */
+                    {'background': '-moz-linear-gradient('+ gradient +')'}, /* FF3.6+ */
+                    {'background': '-webkit-linear-gradient('+ gradient +')'}, /* Chrome10+,Safari5.1+ */
+                    {'background': '-o-linear-gradient('+ gradient +')'}, /* Opera 11.10+ */
+                    {'background': '-ms-linear-gradient('+ gradient +')'}, /* IE10+ */
+                    {'background': 'linear-gradient('+ gradient2 +')'} /* W3C */
                 ];
+
                 _.each(gradients, function(gradient){
                     vein.inject(
                         current.style.selector.split(','),
@@ -108,14 +139,29 @@
                 value.bind(function (newval) {
                     var myObj = {};
 
+                    // Skip all if is not style rule
+                    if ( typeof current.style === 'undefined' ) return;
+
                     if (_.isArray(current.style)) {
                         _.each(current.style, function (subcurrent) {
+
+                            myObj = {};
+
                             myObj[subcurrent.rule] = newval;
 
                             if (_.findKey(utils, function (value, key) {
                                     return key === $.camelCase(subcurrent.rule)
                                 })) {
-                                myObj[subcurrent.rule] = utils[$.camelCase(subcurrent.rule)](current, newval);
+
+                                if ( subcurrent.rule === 'display' ) {
+                                    myObj[subcurrent.rule] = utils[$.camelCase(subcurrent.rule)](current, newval, subcurrent.display_type);
+
+                                    if ( typeof WPZOOM_THEME !== 'undefined' ) {
+                                        WPZOOM_THEME.postsMasonry.init();
+                                    }
+                                } else {
+                                    myObj[subcurrent.rule] = utils[$.camelCase(subcurrent.rule)](current, newval);
+                                }
 
                                 if (subcurrent.rule === 'font-family') {
                                     return;
@@ -137,7 +183,16 @@
                     myObj[current.style.rule] = newval;
 
                     if ( _.findKey(utils, function (value, key) { return key === $.camelCase( current.style.rule ) }) ) {
-                        myObj[current.style.rule] = utils[$.camelCase(current.style.rule)](current, newval);
+
+                        if ( current.style.rule === 'display' ) {
+                            myObj[current.style.rule] = utils[$.camelCase(current.style.rule)](current, newval, current.style.display_type);
+
+                            if ( typeof WPZOOM_THEME !== 'undefined' ) {
+                                WPZOOM_THEME.postsMasonry.init();
+                            }
+                        } else {
+                            myObj[current.style.rule] = utils[$.camelCase(current.style.rule)](current, newval);
+                        }
 
                         if (current.style.rule === 'font-family') {
                             return;
@@ -258,6 +313,22 @@ function array_flip( trans ) {
     }
 
     return tmp_ar;
+}
+
+function hexToRgbA(hex, opacity) {
+    var c;
+
+    opacity = opacity || '1';
+
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+        c= hex.substring(1).split('');
+        if(c.length== 3){
+            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c= '0x'+c.join('');
+        return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+', '+ opacity +')';
+    }
+    throw new Error('Bad Hex');
 }
 
 function remove_order_class( index, css ) {

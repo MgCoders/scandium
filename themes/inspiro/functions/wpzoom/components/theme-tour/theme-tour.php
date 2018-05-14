@@ -92,17 +92,17 @@ class WPZOOM_Theme_Tour {
             'wpzoom_options' => array(
                 'content' => '<h3>' . __('Import Demo', 'wpzoom') . '</h3><p><strong>'. sprintf(__('Would you like to import the demo content to have the exact looks as our demo for %s theme', 'wpzoom'), WPZOOM::$themeName) .'</strong></p><p>' . sprintf( __('You can now import the demo content by clicking the button %s or from the <em>Demo Content</em> section here under Import/Export.', 'wpzoom'), '<i class="fa fa-download"></i>' ) . '</p>',
                 'id' => 'wpz-demo-content-icon',
-                'button2' => __('Next', 'textdomain'),
+                'button2' => __('Next', 'wpzoom'),
                 'function' => 'window.location="' . admin_url('admin.php?page=wpzoom_options&welcome_tour=1') . '";',
             ),
             'wpzoom_options_1' => array(
                 'content' => '<h3>' . __('Personalize your Theme', 'wpzoom') . '</h3><p>' . __('Using the Live Customizer you can easily upload your logo image, change fonts, colors, widgets, menus and much more!', 'wpzoom') . ' <a href="'. admin_url('customize.php?return='. urlencode($_SERVER['REQUEST_URI'])) .'">'. __('Open Customizer', 'wpzoom') .'</a></p>',
                 'id' => 'toplevel_page_wpzoom_options',
-                'button2' => __('Next', 'textdomain'),
+                'button2' => __('Next', 'wpzoom'),
                 'function' => 'window.location="' . admin_url('admin.php?page=wpzoom_options&welcome_tour=2') . '";',
             ),
             'wpzoom_options_2' => array(
-                'content' => '<h3>' . __('Need Help?', 'wpzoom') . '</h3><p><strong>'. __('Congratulations! Your theme is fully set up.') .'</strong></p><p>' . __('In case you need help with theme or have a question get in touch with our Support Team. We\'d love the opportunity to help you.', 'wpzoom') . '</p>',
+                'content' => '<h3>' . __('Need Help?', 'wpzoom') . '</h3><p><strong>'. __('Congratulations! Your theme is fully set up.', 'wpzoom') .'</strong></p><p>' . __('In case you need help with theme or have a question get in touch with our Support Team. We\'d love the opportunity to help you.', 'wpzoom') . '</p>',
                 'id' => 'zoomInfo-support',
             ),
         );
@@ -116,7 +116,7 @@ class WPZOOM_Theme_Tour {
                     'edge' => 'top',
                     'align' => 'left'
                 ),
-                'button2' => __('Next', 'textdomain'),
+                'button2' => __('Next', 'wpzoom'),
                 'function' => 'window.location="' . admin_url('admin.php?page=wpzoom_options&welcome_tour=1') . '";',
             );
         }
@@ -126,7 +126,7 @@ class WPZOOM_Theme_Tour {
             $adminpages['wpzoom_options'] = array(
                 'content' => '<h3>' . __('Demo successfully imported', 'wpzoom') . '</h3><p><strong>'. sprintf(__('You have imported «%s» demo content for %s theme. Now we recommend to go to Next step.', 'wpzoom'), zoom_get_beauty_demo_title($demos['imported']), WPZOOM::$themeName) .'</strong></p>',
                 'id' => 'wpz-demo-content-icon',
-                'button2' => __('Next', 'textdomain'),
+                'button2' => __('Next', 'wpzoom'),
                 'function' => 'window.location="' . admin_url('admin.php?page=wpzoom_options&welcome_tour=1') . '";',
             );
         }
@@ -173,7 +173,7 @@ class WPZOOM_Theme_Tour {
                 'pointerWidth' => 400
             );
             if (isset($adminpages[$page]['button2'])) {
-                $button2 = (!empty($adminpages[$page]['button2'])) ? $adminpages[$page]['button2'] : __('Next', 'textdomain');
+                $button2 = (!empty($adminpages[$page]['button2'])) ? $adminpages[$page]['button2'] : __('Next', 'wpzoom');
             }
             if (isset($adminpages[$page]['function'])) {
                 $function = $adminpages[$page]['function'];
@@ -182,7 +182,7 @@ class WPZOOM_Theme_Tour {
         }
 
         if ( ! empty($opt_arr) ) {
-            $this->print_scripts($id, $opt_arr, __("Close", 'textdomain'), $button2, $function);
+            $this->print_scripts($id, $opt_arr, __("Close", 'wpzoom'), $button2, $function);
         }
     }
 

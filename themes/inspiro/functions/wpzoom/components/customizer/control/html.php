@@ -55,18 +55,15 @@ class WPZOOM_Customizer_Control_HTML extends WP_Customize_Control {
 	}
 
 	/**
-	 * Add extra properties to JSON array.
+	 * Refresh the parameters passed to the JavaScript via JSON.
 	 *
-	 * @since 1.7.0.
-	 *
-	 * @return array
+	 * @since 1.7.1.
+	 * @uses WP_Customize_Control::to_json()
 	 */
-	public function json() {
-		$json = parent::json();
+	public function to_json() {
+		parent::to_json();
 
-		$json['html'] = $this->html;
-
-		return $json;
+		$this->json['html'] = $this->html;
 	}
 
 	/**

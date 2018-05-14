@@ -9,7 +9,14 @@ class option {
     public static $options = array();
     public static $evoOptions;
 
-    private static $prefix = "wpzoom_";
+    /**
+     * Option prefix.
+     *
+     * @since 1.7.1. Changed access from 'private' to 'public'
+     *
+     * @var string
+     */
+    public static $prefix = "wpzoom_";
 
     public static function init() {
         self::loadOptions();
@@ -23,7 +30,7 @@ class option {
         }
 
         update_option(self::$prefix . $name, $value);
-        
+
         self::$options[$name] = $value;
 
         return $value;
@@ -34,8 +41,12 @@ class option {
 
         // Check option from customizer
         if ( self::is_on_customizer($name) ) {
-            $result = get_theme_mod($name);
-        } elseif (isset(self::$options[$name])) {
+            $default = self::get_customizer_default_value($name);
+
+            // If the modification name does not exist, then the $default will be passed 
+            $result = get_theme_mod($name, $default);
+        }
+        elseif (isset(self::$options[$name])) {
             $result = self::$options[$name];
         }
 
@@ -71,7 +82,7 @@ class option {
     }
 
     public static function is_on($name) {
-        return (self::get($name) === 'on');
+        return (self::get($name) === 'on' || self::get($name) === true || self::get($name) === '1');
     }
 
     /**
@@ -82,7 +93,38 @@ class option {
      * @return bool
      */
     public static function is_on_customizer($name) {
-        return (get_theme_mod($name) !== false);
+        $default = self::get_customizer_default_value($name);
+
+        return (get_theme_mod($name, $default) !== false);
+    }
+
+    /**
+     * Get default value by option name from customizer data.
+     *
+     * @since 1.7.3.
+     *
+     * @param string $name Option name
+     *
+     * @return bool
+     */
+    public static function get_customizer_default_value( $name ) {
+        $customizer_data = apply_filters( 'wpzoom_customizer_data', array() );
+
+        foreach ($customizer_data as $data) {
+            foreach ($data['options'] as $id => $option) {
+                if ( $id === $name && isset($option['setting']['default']) ) {
+                    $value = $option['setting']['default'];
+
+                    if ( is_bool($value) && $value === false ) {
+                        $value = '0';
+                    }
+
+                    return $value;
+                }
+            }
+        }
+
+        return false;
     }
 
     private static function loadOptions() {
@@ -132,10 +174,38 @@ class option {
                 }
 
                 $id = $row['id'];
-                $value = get_option(self::$prefix . $id);
+                $value = self::get( $id );
 
                 if ($value === false) {
                     $options[$id] = isset($row['std']) ? $row['std'] : '';
+                } else {
+                    $options[$id] = $value;
+                }
+
+                if ($options[$id] === 'on') {
+                    $options[$id] = true;
+                }
+
+                if ($options[$id] === 'off') {
+                    $options[$id] = false;
+                }
+            }
+        }
+
+        return $options;
+    }
+
+    public static function getCustomizerJsOptions() {
+        $customizer_data = apply_filters( 'wpzoom_customizer_data', array() );
+        $options = array();
+
+        foreach ($customizer_data as $data) {
+            foreach ($data['options'] as $id => $option) {
+
+                $value = self::get( $id );
+
+                if ( is_null($value) ) {
+                    continue;
                 } else {
                     $options[$id] = $value;
                 }
@@ -172,9 +242,11 @@ class option {
                 $ignored = array('preheader', 'startsub', 'endsub');
                 if (in_array($row['type'], $ignored)) continue;
 
-                $id = $row['id'];
+                if ( isset( $row['id'] ) ) {
+                    $id = $row['id'];
 
-                self::set($id, $xoptions[$id]);
+                    self::set($id, $xoptions[$id]);
+                }
             }
         }
 
@@ -235,9 +307,11 @@ class option {
                 $ignored = array('preheader', 'startsub', 'endsub');
                 if (in_array($row['type'], $ignored)) continue;
 
-                $id = $row['id'];
+                if ( isset( $row['id'] ) ) {
+                    $id = $row['id'];
 
-                self::delete($id);
+                    self::delete($id);
+                }
             }
         }
 

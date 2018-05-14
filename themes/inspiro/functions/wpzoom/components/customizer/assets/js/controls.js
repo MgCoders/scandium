@@ -124,19 +124,39 @@
                         // Each all dependencies to check if control satisfy all conditions or not
                         _.each(dependencies, function(val, id){
 
-                            var control = list[ id ], // dependency control
-                                value   = control.setting.get(), // value of dependency control
-                                node    = $(control.selector);
+                            var control      = list[ id ], // dependency control
+                                value        = control.setting.get(), // value of dependency control
+                                value_type   = typeof value,
+                                control_type = control.params.type,
+                                node         = $(control.selector),
+                                helper       = [];
+
+                            if ( value == '' ) value = '0';
+
+                            helper[ controlID ] = [];
 
                             // Link Elements
                             if ( typeof elements[ control.id ] == 'undefined' ) {
                                 elements[ control.id ] = control;
                             }
 
-                            if ( value == val ) {
-                                check[ controlID ].push(true); // Show control
+                            // Check for multiple values
+                            if ( _.isArray( val ) ) {
+                                _.each(val, function(_val) {
+                                    _val = WPZOOM.convertToType( _val, value_type );
+
+                                    helper[ controlID ].push(value == _val);
+                                });
                             } else {
-                                check[ controlID ].push(false); // Hide control
+                                val = WPZOOM.convertToType( val, value_type );
+
+                                helper[ controlID ].push(value == val);
+                            }
+
+                            if ( _.contains( helper[ controlID ], true ) ) {
+                                check[ controlID ].push(true);
+                            } else {
+                                check[ controlID ].push(false);
                             }
 
                         });
@@ -164,6 +184,10 @@
 
             _.each(elements, function(control){
                 var element = $(control.selector);
+
+                if ( control.params.type == 'zoom_checkbox' && control.params.value == '0' ) {
+                    element.find('input[type="checkbox"]').prop('checked', false);
+                }
 
                 // Update customizer controls visibility
                 element.bind('change', function(e) {
@@ -506,7 +530,7 @@
             // Listen for changes to the radio group.
             $container.on('change', 'input:radio', function() {
                 var value = $(this).parent().find('input:radio:checked').val();
-                var value_type = control.setting.get();
+                var value_type = typeof control.setting.get();
                 
                 control.setting.set( WPZOOM.convertToType( value, value_type ) );
             });
@@ -519,11 +543,182 @@
     });
 
     /**
-     * Initialize instances of WPZOOM_Customizer_Control_Checkbox
+     * Initialize instances of WPZOOM_Customizer_Control_Background_Gradient
+     *
+     * @since 1.7.1.
+     */
+    api.controlConstructor.zoom_background_gradient = api.Control.extend({
+        obj: {},
+        ready: function() {
+            var control = this,
+                settings = control.setting.get(),
+                $container = control.container.find('.zoom-background-gradient-container'),
+                picker = control.container.find( '.color-picker-hex' ),
+                directions = control.container.find( 'select#directions' ),
+                range = control.container.find( '.range-opacity-container' );
+
+            try {
+                control.obj = JSON.parse( settings );
+            } catch (e) {
+                control.obj = [settings];
+            }
+
+            picker.each(function(){
+                var id = $(this).attr('id'),
+                    value = control.obj[0][ id ];
+
+                control.initColorPicker( $(this), value );
+            });
+
+            // Listen for changes to the select.
+            directions.on('change', function() {
+                var value = $(this).val();
+
+                control.obj[0]['direction'] = value;
+
+                control.setting.set( JSON.stringify(control.obj) );
+            });
+
+            // Update the select if the setting changes.
+            control.setting.bind(function(value) {
+                value = JSON.parse(value);
+
+                directions.val(value[0]['direction']);
+            });
+
+            range.each(function() {
+                control.initRange( $(this) );
+            });
+        },
+        initColorPicker: function( picker, value ) {
+            var control = this,
+                updating = false,
+                id = picker.attr('id');
+                
+            picker.val( value ).wpColorPicker({
+                change: function() {
+                    updating = true;
+
+                    control.obj['picker'] = picker;
+                    control.obj['id'] = id;
+                    control.obj[0][ id ] = picker.wpColorPicker( 'color' );
+
+                    control.setting.set( JSON.stringify(control.obj) );
+                    updating = false;
+                },
+                clear: function() {
+                    updating = true;
+
+                    control.obj['picker'] = picker;
+                    control.obj['id'] = id;
+                    control.obj[0][ id ] = '';
+
+                    control.setting.set( JSON.stringify(control.obj) );
+                    updating = false;
+                }
+            });
+
+            control.setting.bind( function ( value ) {
+                // Bail if the update came from the control itself.
+                if ( updating ) {
+                    return;
+                }
+
+                value = JSON.parse(value);
+
+                var picker = value[ 'picker' ], id = value[ 'id' ];
+
+                _.each(value[0], function(val, key) {
+                    if ( id === key ) {
+                        picker.val( val );
+                        picker.wpColorPicker( 'color', val );
+                    }
+                });
+
+            } );
+            
+
+            // Collapse color picker when hitting Esc instead of collapsing the current section.
+            control.container.on( 'keydown', function( event ) {
+                var pickerContainer;
+                if ( 27 !== event.which ) { // Esc.
+                    return;
+                }
+                pickerContainer = control.container.find( '.wp-picker-container' );
+
+                $.each(pickerContainer, function(){
+                    if ( $(this).hasClass( 'wp-picker-active' ) ) {
+                        if ( typeof control.obj[ 'picker' ] !== 'undefined' ) {
+                            control.obj[ 'picker' ].wpColorPicker( 'close' );
+                        }
+
+                        $(this).find( '.wp-color-result' ).focus();
+                        event.stopPropagation(); // Prevent section from being collapsed.
+                    }
+                });
+            } );
+        },
+        initRange: function( container ) {
+            var control = this;
+
+            var $input = container.find('.zoom-range-input'),
+                $slider = container.find('.zoom-range-slider'),
+                value = parseFloat( $input.val() ),
+                min = parseFloat( $input.attr('min') ),
+                max = parseFloat( $input.attr('max') ),
+                step = parseFloat( $input.attr('step') );
+
+            // Configure the slider
+            $slider.slider({
+                value : value,
+                min   : min,
+                max   : max,
+                step  : step,
+                slide : function(e, ui) { $input.val(ui.value) }
+            });
+
+            // Debounce the slide event so the preview pane doesn't update too often
+            $slider.on('slide', _.debounce(function(e, ui) {
+                $input.keyup().trigger('change');
+            }, 300));
+
+            // Sync values of number input and slider
+            $input.val( $slider.slider('value')).on('change', function() {
+                $slider.slider('value', $(this).val());
+            });
+
+            // Listen for changes to the range.
+            $input.on('change', function() {
+                var value = $(this).val(),
+                    id = $(this).attr('id');
+
+                control.obj['slide'] = $(this);
+                control.obj['slide_id'] = id;
+                control.obj[0][ id ] = value;
+
+                control.setting.set( JSON.stringify(control.obj) );
+            });
+
+            // Update the range if the setting changes.
+            control.setting.bind(function(value) {
+                var $input = control.obj['slide'],
+                    id = control.obj['slide_id'];
+
+                value = JSON.parse(value);
+
+                if ( typeof id !== 'undefined' ) {
+                    $input.val(value[0][ id ]);
+                }
+            });
+        }
+    });
+
+    /**
+     * Initialize instances of WPZOOM_Customizer_Control_Checkbox_Multiple
      *
      * @since 1.7.0.
      */
-    api.controlConstructor.zoom_checkbox = api.Control.extend({
+    api.controlConstructor.zoom_checkbox_multiple = api.Control.extend({
         ready: function() {
             var control = this,
                 multiple_values = [],
@@ -595,6 +790,56 @@
                     }
 
                 });
+            });
+        }
+    });
+
+    /**
+     * Initialize instances of WPZOOM_Customizer_Control_Checkbox
+     *
+     * @since 1.7.1.
+     */
+    api.controlConstructor.zoom_checkbox = api.Control.extend({
+        ready: function() {
+            var control = this,
+                $container = control.container.find('.zoom-checkbox-container');
+
+            // Listen for changes to the checkbox.
+            $container.on('change', 'input:checkbox', function() {
+                var value = $(this).parent().find('input:checkbox:checked').val();
+                var value_type = typeof control.setting.get();
+                
+                control.setting.set( WPZOOM.convertToType( value, value_type ) );
+            });
+
+            // Update the checkbox if the setting changes.
+            control.setting.bind(function(value) {
+                $container.find('input:checkbox').filter('[value=' + value + ']').prop('checked', true);
+            });
+        }
+    });
+
+    /**
+     * Initialize instances of WPZOOM_Customizer_Control_Text
+     *
+     * @since 1.7.1.
+     */
+    api.controlConstructor.zoom_text = api.Control.extend({
+        ready: function() {
+            var control = this,
+                $container = control.container.find('.zoom-text-container');
+
+            // Listen for changes to the text input.
+            $container.on('change', 'input:text', function() {
+                var value = $(this).val();
+                var value_type = typeof control.setting.get();
+                
+                control.setting.set( WPZOOM.convertToType( value, value_type ) );
+            });
+
+            // Update the text input if the setting changes.
+            control.setting.bind(function(value) {
+                $container.find('input:text').val(value);
             });
         }
     });
