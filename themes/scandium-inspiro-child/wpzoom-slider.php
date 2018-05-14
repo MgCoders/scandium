@@ -62,11 +62,11 @@ $slide_counter = 0;
 
                                     <?php if ( empty( $slide_url ) ) : ?>
 
-                                        <?php the_title( '<h3 class="missing-url">', '</h3>' ); ?>
+                                        <?php // the_title( '<h3 class="missing-url">', '</h3>' ); ?>
 
                                     <?php else: ?>
 
-                                        <?php the_title( sprintf( '<h3><a href="%s">', esc_url( $slide_url ) ), '</a></h3>' ); ?>
+                                        <?php //the_title( sprintf( '<h3><a href="%s">', esc_url( $slide_url ) ), '</a></h3>' ); ?>
 
                                     <?php endif; ?>
 

@@ -13,6 +13,7 @@
 */
 
 
+/*
 
 .really-full-width {
   padding-left: 0rem;
@@ -20,9 +21,9 @@
   overflow: hidden;
 }
 
-/**
+!**
  Language icons
- **/
+ **!
 
 
 #lang-icons ul {
@@ -95,17 +96,17 @@
   border-color: rgba(0,0,0,1);
 }
 
-/**
+!**
 End Language icons
- */
+ *!
 
 
 
-/*********************************************************************************************
+!*********************************************************************************************
 
 3. Navigation
 
-*********************************************************************************************/
+*********************************************************************************************!
 
 .sf-menu, .sf-menu * { margin: 0; padding: 0; list-style: none; }
 .sf-menu li { position: relative }
@@ -132,13 +133,13 @@ End Language icons
 .navbar-toggle .icon-bar { position: relative; display: block; width: 22px; height: 2px; border-radius: 1px; background: #fff; }
 .navbar-toggle .icon-bar + .icon-bar { margin-top: 5px; }
 
-/* hamburger animation */
+!* hamburger animation *!
 .navbar-toggle .icon-bar { -webkit-transition: width .13s ease-out, -webkit-transform .13s ease-out, opacity .13s ease-out; transition: width .13s ease-out, transform .13s ease-out, opacity .13s ease-out; }
 .navbar-toggle:hover .icon-bar:nth-child(2) { -webkit-transform: rotateZ(-40deg) translateX(-6px); transform: rotateZ(-40deg) translateX(-6px); width: 12px; }
 .navbar-toggle:hover .icon-bar:nth-child(3) { -webkit-transform: translateX(-3px); -ms-transform: translateX(-3px); transform: translateX(-3px); }
 .navbar-toggle:hover .icon-bar:nth-child(4) { -webkit-transform: rotateZ(40deg) translateX(-6px); transform: rotateZ(40deg) translateX(-6px); width: 12px; }
 
-/* hamburger when side-nav is opened */
+!* hamburger when side-nav is opened *!
 .side-nav-open .navbar-toggle .icon-bar:nth-child(2) { -webkit-transform: rotateZ(-45deg) translate3d(-5px, 5px, 0); transform: rotateZ(-45deg) translate3d(-5px, 5px, 0); width: 28px; }
 .side-nav-open .navbar-toggle .icon-bar:nth-child(3) { -webkit-transform: translateX(0); -ms-transform: translateX(0); transform: translateX(0); opacity: 0; }
 .side-nav-open .navbar-toggle .icon-bar:nth-child(4) { -webkit-transform: rotateZ(45deg) translate3d(-5px, -5px, 0); transform: rotateZ(45deg) translate3d(-5px, -5px, 0); width: 28px; }
@@ -159,7 +160,7 @@ End Language icons
 .navbar-nav > li > a.sf-with-ul:hover { border-bottom: 1px solid rgba(255, 255, 255, 0) }
 .current-menu-item a, .current_page_item a, .current-menu-parent a, .current_page_parent a { border-bottom: 1px solid rgba(255, 255, 255, 0.3) }
 
-/* WooCommerce Cart Icon */
+!* WooCommerce Cart Icon *!
 a.cart-button:before { font: normal 20px/25px 'dashicons'; display: inline-block; margin: 0 8px 0 0; content: '\f174'; vertical-align: top; -webkit-font-smoothing: antialiased; }
 a.cart-button { display: block; float: right; }
 .woocommerce-pagination, .paging-navigation { text-align: center; padding: 50px 0 0; }
@@ -167,7 +168,8 @@ a.cart-button { display: block; float: right; }
 .woocommerce-pagination .page-numbers.current, .woocommerce-pagination .page-numbers:hover, .paging-navigation .page-numbers.current, .paging-navigation .page-numbers:hover { text-decoration: none; color: #0bb4aa; }
 
 
-/* Hides navigation links and site footer when infinite scroll is active */
+!* Hides navigation links and site footer when infinite scroll is active *!
 .infinite-scroll .paging-navigation {
   display: none;
 }
+*/
