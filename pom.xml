@@ -1,6 +1,6 @@
 <project>
     <artifactId>scandium</artifactId>
-    <version>0.1</version>
+    <version>1.0</version>
     <urlTest>scandium.magnesium.coop</urlTest>
     <urlProd>scandium.magnesium.link</urlProd>
 </project>
