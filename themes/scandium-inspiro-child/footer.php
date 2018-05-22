@@ -35,6 +35,13 @@
     <?php endif; ?>
 
     <div class="site-info">
+        <p class="copyright">
+            <?php _e( 'Copyright', 'wpzoom' ); ?> &copy; <?php echo date( 'Y' ); ?> &mdash; <?php bloginfo('name'); ?>. <?php _e( 'Todos los derechos reservados', 'wpzoom' ); ?>
+        </p>
+        <p class="designed-by">
+            <?php printf( __( 'Developed and designer by %s', 'Magnesium.coop' ), '<a href="http://magnesium.coop/" target="_blank" rel="designer">Magnesium</a>' ); ?> &
+            <a href="mailto:hola@flobrizuela.com" target="_blank" rel="designer">Flor Brizuela</a>
+        </p>
        <!-- <p class="copyright">
             <?php /*_e( 'Copyright', 'magnesium' ); */?> &copy; <?php /*echo date( 'Y' ); */?> &mdash; <?php /*bloginfo('name'); */?>. <?php /*_e( 'All Rights Reserved', 'wpzoom' ); */?>
         </p>

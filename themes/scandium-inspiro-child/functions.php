@@ -5,7 +5,7 @@
  * Date: 13/03/18
  * Time: 05:39 PM
  */
-
+/*
 function scandium_remove_menu_pages() {
     remove_menu_page('edit.php');
     remove_menu_page('edit-comments.php');
@@ -19,7 +19,7 @@ function scandium_remove_widget_areas() {
 
 }
 add_action ('widgets_init', 'scandium_remove_widget_areas');
-
+*/
 
 function register_header_menu() {
     register_nav_menu('header-menu',__( 'Header Menu' ));
@@ -33,9 +33,9 @@ function my_theme_enqueue_styles() {
     $parent_style = 'inspiro-style';
 
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
-    wp_enqueue_style( 'bootstrap_css', get_stylesheet_directory_uri() . '/css/bootstrap.css' );
+    //wp_enqueue_style( 'bootstrap_css', get_stylesheet_directory_uri() . '/css/bootstrap.css' );
     wp_enqueue_style( 'bootstrap-grid_css', get_stylesheet_directory_uri() . '/css/bootstrap-grid.css' );
-    wp_enqueue_style( 'bootstrap-reboot_css', get_stylesheet_directory_uri() . '/css/bootstrap-reboot.css' );
+    //wp_enqueue_style( 'bootstrap-reboot_css', get_stylesheet_directory_uri() . '/css/bootstrap-reboot.css' );
     wp_enqueue_style( 'scandium-inspiro-child',
         get_stylesheet_directory_uri() . '/style.css',
         array( $parent_style ),
@@ -47,6 +47,21 @@ function my_theme_enqueue_styles() {
 
 }
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
+
+
+
+//agrego
+if ( function_exists('register_sidebar') )
+  register_sidebar(array(
+    'name' => 'Estudio',
+    'before_widget' => '<div class = "widgetizedAreaStudio">',
+    'after_widget' => '</div>',
+    'before_title' => '<h3>',
+    'after_title' => '</h3>',
+  )
+);
+
+
 
 
 
