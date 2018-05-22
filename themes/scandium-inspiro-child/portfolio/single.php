@@ -6,102 +6,444 @@ $hasSlider = is_array( $slides ) && count( $slides ) > 0;
 $slide_counter = 0;
 ?>
 
-<main id="main" class="site-main container-fluid" role="main">
+<main id="main" class="site-main" role="main">
 
-    <h3>Alcance de trabajos</h3>
+<?php // outputs a list of languages names ?>
+    <?php 
+      /*
+        pll_the_languages(array('show_flags'=>1,'show_names'=>0));
+        print_r(pll_the_languages(array('raw'=>1))); 
+
+        $locale_str = get_bloginfo("language");
+        echo ">";
+        print_r($locale_str);
+        echo "<".$locale_str;
+        $value = get_field( 'cf_fp_sow_es');
+        echo "<br><br>!!>";
+        echo $value;
+        print_r($value);
+        echo "<!!".$locale_str;
+
+
+
+    <h3>La posta</h3>
     <p>
-        <?php the_field('alcance_de_trabajos'); ?>
+    <?php 
+        $fields = get_field_objects();
+        if( $fields ): ?>
+            <ul>
+                <?php foreach( $fields as $name => $value ): ?>
+                    <li>
+                        <b><?php echo $name; ?></b>
+                        <?php print_r($value); ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul> ?>
+        <?php endif; ?>
     </p>
 
+
+
+
+    <h3>Alcance de trabajo</h3>
+    <p>
+        <?php the_field('cf_fp_sow_es'); ?>
+        <?php the_field('cf_fp_sow_en'); ?>        
+    </p>
+*/
+     ?>
 
     <?php while ( have_posts() ) : the_post(); ?>
 
         <article id="post-<?php the_ID(); ?>" <?php post_class( ( has_post_thumbnail() || $hasSlider ) ? ' has-post-cover' : '' ); ?>>
-            <div class="entry-cover">
-                <?php $entryCoverBackground = get_the_image( array( 'size' => 'entry-cover', 'format' => 'array' ) ); ?>
+            <div class="container-fluid no-padding">
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-4 info-panel">
+                        <div class="card-info">
+                            <div class="card-title">
+                                <span class="proyect-title">
+                                    <?php 
+                                        $titleOfPost = get_the_title();
+                                        $idOfPost = $post->ID;
+                                        echo strtoupper($titleOfPost); 
+                                    ?>
+                                </span>
+                            </div>
 
-                <?php if ( $hasSlider ) :  ?>
 
-                   <div id="slider">
-                        <ul class="slides">
+                            <div class="card-table">
 
-                            <?php foreach ( $slides as $slide ) : ?>
 
-                                <?php if ( $slide['slideType'] == 'image' ) :
-                                    $slide_counter++;
-                                    $img = inspiro_get_slide_image( $slide );
-                                    $style = ' data-smallimg="' . $img['small_image_url'] . '" data-bigimg="' . $img['large_image_url'] . '"';
 
-                                    if ($slide_counter === 1) {
-                                        $style .= ' style="background-image:url(\'' . $img['large_image_url'] . '\')"';
+                                <?php $table = get_field( 'cf_fp_summary' );
+
+                                    if ( $table ) {
+                                        echo '<table class="summary-table">';
+                                            if ( $table['header'] ) {
+                                                echo '<thead>';
+                                                    echo '<tr>';
+                                                        foreach ( $table['header'] as $th ) {
+                                                            echo '<th>';
+                                                                echo $th['c'];
+                                                            echo '</th>';
+                                                        }
+                                                    echo '</tr>';
+                                                echo '</thead>';
+                                            }
+
+                                            echo '<tbody>';
+                                                foreach ( $table['body'] as $tr ) {
+                                                    echo '<tr>';
+                                                        foreach ( $tr as $td ) {
+                                                            echo '<td>';
+                                                                echo $td['c'];
+                                                            echo '</td>';
+                                                        }
+                                                    echo '</tr>';
+                                                }
+                                            echo '</tbody>';
+                                        echo '</table>';
                                     }
+                                ?>                                
+                            </div>
+                            <div class="card-content">
+                                <span class="card">
+
+                                
+
+
+                                    <?php
+                                        //Contenido principal 
+                                        the_content(); 
                                     ?>
 
-                                    <li<?php echo $style; ?>>
-                                        <div class="slide-background-overlay"></div>
-                                        <div class="li-wrap">
 
-                                            <?php if (! empty( $img['caption'] ) ) { ?>
-                                                <h3><?php echo esc_html( $img['caption'] ); ?></h3>
-                                            <?php } ?>
 
-                                            <?php if (! empty( $img['description'] )) { ?>
-                                                <div class="excerpt"><?php echo esc_html( $img['description'] ); ?></div>
-                                            <?php } ?>
+                                    <?php 
 
-                                        </div>
-                                    </li>
+                                        //
 
-                                <?php endif; ?>
+                                        $objects_to_show = array(
+                                                            'cf_fp_sow', 'cf_fp_da', 'cf_fp_cli', 'cf_fp_p', 'cf_fp_com'
+                                                            );
 
-                            <?php endforeach; ?>
 
-                        </ul>
-
-                        <div id="scroll-to-content" title="<?php esc_attr_e( 'Scroll to Content', 'wpzoom' ); ?>">
-                            <?php _e( 'Scroll to Content', 'wpzoom' ); ?>
-                        </div>
-
+                                        foreach ($objects_to_show as $key => $param) {
+                                            $sw = get_field_object( $param );
+                                            if ( $sw ) {
+                                                $content = get_field($param);
+                                                if ( $content ) {
+                                                    echo "<b>".$sw['label']."</b> <br>";
+                                                    echo $content;
+                                                    echo "<br> <br>";
+                                                }
+                                            }
+                                        }
+                                    ?>
+                                    
+                                </span>
+                            </div>  
+                        </div>    
                     </div>
 
-                <?php elseif( isset( $entryCoverBackground['src'] ) ) : ?>
+                    <div class="col-12 col-md-8">
+                        <div class="entry-cover">
+                            <?php $entryCoverBackground = get_the_image( array( 'size' => 'entry-cover', 'format' => 'array' ) ); ?>
 
-                    <div class="entry-cover-image" style="background-image: url('<?php echo $entryCoverBackground['src'] ?>');"></div>
+                            <?php 
 
-                <?php endif; ?>
+                            //desactivo el slider
+                            /*
+                            if ( $hasSlider ) :  ?>
 
-                <header class="entry-header">
-                    <div class="entry-info">
+                                <div id="slider">
+                                    <ul class="slides">
 
-                        <div class="entry-meta">
+                                        <?php foreach ( $slides as $slide ) : ?>
 
-                            <?php if ( option::is_on( 'portfolio_category' ) ) : ?>
+                                            <?php if ( $slide['slideType'] == 'image' ) :
+                                                $slide_counter++;
+                                                $img = inspiro_get_slide_image( $slide );
+                                                $style = ' data-smallimg="' . $img['small_image_url'] . '" data-bigimg="' . $img['large_image_url'] . '"';
 
-                                <?php if ( is_array( $tax_menu_items = get_the_terms( get_the_ID(), 'portfolio' ) ) ) : ?>
-                                    <?php foreach ( $tax_menu_items as $tax_menu_item ) : ?>
-                                        <a href="<?php echo get_term_link( $tax_menu_item, $tax_menu_item->taxonomy ); ?>"><?php echo $tax_menu_item->name; ?></a>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
+                                                if ($slide_counter === 1) {
+                                                    $style .= ' style="background-image:url(\'' . $img['large_image_url'] . '\')"';
+                                                }
+                                                ?>
 
-                            <?php endif; ?>
+                                                <li<?php echo $style; ?>>
+                                                    <div class="slide-background-overlay"></div>
+                                                    <div class="li-wrap">
 
-                        </div>
+                                                        <?php if (! empty( $img['caption'] ) ) { ?>
+                                                            <h3><?php echo esc_html( $img['caption'] ); ?></h3>
+                                                        <?php } ?>
+
+                                                        <?php if (! empty( $img['description'] )) { ?>
+                                                            <div class="excerpt"><?php echo esc_html( $img['description'] ); ?></div>
+                                                        <?php } ?>
+
+                                                    </div>
+                                                </li>
+
+                                            <?php endif; ?>
+
+                                        <?php endforeach; ?>
+
+                                    </ul>
+
+                                    <div id="scroll-to-content" title="<?php esc_attr_e( 'Scroll to Content', 'wpzoom' ); ?>">
+                                        <?php _e( 'Scroll to Content', 'wpzoom' ); ?>
+                                    </div>
+
+                                </div>
+
+                            <?php elseif( isset( $entryCoverBackground['src'] ) ) : */?>
+
+                                <div class="entry-cover-image" style="background-image: url('<?php echo $entryCoverBackground['src'] ?>');"></div>
+
+                            <?php /*endif;*/ ?>
+
+                            <?php /*
+                            <header class="entry-header">
+                                <div class="entry-info">
+
+                                    <div class="entry-meta">
+
+                                        <?php if ( option::is_on( 'portfolio_category' ) ) : ?>
+
+                                            <?php if ( is_array( $tax_menu_items = get_the_terms( get_the_ID(), 'portfolio' ) ) ) : ?>
+                                                <?php foreach ( $tax_menu_items as $tax_menu_item ) : ?>
+                                                    <a href="<?php echo get_term_link( $tax_menu_item, $tax_menu_item->taxonomy ); ?>"><?php echo $tax_menu_item->name; ?></a>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+
+                                        <?php endif; ?>
+
+                                    </div>
 
 
-                        <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+                                    <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 
-                        <div class="entry-meta">
-                            <?php if ( option::is_on( 'portfolio_date' ) ) printf( '<p class="entry-date"><time class="entry-date" datetime="%1$s">%2$s</time></p>', esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() ) ); ?>
-                        </div>
+                                    <div class="entry-meta">
+                                        <?php if ( option::is_on( 'portfolio_date' ) ) printf( '<p class="entry-date"><time class="entry-date" datetime="%1$s">%2$s</time></p>', esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() ) ); ?>
+                                    </div>
+                                </div>
+                            </header><!-- .entry-header -->
+                            */
+                            ?>
+                        </div><!-- .entry-cover -->
                     </div>
-                </header><!-- .entry-header -->
-            </div><!-- .entry-cover -->
-
+                </div>
+            </div>
             <div class="entry-content">
+                
 
-                <?php the_content(); ?>
+                <?php
 
+                $locale_str = get_bloginfo("language");
+                $current_lang = substr($locale_str, 0, 2);
+                $ext = "";
+
+                if($current_lang != 'es'){
+                    $ext = "_".$current_lang;
+                }
+
+                    $sli = get_field( 'cf_fp_sli'.$ext ); 
+                    $ili = get_field( 'cf_fp_ili'.$ext ); 
+                    $ri = get_field( 'cf_fp_ri'.$ext ); 
+
+/*
+                    $size = 'full';
+
+                    print_r(get_field_object( 'cf_fp_sli' ));
+*/
+                    $NOIMAGE = "http://localhost/wp-content/uploads/2018/05/noFoto.png";
+
+                    if ( !$sli ) {
+                        $sli = $NOIMAGE;
+                    }
+
+                    if ( !$ili ) {
+                        $ili = $NOIMAGE;
+                    }
+
+
+                    if ( !$ri ) {
+                        $ri = $NOIMAGE;
+                    } 
+
+                ?>
+
+
+                <div class="row">
+                    <div class="col-12 col-md-4 separation">
+                        <div class="col-12 cover_fp_ii_div separation">
+                            <div class="cover_fp_ii" style="background-image: url('<?php echo $sli; ?>');"></div>
+                        </div>
+                        <div class="col-12 cover_fp_ii_div">
+                            <div class="cover_fp_ii" style="background-image: url('<?php echo $ili; ?>');"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="col-12 cover_fp_id_div">
+                            <div class="cover_fp_id" style="background-image: url('<?php echo $ri; ?>');"></div>
+                        </div>
+                    </div>
+                </div>         
+
+                <?php
+
+                    //Imprimo los tipos de porfolio
+                    //$terms = get_terms( 'portfolio');
+                    //print_r($terms);
+                    //echo "<br> <br>";
+
+                    //imprimo el porfolo del post actual
+                    //print_r(get_the_terms($post->ID, 'portfolio'));
+
+
+                    
+                    $related = new WP_Query(
+                                            array(
+                                                //'category__in'   => wp_get_post_categories( $post->ID ),
+                                                'posts_per_page' => 5,
+                                                //'terms' => get_the_terms($post->ID, 'portfolio')['0']->term_id,
+                                                //'post__not_in'   => array( $post->ID )
+                                                'post_type' => 'portfolio_item',
+                                                //'paged'=> $paged,
+                                                'tax_query' => array(
+                                                                    array(
+                                                                        'taxonomy' => 'portfolio',
+                                                                        'field' => 'term_id',
+                                                                        'terms' => get_the_terms($post->ID, 'portfolio')['0']->term_id
+                                                                         )
+                                                                    )
+                                            )
+                                        );
+                    //wp_get_post_terms( $post->ID, 'my_taxonomy', array("fields" => "all" )
+echo "<br> <br>";
+//print("<pre>".print_r($related,true)."</pre>");
+
+
+//echo $related->have_posts();
+
+/*
+foreach ($related as $key => $value) {
+    # code...
+    
+    echo $key.": ";
+    foreach ($value as $key2 => $value2) {
+        # code...
+        
+        echo ">".$key2.": ";
+        print_r($value2);
+        echo "<br>";
+    }
+    echo "<br>";
+    echo "<br>";
+}*/
+
+if( $related->have_posts() ) { 
+    //echo "string";
+    $last_url = "";
+    $next_url = "";
+    $finded = false;
+    $cant_posts = 0;
+
+
+    while( $related->have_posts() and $next_url == "") { 
+        
+        //Seteo el post para trabajar con el
+        echo $related->the_post(); 
+
+        $cant_posts++;
+
+        //si ya encontré, asigno el que sigue y salgo.
+        if ($finded) {
+             $next_url = get_permalink();
+        }
+
+        //me voy guardando el actual para el siguiente
+        if (!$finded && $idOfPost != get_the_ID()) {
+            $last_url = get_permalink();
+        }
+
+        //cuando me encuentro, preparo para salir
+        if (!$finded && $idOfPost == get_the_ID()) {
+            $finded = true;
+        }
+
+        //the_title();
+        /*whatever you want to output*/
+        
+    }
+    wp_reset_postdata();
+}
+
+if ($cant_posts > 1){
+
+   ?> 
+
+    <div class="row slider-portfolio">
+        <div class="col-1">
+            <?php
+            if ($last_url != ""){
+            ?>
+            <a href="<?php
+                        echo "".$last_url;
+                    ?>">
+                <i class="arrow left">
+                    
+                </i>
+            </a>
+            <?php
+            }   
+            ?>
+        </div>
+        <div class="col-10">
+            <span class="portfolio-term">
+                <?php
+                echo strtoupper(get_the_terms($post->ID, 'portfolio')['0']->name);
+                ?>
+            </span>
+        </div>
+        <div class="col-1">
+            <?php
+            if ($next_url != ""){
+            ?>
+            <a href="<?php
+                        echo "".$next_url;
+                    ?>">
+                <i class="arrow right">
+                    
+                </i>
+            </a>
+            <?php
+            }   
+            ?>
+        </div>
+        <?php
+}
+?>
+
+       
+
+<?php
+    $select_category_arr = array();
+
+
+
+    $taxonomy = 'cultural-es'; // Go to WPadmin -> Portfolio categories. Check url for correct taxonomy name.
+    $terms = get_terms($taxonomy); // Get all terms of a taxonomy
+    if ( $terms && !is_wp_error( $terms ) ) {
+        foreach( $terms as $term ) {
+            $select_category_arr[$term->slug] = $term->name;    
+        }
+    }
+ ?>
             </div><!-- .entry-content -->
+
 
 
             <footer class="entry-footer">

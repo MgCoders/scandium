@@ -102,7 +102,7 @@ class Wpzoom_Portfolio_Showcase extends WP_Widget {
 
                 <?php endwhile; ?>
 
-                <?php if ( $view_all_enabled ) : ?>
+                <?php if ( /*false && */$view_all_enabled ) : ?>
 
                     <article class="portfolio-view_all-link portfolio_item type-portfolio_item hentry no-thumbnail">
                         <div class="entry-thumbnail-popover">
