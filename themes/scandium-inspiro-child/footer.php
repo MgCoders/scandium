@@ -39,9 +39,15 @@
             <?php _e( 'Copyright', 'wpzoom' ); ?> &copy; <?php echo date( 'Y' ); ?> &mdash; <?php bloginfo('name'); ?>. <?php _e( 'Todos los derechos reservados', 'wpzoom' ); ?>
         </p>
         <p class="designed-by">
-            <?php printf( __( 'Developed by %s', 'Magnesium.coop' ), '<a href="http://magnesium.coop/" target="_blank" rel="designer">Magnesium</a>' ); ?>
-            - Designed by <a href="mailto:hola@flobrizuela.com" target="_blank" rel="designer">Flor Brizuela</a>
+            <?php printf( __( 'Developed and designer by %s', 'Magnesium.coop' ), '<a href="http://magnesium.coop/" target="_blank" rel="designer">Magnesium</a>' ); ?> &
+            <a href="mailto:hola@flobrizuela.com" target="_blank" rel="designer">Flor Brizuela</a>
         </p>
+       <!-- <p class="copyright">
+            <?php /*_e( 'Copyright', 'magnesium' ); */?> &copy; <?php /*echo date( 'Y' ); */?> &mdash; <?php /*bloginfo('name'); */?>. <?php /*_e( 'All Rights Reserved', 'wpzoom' ); */?>
+        </p>
+        <p class="designed-by">
+            <?php /*printf( __( 'Designed by %s', 'wpzoom' ), '<a href="http://www.wpzoom.com/" target="_blank" rel="designer">WPZOOM</a>' ); */?>
+        </p>-->
     </div><!-- .site-info -->
 </footer><!-- #colophon -->
 
