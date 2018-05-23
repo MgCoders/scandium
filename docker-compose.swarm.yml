@@ -16,7 +16,8 @@ services:
       WORDPRESS_DB_USER_FILE: /run/secrets/mysql_user
       WORDPRESS_DB_NAME: REPLACE_PROJECT_NAME
     volumes:
-      - REPLACE_PROJECT_NAME_vol:/var/www/html/wp-content
+      - REPLACE_PROJECT_NAME_vol_plugins:/var/www/html/wp-content/plugins
+      - REPLACE_PROJECT_NAME_vol_uploads:/var/www/html/wp-content/uploads
     deploy:
       labels:
         - "traefik.port=80"
@@ -34,9 +35,10 @@ networks:
     external: true
 
 volumes:
-  REPLACE_PROJECT_NAME_vol:
+  REPLACE_PROJECT_NAME_vol_plugins:
     driver: "cloudstor:aws"
-
+  REPLACE_PROJECT_NAME_vol_uploads:
+    driver: "cloudstor:aws"
 secrets:
   mysql_host:
     external: true
