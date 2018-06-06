@@ -8,27 +8,24 @@ if ( is_array( $portfolios ) ) {
     }
 }
 ?>
-
-<article id="post-<?php the_ID(); ?>" <?php post_class( $articleClass ); ?>>
-    <div class="entry-thumbnail-popover">
-        <div class="entry-thumbnail-popover-content popover-content--animated">
-            <?php the_title( sprintf( '<h2 class="portfolio_item-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-
-            <?php if ( option::is_on( 'portfolio_excerpt' ) ) : ?>
-
-                <?php the_excerpt(); ?>
-
-            <?php endif; ?>
-
-            <a class="btn" href="<?php echo esc_url( get_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
-                <?php _e( 'View More', 'wpzoom' ); ?>
-            </a>
-        </div>
+<a href="<?php echo esc_url( get_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
+<article id="post-<?php the_ID(); ?>" class="my_portfolio_item" <?php //post_class( $articleClass ); ?> >
+    <div class="my_entry-thumbnail-popover">
+        <?php if(has_post_thumbnail()) {
+        ?>
+        <span> <b><?php echo strtoupper( get_the_title()) ; ?></b> </span>
+        <?php
+        } else {
+        ?>
+        <p> <b><?php echo strtoupper( get_the_title()) ; ?></b> </p>
+        <?php
+        }
+        ?>
     </div>
 
     <?php if ( has_post_thumbnail() )  : ?>
 
-        <a class="link_to_post" href="<?php echo esc_url( get_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>"><?php the_post_thumbnail( 'portfolio_item-thumbnail' ); ?></a>
+        <?php the_post_thumbnail( 'portfolio_item-thumbnail' ); ?>
 
     <?php else: ?>
 
@@ -37,3 +34,4 @@ if ( is_array( $portfolios ) ) {
     <?php endif; ?>
 
 </article><!-- #post-## -->
+</a>
