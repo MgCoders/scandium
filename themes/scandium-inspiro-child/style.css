@@ -279,13 +279,14 @@ a {
 
 /* Titulos */
 
-.section-title {
+.ccchildpage h3, .section-title {
+  font-family: Montserrat, sans-serif !important;
   font-size: 30px;
   font-weight: normal;
   color: #808080;
 }
 
-.section-title:after {
+.ccchildpage h3:after, .section-title:after {
     display: block;
     content: " ";
     width: 60px;
@@ -294,6 +295,13 @@ a {
     margin: 10px auto 48px;
 }
 
+.ccpages_excerpt {
+  font-size: 100%;
+}
+
+.ccpages_more {
+  display: none;
+}
 
 
 /* SCROLLBAR */
@@ -432,7 +440,7 @@ ul.sf-menu a:hover {
 
 ul.sf-menu li {
   width: 100px;
-  text-align: right;
+  text-align: center;
   margin: 0 !important;
 }
 

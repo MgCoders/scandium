@@ -197,7 +197,27 @@ $slide_counter = 0;
                                         //
 
                                         $objects_to_show = array(
-                                                            'cf_fp_da', 'cf_fp_cli', 'cf_fp_p', 'cf_fp_com'
+                                                            'cf_fp_da', 'cf_fp_cli', 'cf_fp_ow'
+                                                            );
+
+
+                                        foreach ($objects_to_show as $key => $param) {
+                                            //echo $param.$ext;
+                                            $sw = get_field_object( $param );
+                                            if ( $sw ) {
+                                                $content = get_field($param);
+                                                if ( $content ) {
+                                                    echo "<b>".$sw['label']."</b> <br>";
+                                                    echo $content;
+                                                    echo "<br> <br>";
+                                                }
+                                            }
+                                        }
+
+                                        //
+
+                                        $objects_to_show = array(
+                                                            'cf_fp_com'
                                                             );
 
 
