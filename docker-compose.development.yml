@@ -9,7 +9,8 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: password      
     volumes:
-      - ./themes:/var/www/html/wp-content/themes   
+      - ./themes:/var/www/html/wp-content/themes
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     links: 
       - mysql
 
