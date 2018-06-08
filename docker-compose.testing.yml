@@ -34,8 +34,7 @@ networks:
     external: true
 
 volumes:
-  REPLACE_PROJECT_NAME_vol_plugins:
-  REPLACE_PROJECT_NAME_vol_uploads:
+  REPLACE_PROJECT_NAME_vol:
 
 secrets:
   mysql_host:
