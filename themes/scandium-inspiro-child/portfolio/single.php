@@ -158,14 +158,18 @@ $slide_counter = 0;
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="card-main-content">
+                                <?php
+                                    //Contenido principal 
+                                    the_content(); 
+                                ?>
+                            </div>
                             <div class="card-content">
                                 <span class="card">
 
                                 
                                     <?php
-                                        //Contenido principal 
-                                        the_content(); 
-                                        echo "<br>";
+
 
                                         //El scope of work es distinto dependiendo del lenguaje
                                         $cats = get_field('cf_fp_sow'.$ext);
