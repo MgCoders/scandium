@@ -468,15 +468,21 @@ ul.sf-menu li {
 
 
 .card-content {
-  margin-top: 40px;
+  margin-top: 10px;
   max-height: 300px;
   overflow-y: scroll;
 }
 
+.card-main-content {
+  margin-top: 30px;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+
 .info-panel span.proyect-title {
   color: #8a8a8a;
-  font-size: 40px;
-  font-weight: 600;
+  font-size: 35px;
   line-height: 40px;
 }
 
@@ -489,10 +495,16 @@ ul.sf-menu li {
   width: 100%
 }
 
-.summary-table * {
+.summary-table td, .summary-table th {
   border: 1px solid #fff;
   text-align: center;
 }
+
+.summary-table p {
+  margin: 0!important;
+  font-family: Montserrat, sans-serif !important;
+}
+
 
 .cover_fp_id_div {
     height: 500px;    
