@@ -18,7 +18,7 @@ services:
     volumes:
       - REPLACE_PROJECT_NAME_vol:/var/www/html/wp-content
     command:  >
-        bash -c "/run.sh"
+        bash -c "cd / && run.sh"
     deploy:
       labels:
         - "traefik.port=80"
