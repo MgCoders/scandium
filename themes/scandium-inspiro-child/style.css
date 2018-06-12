@@ -775,6 +775,9 @@ ul.portfolio-archive-taxonomies li:hover {
 }
 
 
+.tiles-photo-details {
+  text-align: center;
+}
 
 .tiles-photo-details a {
   pointer-events: none;
