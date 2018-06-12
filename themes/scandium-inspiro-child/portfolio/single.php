@@ -200,8 +200,8 @@ $slide_counter = 0;
 
                                         //
 
-                                        $objects_to_show = array(
-                                                            'cf_fp_da', 'cf_fp_cli', 'cf_fp_ow'
+                                        /*$objects_to_show = array(
+                                                            
                                                             );
 
 
@@ -216,12 +216,12 @@ $slide_counter = 0;
                                                     echo "<br> <br>";
                                                 }
                                             }
-                                        }
+                                        }*/
 
                                         //
 
                                         $objects_to_show = array(
-                                                            'cf_fp_com'
+                                                            'cf_fp_da', 'cf_fp_cli', 'cf_fp_ow','cf_fp_com'
                                                             );
 
 
@@ -296,11 +296,20 @@ $slide_counter = 0;
 
                                 </div>
 
-                            <?php elseif( isset( $entryCoverBackground['src'] ) ) : */?>
+                            <?php */ 
+                                if( isset( $entryCoverBackground['src'] ) ) : ?>
 
                                 <div class="entry-cover-image" style="background-image: url('<?php echo $entryCoverBackground['src'] ?>');"></div>
 
-                            <?php /*endif;*/ ?>
+                            <?php else: ?>
+                                <div class="entry-cover-image" style="
+                                                                    height: 600px;
+                                                                    background-color: #aaa;
+                                                                    font-weight: 900;
+                                                                ">
+                                    Este proyecto no tiene imagen destacada
+                                </div>
+                            <?php endif; ?>
 
                             <?php /*
                             <header class="entry-header">
@@ -396,7 +405,11 @@ $slide_counter = 0;
                             define('WP_DEBUG_DISPLAY', false);
 
                             $gallery = get_field( 'cf_fp_gallery'); 
-                            echo do_shortcode($gallery, true);
+                            if($gallery){
+                                echo do_shortcode($gallery, true);
+                            } else {
+                                echo "No se ha asignado galería de imágenes a este proyecto";
+                            }
                         ?>
                     </div>
                 </div>     
