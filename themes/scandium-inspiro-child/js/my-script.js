@@ -36,4 +36,16 @@ jQuery(document).ready(function( $ ) {
     }
   });
 
+  $('#div_slick').slick({
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 10000,
+    speed: 300,
+    slidesToShow: 1,
+    adaptiveHeight: true,
+    arrows: false,
+    variableWidth: false
+  });
+
 });
