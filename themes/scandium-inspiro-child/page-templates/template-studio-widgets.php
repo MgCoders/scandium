@@ -29,12 +29,26 @@ get_header(); ?>
     </article>
 
 	<div class="container">
-		<div class="widgetized-section">
-		    <?php if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'Estudio' ) ) : ?>
+		<div class="widgetized-section1">
+		    <?php if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'Estudio1' ) ) : ?>
 
 		    <?php endif; ?>
 		</div>
 	</div>
+
+    <div class="widgetized-section2">
+        <?php if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'Estudio2' ) ) : ?>
+
+        <?php endif; ?>
+    </div>
+
+    <div class="container">
+        <div class="widgetized-section3">
+            <?php if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'Estudio3' ) ) : ?>
+
+            <?php endif; ?>
+        </div>
+    </div>
 </main>
 <?php
 get_footer();
