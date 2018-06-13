@@ -820,3 +820,12 @@ width: 270px;
 .slick-prev:before, .slick-next:before {
  color: #b3b3b3 !important;
 }
+
+.slick-dots li {
+  padding: unset !important;
+  margin: 0 !important;
+}
+
+.slick-dots li button {
+  padding: 10px 25px !important;
+}

@@ -17,8 +17,6 @@ services:
       WORDPRESS_DB_NAME: REPLACE_PROJECT_NAME
     volumes:
       - REPLACE_PROJECT_NAME_vol:/var/www/html/wp-content
-    command: 
-      - /run.sh
     deploy:
       labels:
         - "traefik.port=80"
@@ -45,5 +43,3 @@ secrets:
     external: true
   mysql_user:
     external: true
-     
-
