@@ -4,4 +4,3 @@ ADD ./themes /var/www/html/wp-content/themes
 ADD ./themes /tmp/themes/
 COPY apache2-custom.sh /usr/local/bin/apache2-custom.sh
 RUN chmod +x /usr/local/bin/apache2-custom.sh
-RUN chown -R www-data:www-data /var/www/html/wp-content/themes
