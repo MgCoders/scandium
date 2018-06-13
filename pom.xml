@@ -1,7 +1,7 @@
 <project>
-    <artifactId>scandium_marq</artifactId>
+    <artifactId>scandium</artifactId>
     <version>1.2</version>
-    <urlTest>scandium_marq.magnesium.coop</urlTest>
-    <urlProd>scandium_marq.magnesium.link</urlProd>
+    <urlTest>scandium.magnesium.coop</urlTest>
+    <urlProd>scandium.magnesium.link</urlProd>
 </project>
 
