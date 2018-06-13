@@ -17,7 +17,31 @@ get_header(); ?>
     <?php endif; ?>
 </div>
 
+<div id="" class="row">
+	<div id="" class="col-0 col-md-2"> </div>
+	<div id="div_slick" class="col-12 col-md-8">
+		<div class="widgetized-section-c1">
+			<?php if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'Carrousel_clientes_1' ) ) : ?>
 
+			<?php endif; ?>
+		</div>
+		<div class="widgetized-section-c2">
+			<?php if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'Carrousel_clientes_2' ) ) : ?>
+
+			<?php endif; ?>
+		</div>
+		<div class="widgetized-section-c3">
+			<?php if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'Carrousel_clientes_3' ) ) : ?>
+
+			<?php endif; ?>
+		</div>
+		<div class="widgetized-section-c4">
+			<?php if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'Carrousel_clientes_4' ) ) : ?>
+
+			<?php endif; ?>
+		</div>
+	</div>
+</div>			
 
 <?php
 get_footer();
