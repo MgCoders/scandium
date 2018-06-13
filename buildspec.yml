@@ -12,10 +12,10 @@ phases:
       commands:
         - echo Logging in to Amazon ECR...
         - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-        - export IMAGE_TAG=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)
-        - export PROJECT_NAME=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='artifactId']/text()" pom.xml)
-        - export PROJECT_URL_TEST=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='urlTest']/text()" pom.xml)
-        - export PROJECT_URL_PROD=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='urlProd']/text()" pom.xml)
+        - export IMAGE_TAG=$(docker run -v $PWD:/mnt -i manorrock/xmllint xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)
+        - export PROJECT_NAME=$(docker run -v $PWD:/mnt -i manorrock/xmllint xmllint --xpath "//*[local-name()='project']/*[local-name()='artifactId']/text()" pom.xml)
+        - export PROJECT_URL_TEST=$(docker run -v $PWD:/mnt -i manorrock/xmllint xmllint --xpath "//*[local-name()='project']/*[local-name()='urlTest']/text()" pom.xml)
+        - export PROJECT_URL_PROD=$(docker run -v $PWD:/mnt -i manorrock/xmllint xmllint --xpath "//*[local-name()='project']/*[local-name()='urlProd']/text()" pom.xml)
         - sed -i "s/REPLACE_PROJECT_NAME/$PROJECT_NAME/g" stop_server.sh
         - sed -i "s/REPLACE_PROJECT_NAME/$PROJECT_NAME/g" start_server.sh
         - sed -i "s/REPLACE_PROJECT_NAME/$PROJECT_NAME/g" appspec.yml
