@@ -24,6 +24,10 @@ get_header(); ?>
             'post_type'      => 'portfolio_item',
             'paged'          => $paged,
             'posts_per_page' => option::get( 'portfolio_posts' ),
+            
+            'meta_key' => 'order_value_num',
+            'orderby' => 'meta_value_num',
+            'order' => 'ASC'
         );
 
         $wp_query = new WP_Query( $args );
@@ -39,8 +43,11 @@ get_header(); ?>
 
             <div class="portfolio-grid">
 
-                <?php while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
+                <?php while ( $wp_query->have_posts() ) : $wp_query->the_post();
 
+                    //$testimonial_data = get_post_meta(get_the_ID());
+                    //echo '<pre>'; print_r($testimonial_data['order_value_num']) ; echo '</pre>';
+ ?>
                     <?php get_template_part( 'portfolio/content' ); ?>
 
                 <?php endwhile; ?>
