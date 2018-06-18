@@ -82,43 +82,6 @@ if ( function_exists('register_sidebar') )
 );
 
 
-if ( function_exists('register_sidebar') )
-  register_sidebar(array(
-    'name' => 'Carrousel_clientes_1',
-    'before_widget' => '<div class = "widgetizedAreaClientes">',
-    'after_widget' => '</div>',
-    'before_title' => '<h3>',
-    'after_title' => '</h3>',
-  )
-);
-if ( function_exists('register_sidebar') )
-  register_sidebar(array(
-    'name' => 'Carrousel_clientes_2',
-    'before_widget' => '<div class = "widgetizedAreaClientes">',
-    'after_widget' => '</div>',
-    'before_title' => '<h3>',
-    'after_title' => '</h3>',
-  )
-);
-if ( function_exists('register_sidebar') )
-  register_sidebar(array(
-    'name' => 'Carrousel_clientes_3',
-    'before_widget' => '<div class = "widgetizedAreaClientes">',
-    'after_widget' => '</div>',
-    'before_title' => '<h3>',
-    'after_title' => '</h3>',
-  )
-);
-if ( function_exists('register_sidebar') )
-  register_sidebar(array(
-    'name' => 'Carrousel_clientes_4',
-    'before_widget' => '<div class = "widgetizedAreaClientes">',
-    'after_widget' => '</div>',
-    'before_title' => '<h3>',
-    'after_title' => '</h3>',
-  )
-
-);
 
 if ( function_exists('register_sidebar') )
   register_sidebar(array(
@@ -1159,7 +1122,7 @@ class ClientesDesc extends WP_Widget {
 
             $arr_cli = array('lc_logo'=> get_field('lc_logo')['url'],
                             'lc_name'=> get_field('lc_name'),
-                            'lc_type'=> get_field('lc_type'),
+                            //'lc_type'=> get_field('lc_type'),
                             'lc_url'=> get_field('lc_url'),
                             'lc_location'=> get_field('lc_location') );
 

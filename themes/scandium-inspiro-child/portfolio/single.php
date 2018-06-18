@@ -303,9 +303,9 @@ $slide_counter = 0;
 
                             <?php else: ?>
                                 <div class="entry-cover-image" style="
-                                                                    height: 600px;
+                                                                    /*height: 600px;
                                                                     background-color: #aaa;
-                                                                    font-weight: 900;
+                                                                    font-weight: 900;*/
                                                                 ">
                                     Este proyecto no tiene imagen destacada
                                 </div>
@@ -538,7 +538,7 @@ if ($cant_posts > 1){
                             if ($categ->term_id == get_the_terms($post->ID, 'portfolio')['0']->term_id ) { 
                             ?>
                             <li class="cat-item current-cat">
-                                <a href="http://localhost/portfolio/<?php echo $categ->slug ; ?>/">
+                                <a href="/portfolio/<?php echo $categ->slug ; ?>/">
                                     <?php echo $categ->name ; ?>                                        
                                 </a>
                             </li>
@@ -546,7 +546,7 @@ if ($cant_posts > 1){
                             } else {
                             ?>
                             <li class="cat-item">
-                                <a href="http://localhost/portfolio/<?php echo $categ->slug ; ?>/">
+                                <a href="/portfolio/<?php echo $categ->slug ; ?>/">
                                     <?php echo $categ->name ; ?>                                        
                                 </a>
                             </li>
