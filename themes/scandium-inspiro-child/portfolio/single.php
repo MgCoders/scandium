@@ -44,13 +44,13 @@ $slide_counter = 0;
 
 
 
-
     <h3>Alcance de trabajo</h3>
     <p>
         <?php the_field('cf_fp_sow_es'); ?>
         <?php the_field('cf_fp_sow_en'); ?>        
-    </p>*/
+    </p>
 
+*/
      ?>
 
     <?php while ( have_posts() ) : the_post();
@@ -229,7 +229,7 @@ $slide_counter = 0;
                                             //echo $param.$ext;
                                             $sw = get_field_object( $param.$ext );
                                             if ( $sw ) {
-                                                $content = get_field($param);
+                                                $content = get_field($param.$ext);
                                                 if ( $content ) {
                                                     echo "<b>".$sw['label']."</b> <br>";
                                                     echo $content;
