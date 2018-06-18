@@ -842,6 +842,7 @@ width: 270px;
   height: 200px;
   background-repeat: no-repeat;
   background-position-x: 100%;
+  background-size: contain;
 }
 
 .div_clients-exp {
@@ -863,4 +864,47 @@ width: 270px;
   line-height: 18px;
   font-size: 14px;
   color: #818181;
+}
+
+
+
+
+/* clients page */
+
+#div_clients-logos{
+  background-color: #f8f8f8; 
+}
+
+.client-logo {
+  margin: 0 auto;
+  height: 130px;
+  max-width: 200px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: contain;
+}
+
+.client-logo-text {
+  text-align: center;
+}
+
+
+.client-logo-name {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.clientes_banner {
+  display: flex !important;
+}
+
+.clientes_banner h3{
+  /*display: none;*/
+  font-family: Montserrat, sans-serif !important;
+  text-align: center;
+  margin: 40px auto;
+  color: #b5b5b4;
+  font-size: 2rem;
+  letter-spacing: 3px
+
 }
