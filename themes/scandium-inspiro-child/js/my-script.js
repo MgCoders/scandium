@@ -36,7 +36,7 @@ jQuery(document).ready(function( $ ) {
     }
   });
 
-  $('#div_slick_testimonial') ? $('#div_slick').slick({
+  $('#div_slick') ? $('#div_slick').slick({
     dots: true,
     infinite: true,
     autoplay: true,
@@ -65,7 +65,7 @@ jQuery(document).ready(function( $ ) {
   
 
   $('#div_slick_logos') ? $('#div_slick_logos').slick({
-    dots: true,
+    dots: false,
     infinite: true,
     autoplay: true,
     autoplaySpeed: 5000,

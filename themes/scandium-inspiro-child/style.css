@@ -195,9 +195,35 @@ body {
 
 .footer-widgets > :nth-of-type(3) {
     width: 33.33%;
+    padding: 0 20px;
 }
 
+.footer-widgets > :nth-of-type(3) .widget {
+    margin-bottom: 0!important;
+}
+
+.site-info {
+  padding: 0!important;
+  font-size: 12px;
+}
+
+.site-info p {
+  margin: 0!important;
+}
+
+.site-footer-separator {
+  border-color: #a0a0a0;
+}
 /*******Header*********/
+
+.navbar .wrap {
+  max-width: unset !important;
+  padding: 0px 25px;
+}
+
+.logo-bg{
+  height: 46px!important;
+}
 
 .row-language {
     margin-top: 15px;
@@ -233,8 +259,16 @@ body {
   color: #808080 !important;
 }
 
-main, #slider {
-    margin-top: 120px;
+#slider {
+    margin-top: 90px;
+}
+
+.section-title {
+  margin-top: 0px;
+}
+
+#content-homepage .section-title {
+  margin-top: 120px;
 }
 
 
@@ -259,14 +293,17 @@ a {
 /* Portfolio*/
 
 .portfolio-archive .portfolio_item {
-    width: 31.33% !important;
-    margin: 1% !important;
+    /*width: 31.33% !important;
+    margin: 1% !important;*/
 }
 
 .portfolio-grid {
   margin: 0 2%;
 }
 
+.portfolio-grid a {
+  margin-bottom: 20px;
+}
 
 
 * {
@@ -340,8 +377,9 @@ a {
   color: #fff;
   border: 1px solid;
   text-align: center;
-  margin-left: 33.33%;
-  width: 33.33%;
+  margin-left: 37.5%;
+  width: 25%;
+  padding: 0px;
 }
 
 .wpcf7 input:not([type='submit']), .wpcf7 textarea{
@@ -350,7 +388,8 @@ a {
   border-bottom: 1px solid;
   width: 100%;
   max-width: 100%;
-  max-height: 100px;
+  max-height: 70px;
+  padding: 0px !important;
 }
 
 .wpcf7 .ajax-loader {
@@ -384,8 +423,8 @@ p>input[type='submit'] {
 
 
 .widget_media_image img {
-  margin-left: 12%;
-  width: 50%;
+  margin-left: 20%;
+  width: 40%;
 }
 
 .zoom-social_icons-list__link span:before{
@@ -427,9 +466,15 @@ p>input[type='submit'] {
 }
 
 
-ul.slides .li-wrap {
-  /*Para el título del slider*/
-  display: none;
+
+.slides > li .excerpt{
+  text-align: left;
+}
+
+
+.excerpt {
+  font-family: Montserrat, sans-serif !important;
+  font-size: 14px !important;
 }
 
 ul.sf-menu a:hover {
@@ -681,15 +726,40 @@ ul.portfolio-archive-taxonomies li:hover {
       padding: 0 15px;
       margin-top: 60px;
   }
+
+  ul.slides .li-wrap {
+    /*Para el título del slider*/
+    top: 90%;
+  }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 601px) and (max-width: 899px) {
+  .home .widgetized-section > :nth-of-type(1) .textwidget {
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 15px;
+      margin-top: 60px;
+  }
+
+  ul.slides .li-wrap {
+    /*Para el título del slider*/
+    top: 70%;
+  }
+}
+
+@media (min-width: 900px) {
   .home .widgetized-section > :nth-of-type(1) .textwidget {
       width: 60%;
       margin: 0 auto;
       text-align: center;
       padding: 0 15px;
       margin-top: 60px;
+  }
+
+  ul.slides .li-wrap {
+    /*Para el título del slider*/
+    top: 350px;
   }
 }
 
@@ -698,6 +768,11 @@ ul.portfolio-archive-taxonomies li:hover {
 .wrap .navbar-toggle .icon-bar {
   background-color: #000; 
 }
+
+.wrap .navbar-toggle {
+  margin: 0!important; 
+}
+
 
 .categories-wedget{
   margin: 40px 0;
@@ -711,6 +786,7 @@ ul.portfolio-archive-taxonomies li:hover {
   background-repeat: no-repeat;
   display: table;
   width: 100%;
+  margin-bottom: 40px;
 }
 
 .cat-img-fi p {
@@ -741,8 +817,12 @@ ul.portfolio-archive-taxonomies li:hover {
   top: 45%;
 }
 
+.my_entry-thumbnail-popover p, .card-title .proyect-title {
+  text-transform: uppercase;
+}
+
 .my_portfolio_item {
-    width: 31.33% !important;
+    /*width: 31.33% !important;*/
     margin: 1% !important;
     position: relative;
     float: left;
@@ -809,7 +889,7 @@ ul.portfolio-archive-taxonomies li:hover {
 
 /*Botones para el slick*/
 .slick-slide{
-width: 270px;
+  width: 270px;
 }
 
 .widgetizedAreaClientes h3 {
@@ -847,6 +927,8 @@ width: 270px;
   background-repeat: no-repeat;
   background-position-x: 100%;
   background-size: contain;
+  width: 95%;
+  margin: 20px auto 0px;
 }
 
 .div_clients-exp {
@@ -882,7 +964,7 @@ width: 270px;
 .client-logo {
   margin: 0 auto;
   height: 130px;
-  max-width: 200px;
+  max-width: 150px;
   background-repeat: no-repeat;
   background-position: 50%;
   background-size: contain;
@@ -911,4 +993,21 @@ width: 270px;
   font-size: 2rem;
   letter-spacing: 3px
 
+}
+
+#div_clients-logos hr {
+  width: 20%;
+  border-top: 2px solid #ccc;
+}
+
+.client-logo-text {
+  color: #a1a1a1;
+}
+
+.client-logo-text p {
+  font-size: 1rem;
+}
+
+.client-logo-text p span {
+  font-size: 1.2rem;
 }

@@ -19,6 +19,10 @@ $slide_counter = 0;
                         <?php while ( $sliderLoop->have_posts() ) : $sliderLoop->the_post(); ?>
 
                             <?php
+                            //echo '<pre>'; print_r(get_post_meta( get_the_ID())['text']['0']); echo '</pre>';
+
+                            $txt_img = get_post_meta( get_the_ID())['txt_img']['0'];    
+                            $lugar_img = get_post_meta( get_the_ID())['lugar_img']['0'];    
                             $slide_url = trim( get_post_meta( get_the_ID(), 'wpzoom_slide_url', true ) );
                             $btn_title = trim( get_post_meta( get_the_ID(), 'wpzoom_slide_button_title', true ) );
                             $btn_url = trim( get_post_meta( get_the_ID(), 'wpzoom_slide_button_url', true ) );
@@ -62,15 +66,22 @@ $slide_counter = 0;
 
                                     <?php if ( empty( $slide_url ) ) : ?>
 
-                                        <?php // the_title( '<h3 class="missing-url">', '</h3>' ); ?>
+                                        <?php //the_title( '<h3 class="missing-url">', '</h3>' ); ?>
 
                                     <?php else: ?>
 
-                                        <?php //the_title( sprintf( '<h3><a href="%s">', esc_url( $slide_url ) ), '</a></h3>' ); ?>
+                                        <?php the_content(); ?>
 
                                     <?php endif; ?>
 
-                                    <div class="excerpt"><?php the_excerpt(); ?></div>
+                                    <div class="excerpt">
+                                        <b>
+                                            <?php echo  $txt_img; ?>
+                                        </b> 
+                                        |
+                                        <?php echo  $lugar_img; ?>
+                                        
+                                    </div>
 
                                     <?php if ( !empty( $btn_title ) && !empty( $btn_url ) ) {
                                         ?><div class="slide_button">

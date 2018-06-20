@@ -342,13 +342,13 @@ class wpb_widget2 extends WP_Widget {
 
 
                             <div class= "row" style="display:flex;">
-                                <div class= "col-4">
+                                <div class= "col-md-4 col-4 offset-md-1">
                                     <div class="client-pic"
                                         style="background-image: url('<?php  echo get_field('profile-image')['url']; ?>')"
                                     >
                                     </div>
                                 </div>
-                                <div class= "col-6">
+                                <div class= "col-md-6 col-8">
                                     <article id="testimonial-<?php the_ID(); ?>" >
                                         <div class="client-name">
                                             <h3> 
@@ -641,216 +641,6 @@ function testimonial_shortcode( $atts ) {
 
 //PIRE MIO
 /*** PEGO DESDE INTERNET **///
-
-add_action( 'init', 'logoClientes_post_type' );
-function logoClientes_post_type() {
-    $labels = array(
-        'name' => 'logoClientes',
-        'singular_name' => 'logoCliente',
-        'add_new' => 'Ingresar nuevo',
-        'add_new_item' => 'Agregar nuevo logoCliente',
-        'edit_item' => 'Editar logoCliente',
-        'new_item' => 'Nuevo logoCliente',
-        'view_item' => 'Ver logoCliente',
-        'search_items' => 'Buscar logoClientes',
-        'not_found' =>  'No hay logoClientes',
-        'not_found_in_trash' => 'No hay logoClientes en la papelera',
-        'parent_item_colon' => '',
-    );
- 
-    register_post_type( 'logoClientes', array(
-        'labels' => $labels,
-        'public' => true,
-        'publicly_queryable' => true,
-        'show_ui' => true,
-        'exclude_from_search' => true,
-        'query_var' => true,
-        'rewrite' => true,
-        'capability_type' => 'post',
-        'has_archive' => true,
-        'hierarchical' => false,
-        'menu_position' => 10,
-        'supports' => array( 'editor' ),
-        'register_meta_box_cb' => 'logoClientes_meta_boxes', // Callback function for custom metaboxes
-    ) );
-}
-
-
-
-function logoClientes_meta_boxes() {
-    add_meta_box( 'logoClientes_form', 'logoCliente Details', 'logoClientes_form', 'logoClientes', 'normal', 'high' );
-}
- 
-function logoClientes_form() {
-    $post_id = get_the_ID();
-    $logoCliente_data = get_post_meta( $post_id, '_logoCliente', true );
-    $client_name = ( empty( $logoCliente_data['client_name'] ) ) ? '' : $logoCliente_data['client_name'];
-    $source = ( empty( $logoCliente_data['source'] ) ) ? '' : $logoCliente_data['source'];
-    $link = ( empty( $logoCliente_data['link'] ) ) ? '' : $logoCliente_data['link'];
- 
-    wp_nonce_field( 'logoClientes', 'logoClientes' );
-    ?>
-    <p>
-        <label>Nombre del Cliente (OBLIGATORIO)</label><br />
-        <input type="text" value="<?php echo $client_name; ?>" name="logoCliente[client_name]" size="40" />
-    </p>
-    <!--p>
-        <label>Emrpesa / Cargo (optional)</label><br />
-        <input type="text" value="<?php echo $source; ?>" name="logoCliente[source]" size="40" />
-    </p>
-    <p>
-        <label>Link (optional)</label><br />
-        <input type="text" value="<?php echo $link; ?>" name="logoCliente[link]" size="40" />
-    </p-->
-    <?php
-}
-
-
-add_action( 'save_post', 'logoClientes_save_post' );
-function logoClientes_save_post( $post_id ) {
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-        return;
- 
-    if ( ! empty( $_POST['logoClientes'] ) && ! wp_verify_nonce( $_POST['logoClientes'], 'logoClientes' ) )
-        return;
- 
-    if ( ! empty( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
-        if ( ! current_user_can( 'edit_page', $post_id ) )
-            return;
-    } else {
-        if ( ! current_user_can( 'edit_post', $post_id ) )
-            return;
-    }
- 
-    if ( ! wp_is_post_revision( $post_id ) && 'logoClientes' == get_post_type( $post_id ) ) {
-        remove_action( 'save_post', 'logoClientes_save_post' );
- 
-        wp_update_post( array(
-            'ID' => $post_id,
-            'post_title' => 'logoCliente 33 - ' . $post_id
-        ) );
- 
-        add_action( 'save_post', 'logoClientes_save_post' );
-    }
- 
-    if ( ! empty( $_POST['logoCliente'] ) ) {
-        $logoCliente_data['client_name'] = ( empty( $_POST['logoCliente']['client_name'] ) ) ? '' : sanitize_text_field( $_POST['logoCliente']['client_name'] );
-        $logoCliente_data['source'] = ( empty( $_POST['logoCliente']['source'] ) ) ? '' : sanitize_text_field( $_POST['logoCliente']['source'] );
-        $logoCliente_data['link'] = ( empty( $_POST['logoCliente']['link'] ) ) ? '' : esc_url( $_POST['logoCliente']['link'] );
- 
-        update_post_meta( $post_id, '_logoCliente', $logoCliente_data );
-    } else {
-        delete_post_meta( $post_id, '_logoCliente' );
-    }
-}
-
-
-add_filter( 'manage_edit-logoClientes_columns', 'logoClientes_edit_columns' );
-function logoClientes_edit_columns( $columns ) {
-    $columns = array(
-        'cb' => '<input type="checkbox" />',
-        'title' => 'Title',
-        'logoCliente' => 'logoCliente',
-        'logoCliente-client-name' => 'Client\'s Name',
-        'logoCliente-source' => 'Business/Site',
-        'logoCliente-link' => 'Link',
-        'author' => 'Posted by',
-        'date' => 'Date'
-    );
- 
-    return $columns;
-}
- 
-add_action( 'manage_posts_custom_column', 'logoClientes_columns', 10, 2 );
-function logoClientes_columns( $column, $post_id ) {
-    $logoCliente_data = get_post_meta( $post_id, '_logoCliente', true );
-    //print_r($logoCliente_data);
-    switch ( $column ) {
-        case 'logoCliente':
-            the_excerpt();
-            break;
-        case 'logoCliente-client-name':
-            if ( ! empty( $logoCliente_data['client_name'] ) )
-                echo $logoCliente_data['client_name'];
-            break;
-        case 'logoCliente-source':
-            if ( ! empty( $logoCliente_data['source'] ) )
-                echo $logoCliente_data['source'];
-            break;
-        case 'logoCliente-link':
-            if ( ! empty( $logoCliente_data['link'] ) )
-                echo $logoCliente_data['link'];
-            break;
-    }
-}
-
-
-
-
-/**
- * Display a logoCliente
- *
- * @param  int $post_per_page  The number of logoClientes you want to display
- * @param  string $orderby  The order by setting  https://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters
- * @param  array $logoCliente_id  The ID or IDs of the logoCliente(s), comma separated
- *
- * @return  string  Formatted HTML
- */
-function get_logoCliente( $posts_per_page = 1, $orderby = 'none', $logoCliente_id = null ) {
-    $args = array(
-        'posts_per_page' => (int) $posts_per_page,
-        'post_type' => 'logoClientes',
-        'orderby' => $orderby,
-        'no_found_rows' => true,
-    );
-    if ( $logoCliente_id )
-        $args['post__in'] = array( $logoCliente_id );
- 
-    $query = new WP_Query( $args  );
- 
-    $logoClientes = '';
-    if ( $query->have_posts() ) {
-        while ( $query->have_posts() ) : $query->the_post();
-            $post_id = get_the_ID();
-            $logoCliente_data = get_post_meta( $post_id, '_logoCliente', true );
-            $client_name = ( empty( $logoCliente_data['client_name'] ) ) ? '' : $logoCliente_data['client_name'];
-            $source = ( empty( $logoCliente_data['source'] ) ) ? '' : ' - ' . $logoCliente_data['source'];
-            $link = ( empty( $logoCliente_data['link'] ) ) ? '' : $logoCliente_data['link'];
-            $cite = ( $link ) ? '<a href="' . esc_url( $link ) . '" target="_blank">' . $client_name . $source . '</a>' : $client_name . $source;
- 
-            $logoClientes .= '<aside class="logoCliente">';
-            $logoClientes .= '<span class="quote">&ldquo;</span>';
-            $logoClientes .= '<div class="entry-content">';
-            $logoClientes .= '<p class="logoCliente-text">' . get_the_content() . '<span></span></p>';
-            $logoClientes .= '<p class="logoCliente-client-name"><cite>' . $cite . '</cite>';
-            $logoClientes .= '</div>';
-            $logoClientes .= '</aside>';
- 
-        endwhile;
-        wp_reset_postdata();
-    }
- 
-    return $logoClientes;
-}
-
-
-add_shortcode( 'logoCliente', 'logoCliente_shortcode' );
-/**
- * Shortcode to display logoClientes
- *
- * [logoCliente posts_per_page="1" orderby="none" logoCliente_id=""]
- */
-function logoCliente_shortcode( $atts ) {
-    extract( shortcode_atts( array(
-        'posts_per_page' => '1',
-        'orderby' => 'none',
-        'logoCliente_id' => '',
-    ), $atts ) );
- 
-    return get_logoCliente( $posts_per_page, $orderby, $logoCliente_id );
-}
-
-
 
 
 
@@ -1342,6 +1132,10 @@ function logos_edit_columns( $columns ) {
     );
  
     return $columns;
+
+
+
+
 }
  
 add_action( 'manage_posts_custom_column', 'logos_columns', 10, 2 );

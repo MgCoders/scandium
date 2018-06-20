@@ -119,7 +119,7 @@ $slide_counter = 0;
                                 <?php 
 
                                 $objects_to_show = array(
-                                                    'cf_fp_project', 'cf_fp_work', 'cf_fp_area', 'cf_fp_location'
+                                                    'cf_fp_project', 'cf_fp_work', 'cf_fp_area'
                                                     );
                                         
                                 ?>
@@ -221,7 +221,7 @@ $slide_counter = 0;
                                         //
 
                                         $objects_to_show = array(
-                                                            'cf_fp_da', 'cf_fp_cli', 'cf_fp_ow','cf_fp_com'
+                                                            'cf_fp_da', 'cf_fp_cli', 'cf_fp_ow','cf_fp_com', 'cf_fp_location'
                                                             );
 
 
