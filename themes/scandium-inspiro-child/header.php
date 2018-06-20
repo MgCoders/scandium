@@ -54,15 +54,15 @@
         </div>
         <div class="row">
             <nav class="navbar <?php if (inspiro_maybeWithCover()) echo 'page-with-cover'; ?> " role="navigation">
-                <div class="wrap">
-                     <div class="navbar-header">
+                <div class="wrap row">
+                     <div class="col-10 col-md-5 navbar-header">
 
                         <div class="navbar-brand">
                             <?php if ( ! option::get( 'misc_logo_path' ) ) echo '<h1>'; ?>
 
                             <a href="<?php echo home_url(); ?>" title="<?php bloginfo( 'description' ); ?>">
                                 <?php if ( ! option::get( 'misc_logo_path' ) ) { bloginfo( 'name' ); } else { ?>
-                                    <img src="<?php echo ui::logo(); ?>" alt="<?php bloginfo( 'name' ); ?>" />
+                                    <img class="logo-bg" src="<?php echo ui::logo(); ?>" alt="<?php bloginfo( 'name' ); ?>" />
                                 <?php } ?>
                             </a>
 
@@ -72,14 +72,14 @@
 
                     <?php if ( has_nav_menu( 'primary' ) || is_active_sidebar( 'sidebar' ) ) : ?>
 
-                        <button type="button" class="navbar-toggle">
+                        <button type="button" class="col-2 col-md-7 navbar-toggle">
                             <span class="sr-only"><?php _e( 'Toggle sidebar &amp; navigation', 'wpzoom' ); ?></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
 
-                        <div class="navbar-collapse collapse">
+                        <div class="navbar-collapse collapse col-md-7">
 
                             <?php
                             wp_nav_menu( array(

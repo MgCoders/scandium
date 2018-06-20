@@ -32,6 +32,7 @@ get_header(); ?>
 
         $wp_query = new WP_Query( $args );
         ?>
+        <?php //print("<pre>".print_r($wp_query,true)."</pre>"); ?>
 
         <?php if ( $wp_query->have_posts() ) : ?>
 
@@ -41,7 +42,7 @@ get_header(); ?>
                     wpz_pagingURL = '<?php the_permalink(); ?>page/';
             </script>
 
-            <div class="portfolio-grid">
+            <div class="row portfolio-grid">
 
                 <?php while ( $wp_query->have_posts() ) : $wp_query->the_post();
 
