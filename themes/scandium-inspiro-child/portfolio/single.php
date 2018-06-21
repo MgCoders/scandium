@@ -121,6 +121,10 @@ $slide_counter = 0;
                                 $objects_to_show = array(
                                                     'cf_fp_project', 'cf_fp_work', 'cf_fp_area'
                                                     );
+                                $objects_to_show_en = array(
+                                                             'cf_fp_location'
+                                                            );
+                                    
                                         
                                 ?>
                                 <table class="summary-table">
@@ -136,6 +140,15 @@ $slide_counter = 0;
                                                     }
                                                 }
                                             }
+                                            foreach ($objects_to_show_en as $key => $param) {
+                                                $sw = get_field_object( $param.$ext );
+                                                if ( $sw ) {
+                                                    $content = get_field($param.$ext );
+                                                    if ( $content ) {
+                                                        echo "<th>".$sw['label']."</th>";
+                                                    }
+                                                }
+                                            }
                                             ?>
                                         </tr>
                                     </thead>
@@ -146,6 +159,17 @@ $slide_counter = 0;
                                                 $sw = get_field_object( $param );
                                                 if ( $sw ) {
                                                     $content = get_field($param);
+                                                    if ( $content ) {
+                                                        echo "<td>";
+                                                        echo $content;
+                                                        echo "</td>";
+                                                    }
+                                                }
+                                            }
+                                            foreach ($objects_to_show_en as $key => $param) {
+                                                $sw = get_field_object( $param.$ext );
+                                                if ( $sw ) {
+                                                    $content = get_field($param.$ext);
                                                     if ( $content ) {
                                                         echo "<td>";
                                                         echo $content;
@@ -221,7 +245,7 @@ $slide_counter = 0;
                                         //
 
                                         $objects_to_show = array(
-                                                            'cf_fp_da', 'cf_fp_cli', 'cf_fp_ow','cf_fp_com', 'cf_fp_location'
+                                                            'cf_fp_da', 'cf_fp_cli', 'cf_fp_ow','cf_fp_com'
                                                             );
 
 
@@ -533,12 +557,20 @@ if ($cant_posts > 1){
                 <nav class="portfolio-archive-taxonomies">
                     <ul class="portfolio-taxonomies">
                         <?php
+
+                        $idioma = "";
+
+                        if ($ext == "_en") {
+                            $idioma = "/en";
+                        }
+
+
                         foreach ($categorías_posts as $key => $categ) {
                             //print("<pre>".print_r($categ,true)."</pre>");
                             if ($categ->term_id == get_the_terms($post->ID, 'portfolio')['0']->term_id ) { 
                             ?>
                             <li class="cat-item current-cat">
-                                <a href="/portfolio/<?php echo $categ->slug ; ?>/">
+                                <a href="<?php echo $idioma ; ?>/portfolio/<?php echo $categ->slug ; ?>/">
                                     <?php echo $categ->name ; ?>                                        
                                 </a>
                             </li>
@@ -546,7 +578,7 @@ if ($cant_posts > 1){
                             } else {
                             ?>
                             <li class="cat-item">
-                                <a href="/portfolio/<?php echo $categ->slug ; ?>/">
+                                <a href="<?php echo $idioma ; ?>/portfolio/<?php echo $categ->slug ; ?>/">
                                     <?php echo $categ->name ; ?>                                        
                                 </a>
                             </li>
