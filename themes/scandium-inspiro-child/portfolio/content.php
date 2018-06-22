@@ -8,7 +8,7 @@ if ( is_array( $portfolios ) ) {
     }
 }
 ?>
-<a class="col-12 col-md-4" href="<?php echo esc_url( get_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
+<a class="col-12 col-sm-6 col-md-4" href="<?php echo esc_url( get_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
 <article id="post-<?php the_ID(); ?>" class="my_portfolio_item" <?php //post_class( $articleClass ); ?> >
     <div class="my_entry-thumbnail-popover">
         <?php if(has_post_thumbnail()) {

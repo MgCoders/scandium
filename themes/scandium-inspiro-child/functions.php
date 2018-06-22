@@ -103,9 +103,25 @@ function theme_js() {
     wp_enqueue_script( 'bootstrap_js', get_stylesheet_directory_uri() . '/js/bootstrap.min.js' );
     //wp_enqueue_script( 'my_custom_js', get_template_directory_uri() . '/js/scripts.js');
 
+
+    //Copy the merged and packed script from the out­put field as is to a new text-file, give it a name (e.g. "hyphenate.js") and in­clude it in your web­site (<script src="hyphenate.js" type="text/javascript"></script>).
+    wp_enqueue_script( 'hyphenate_js', get_stylesheet_directory_uri() . '/js/hyphenate.js' );
+
+
 }
 
 add_action( 'wp_enqueue_scripts', 'theme_js');
+
+
+
+add_action('wp_enqueue_scripts', 'wpse26822_script_fix', 100);
+function wpse26822_script_fix()
+{
+    $themeJsOptions = option::getJsOptions();
+    wp_dequeue_script('inspiro-script');
+    wp_enqueue_script('inspiro-script_child', get_stylesheet_directory_uri().'/js/functions.js', array('jquery'));
+     wp_localize_script( 'inspiro-script_child', 'zoomOptions', $themeJsOptions );
+}
 
 
 
@@ -168,7 +184,7 @@ public function widget( $args, $instance ) {
               
             foreach( $categ as $category ) {
             ?>
-                <a class="col-12 col-md-3 cat-img-fi_a" href="<?php echo esc_url(get_category_link( $category->term_id ) ); ?>">
+                <a class="col-12 col-sm-6 col-lg-3 cat-img-fi_a" href="<?php echo esc_url(get_category_link( $category->term_id ) ); ?>">
                     <div class="cat-img-fi"
                          style="
                                 background-image: url('<?php echo get_field('image_portfolio', $category); ?>');">

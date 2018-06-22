@@ -68,10 +68,10 @@ $slide_counter = 0;
         <article id="post-<?php the_ID(); ?>" <?php post_class( ( has_post_thumbnail() || $hasSlider ) ? ' has-post-cover' : '' ); ?>>
             <div class="container-fluid no-padding">
                 <div class="row no-gutters">
-                    <div class="col-12 col-md-4 info-panel">
+                    <div class="col-12 col-md-4 info-panel order-2 order-md-1">
                         <div class="card-info">
                             <div class="card-title">
-                                <span class="proyect-title">
+                                <span class="proyect-title hyphenate">
                                     <?php 
                                         $titleOfPost = get_the_title();
                                         $idOfPost = $post->ID;
@@ -268,7 +268,7 @@ $slide_counter = 0;
                         </div>    
                     </div>
 
-                    <div class="col-12 col-md-8">
+                    <div class="col-12 col-md-8 order-1 order-md-2">
                         <div class="entry-cover">
                             <?php $entryCoverBackground = get_the_image( array( 'size' => 'entry-cover', 'format' => 'array' ) ); ?>
 
@@ -447,16 +447,31 @@ $slide_counter = 0;
 
                     //imprimo el porfolo del post actual
                     //print_r(get_the_terms($post->ID, 'portfolio'));
-
+                    $prot_term = get_the_terms($post->ID, 'portfolio');
+                    $taxonomy_obj_port = $prot_term['0'];
+                    //print_r($taxonomy_obj_port);
+                    $order_str = $taxonomy_obj_port->slug;
+                    if($taxonomy_obj_port->slug == "residential") {
+                        $order_str = "residencial";
+                    } else if($taxonomy_obj_port->slug == "offices-and-hotels") {
+                        $order_str = "oficinas-y-hoteles";
+                    } else if($taxonomy_obj_port->slug == "infrastructure") {
+                        $order_str = "infraestructura";
+                    } else if($taxonomy_obj_port->slug == "cultural-es" or $taxonomy_obj_port->slug == "cultural-en") {
+                        $order_str = "cultural";
+                    }
 
                     
                     $related = new WP_Query(
                                             array(
                                                 //'category__in'   => wp_get_post_categories( $post->ID ),
-                                                'posts_per_page' => 5,
+                                                'posts_per_page' => 500,
                                                 //'terms' => get_the_terms($post->ID, 'portfolio')['0']->term_id,
                                                 //'post__not_in'   => array( $post->ID )
                                                 'post_type' => 'portfolio_item',
+                                                'meta_key' => 'order_value_num_'.$order_str,
+                                                'orderby' => 'meta_value_num',
+                                                'order' => 'ASC',
                                                 //'paged'=> $paged,
                                                 'tax_query' => array(
                                                                     array(
@@ -498,11 +513,29 @@ if( $related->have_posts() ) {
     $cant_posts = 0;
     $categorías_posts = get_terms('portfolio');
 
+    $first="";
+
 
     while( $related->have_posts() and $next_url == "") { 
         
+
+
+        /*echo "last_url: ".$last_url."<br>";
+        echo "next_url: ".$next_url."<br>";
+        echo "finded: ".$finded."<br>";
+        echo "cant_posts: ".$cant_posts."<br>";
+        echo "first: ".$first."<br> <br>";
+        echo "categorías_posts: ".$categorías_posts."<br> <br>"; */
+
+
+
         //Seteo el post para trabajar con el
         echo $related->the_post(); 
+
+        //Me guardo el primero para la circular
+        if($first==""){
+            $first= get_permalink();
+        }
 
         //$categorías_posts =
 
@@ -528,6 +561,22 @@ if( $related->have_posts() ) {
         /*whatever you want to output*/
         
     }
+
+    if($next_url == ""){
+        $next_url = $first;
+    }
+
+    if($last_url == ""){
+       while( $related->have_posts() ) { 
+        
+            //Seteo el post para trabajar con el
+            echo $related->the_post(); 
+            //Recorro hasta el último
+            $last_url= get_permalink();
+       
+        }
+    }
+
     wp_reset_postdata();
 }
 
