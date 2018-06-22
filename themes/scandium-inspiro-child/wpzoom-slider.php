@@ -21,8 +21,17 @@ $slide_counter = 0;
                             <?php
                             //echo '<pre>'; print_r(get_post_meta( get_the_ID())['text']['0']); echo '</pre>';
 
-                            $txt_img = get_post_meta( get_the_ID())['txt_img']['0'];    
-                            $lugar_img = get_post_meta( get_the_ID())['lugar_img']['0'];    
+
+                            $locale_str = get_bloginfo("language");
+                            $current_lang = substr($locale_str, 0, 2);
+                            $ext = "";
+
+                            if($current_lang != 'es'){
+                                $ext = "_".$current_lang;
+                            }
+
+                            $txt_img = get_post_meta( get_the_ID())['txt_img'.$ext]['0'];    
+                            $lugar_img = get_post_meta( get_the_ID())['lugar_img'.$ext]['0'];    
                             $slide_url = trim( get_post_meta( get_the_ID(), 'wpzoom_slide_url', true ) );
                             $btn_title = trim( get_post_meta( get_the_ID(), 'wpzoom_slide_button_title', true ) );
                             $btn_url = trim( get_post_meta( get_the_ID(), 'wpzoom_slide_button_url', true ) );
