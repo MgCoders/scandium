@@ -67,7 +67,7 @@ get_header(); ?>
              <script type="text/javascript">
                 var wpz_currPage = <?php echo $paged; ?>,
                     wpz_maxPages = <?php echo $wp_query->max_num_pages; ?>,
-                    wpz_pagingURL = '<?php  echo "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+                    wpz_pagingURL = '<?php  echo (isset($_SERVER['HTTPS']) ? "https" : "http") ."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 //the_permalink(); ?>page/';
             </script>
 
