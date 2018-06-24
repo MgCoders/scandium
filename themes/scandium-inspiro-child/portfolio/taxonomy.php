@@ -64,6 +64,13 @@ get_header(); ?>
 
         <?php if ( $wp_query->have_posts() ) : ?>
 
+             <script type="text/javascript">
+                var wpz_currPage = <?php echo $paged; ?>,
+                    wpz_maxPages = <?php echo $wp_query->max_num_pages; ?>,
+                    wpz_pagingURL = '<?php  echo "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+//the_permalink(); ?>page/';
+            </script>
+
             <div class="row portfolio-grid">
 
                 <?php while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
