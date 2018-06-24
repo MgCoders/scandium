@@ -353,6 +353,20 @@ class wpb_widget2 extends WP_Widget {
             $source = ( empty( $testimonial_data['source'] ) ) ? '' : $testimonial_data['source'];
             //$link = ( empty( $testimonial_data['link'] ) ) ? '' : $testimonial_data['link'];
             //$cite = ( $link ) ? '<a href="' . esc_url( $link ) . '" target="_blank">' . $client_name . $source . '</a>' : $client_name . $source;
+
+
+            $locale_str = get_bloginfo("language");
+            $current_lang = substr($locale_str, 0, 2);
+            $ext = "";
+
+            if($current_lang != 'es'){
+                $ext = "_".$current_lang;
+            }
+
+
+            $name_show = get_field('name_to_show'.$ext);
+            $busi_show = get_field('busi_role'.$ext);
+            $test_show = get_field('testimonial_to_show'.$ext);
             ?>                
 
 
@@ -368,13 +382,13 @@ class wpb_widget2 extends WP_Widget {
                                     <article id="testimonial-<?php the_ID(); ?>" >
                                         <div class="client-name">
                                             <h3> 
-                                                <?php echo $client_name; ?>
+                                                <?php echo $name_show; ?>
                                             </h3>
-                                            <?php echo $source; ?>
+                                            <?php echo $busi_show; ?>
                                         </div>
                                         <div class="client-text">
                                             <p>
-                                                <?php echo get_the_content(); ?>
+                                                <?php echo $test_show; ?>
                                             </p>
                                         </div>
                                     </article>
@@ -476,7 +490,7 @@ function testimonials_post_type() {
 
 
 function testimonials_meta_boxes() {
-    add_meta_box( 'testimonials_form', 'Testimonial Details', 'testimonials_form', 'testimonials', 'normal', 'high' );
+    add_meta_box( 'testimonials_form', 'Testimonial (info de referencia)', 'testimonials_form', 'testimonials', 'normal', 'high' );
 }
  
 function testimonials_form() {
@@ -489,11 +503,11 @@ function testimonials_form() {
     wp_nonce_field( 'testimonials', 'testimonials' );
     ?>
     <p>
-        <label>Nombre del Cliente (optional)</label><br />
+        <label>Nombre del Cliente (opcional)</label><br />
         <input type="text" value="<?php echo $client_name; ?>" name="testimonial[client_name]" size="40" />
     </p>
     <p>
-        <label>Emrpesa / Cargo (optional)</label><br />
+        <label>Emrpesa / Cargo (opcional)</label><br />
         <input type="text" value="<?php echo $source; ?>" name="testimonial[source]" size="40" />
     </p>
     <!--p>
@@ -548,10 +562,10 @@ function testimonials_edit_columns( $columns ) {
     $columns = array(
         'cb' => '<input type="checkbox" />',
         'title' => 'Title',
-        'testimonial' => 'Testimonial',
-        'testimonial-client-name' => 'Client\'s Name',
-        'testimonial-source' => 'Business/Site',
-        'testimonial-link' => 'Link',
+        /*'testimonial' => 'Testimonial',*/
+        'testimonial-client-name' => 'Nombre de la persona',
+        /*'testimonial-source' => 'Business/Site',
+        'testimonial-link' => 'Link',*/
         'author' => 'Posted by',
         'date' => 'Date'
     );
@@ -926,13 +940,24 @@ class ClientesDesc extends WP_Widget {
             //$link = ( empty( $testimonial_data['link'] ) ) ? '' : $testimonial_data['link'];
             //$cite = ( $link ) ? '<a href="' . esc_url( $link ) . '" target="_blank">' . $client_name . $source . '</a>' : $client_name . $source;
 
+
+            $locale_str = get_bloginfo("language");
+            $current_lang = substr($locale_str, 0, 2);
+            $ext = "";
+
+            if($current_lang != 'es'){
+                $ext = "_".$current_lang;
+            }
+
+
+
             $arr_cli = array('lc_logo'=> get_field('lc_logo')['url'],
-                            'lc_name'=> get_field('lc_name'),
+                            'lc_name'=> get_field('lc_name'.$ext),
                             //'lc_type'=> get_field('lc_type'),
                             'lc_url'=> get_field('lc_url'),
-                            'lc_location'=> get_field('lc_location') );
+                            'lc_location'=> get_field('lc_location'.$ext) );
 
-            $arr_categ[get_field('lc_type')][get_field('lc_name')] = $arr_cli;
+            $arr_categ[get_field('lc_type')][get_field('lc_name'.$ext)] = $arr_cli;
 
 
         }
@@ -950,7 +975,7 @@ class ClientesDesc extends WP_Widget {
                         foreach ($arr_categ as $nomCateg => $categ) {
                         ?>
                             <div class="row clientes_banner" id="">
-                              <div class= "col-12">
+                              <div class= "col-12 sec_title_cat_logo">
                                 <h3>
                                     <?php
                                         echo $nomCateg;
