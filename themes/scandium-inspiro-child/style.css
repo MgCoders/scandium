@@ -206,6 +206,12 @@ body {
   margin: 0!important;
 }
 
+.site-info {
+  padding: 5px 10px!important;
+  font-size: 10px!important;
+  line-height: normal;
+}
+
 .site-footer-separator {
   border-color: #a0a0a0;
 }
@@ -213,7 +219,7 @@ body {
 
 .navbar .wrap {
   max-width: unset !important;
-  padding: 0px 25px;
+  padding: 0px 25px 0px 25px;
 }
 
 .logo-bg{
@@ -266,6 +272,11 @@ body {
   margin-top: 120px;
 }
 
+
+
+.site-footer {
+  margin-top: 0!important;
+}
 
 footer a {
   color: #fff;
@@ -344,9 +355,11 @@ a {
 
 /* Titulos */
 
+
+
 .ccchildpage h3, .section-title {
   font-family: Montserrat, sans-serif !important;
-  font-size: 30px;
+  font-size: 30px !important;
   font-weight: normal;
   color: #808080;
   text-align: center;
@@ -465,6 +478,7 @@ p>input[type='submit'] {
     position: relative;
     bottom: 40px;
     left: 56%;
+    width: 85px;
 }
 
 .widget {
@@ -760,7 +774,14 @@ ul.portfolio-archive-taxonomies li:hover {
   .zoom-social-icons-widget {
     position: relative;    
     bottom: 30px;
-    left: 56%;
+    left: 52%;
+  }
+  .div-footer-text {
+    padding-left: 15px;
+  }
+  .navbar .wrap {
+    padding: 0px 50px 0px 0px;
+    margin-bottom: 25px;
   }
 }
 
@@ -773,7 +794,10 @@ ul.portfolio-archive-taxonomies li:hover {
     float: none;
   }
 
-
+  .navbar .wrap {
+    padding: 0px 25px 0px 0px;
+    margin-bottom: 25px;
+  }
 
   .home .widgetized-section > :nth-of-type(1) .textwidget {
       width: 100%;
@@ -824,15 +848,13 @@ ul.portfolio-archive-taxonomies li:hover {
     top: 70%;
   }
 
-  .site-info {
-    padding: 0px 10px!important;
-    font-size: 12px!important;
-    line-height: normal;
-  }
-
   .zoom-social-icons-widget {
     /*margin-left: 55%;*/
     /*margin-top: -110px;*/
+  }
+
+  .navbar .wrap {
+    padding: 0px 25px 0px 0px;
   }
 
   .widget_media_image {
@@ -857,6 +879,10 @@ ul.portfolio-archive-taxonomies li:hover {
       margin-top: 60px;
   }
   
+  .navbar .wrap {
+    padding: 0px 25px 0px 0px;
+  }
+
   .excerpt {
     font-family: Montserrat, sans-serif !important;
     font-size: 14px !important;
@@ -887,10 +913,6 @@ ul.portfolio-archive-taxonomies li:hover {
       text-align: center;
       padding: 0 15px;
       margin-top: 60px;
-  }
-  
-  .site-info {
-    padding: 0px 10px!important;    
   }
 
   .widget_media_image img {
@@ -1031,6 +1053,14 @@ ul.portfolio-archive-taxonomies li:hover {
   width: 270px;
 }
 
+#div_clients-logos_min .slick-slider {
+  margin-bottom: 100px!important;
+}
+
+#div_clients-logos .slick-slider {
+  padding-bottom: 100px!important;
+}
+
 .widgetizedAreaClientes h3 {
   /*display: none;*/
   font-family: Montserrat, sans-serif !important;
@@ -1065,8 +1095,9 @@ ul.portfolio-archive-taxonomies li:hover {
   height: 200px;
   background-repeat: no-repeat;
   background-position-x: 100%;
-  background-size: contain;
+  background-size: cover;
   width: 95%;
+  border-radius: 50%;
   margin: 20px auto 0px;
 }
 
@@ -1098,6 +1129,9 @@ ul.portfolio-archive-taxonomies li:hover {
 
 #div_clients-logos{
   background-color: #f8f8f8; 
+  -webkit-box-shadow:  0px 100px #fff inset;
+  -moz-box-shadow:  0px 100px #fff inset;
+  box-shadow: 0px 100px #fff inset;
 }
 
 .client-logo {
