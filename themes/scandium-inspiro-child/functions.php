@@ -184,7 +184,7 @@ public function widget( $args, $instance ) {
               
             foreach( $categ as $category ) {
             ?>
-                <a class="col-12 col-sm-6 col-lg-3 cat-img-fi_a" href="<?php echo esc_url(get_category_link( $category->term_id ) ); ?>">
+                <!--a class="col-12 col-sm-6 col-lg-3 cat-img-fi_a" href="<?php echo esc_url(get_category_link( $category->term_id ) ); ?>">
                     <div class="cat-img-fi"
                          style="
                                 background-image: url('<?php echo get_field('image_portfolio', $category); ?>');">
@@ -193,6 +193,16 @@ public function widget( $args, $instance ) {
                             echo strtoupper(esc_html( $category->name ));
                         ?>
                         </p>
+                    </div>
+                </a-->
+                <a class="col-12 col-sm-6 col-lg-3 cat-img-fi_a" href="<?php echo esc_url(get_category_link( $category->term_id ) ); ?>">
+                    <div class="cat_container">
+                        <img src="<?php echo get_field('image_portfolio', $category); ?>" alt="Snow" style="width:100%;">
+                        <div class="cat_centered">
+                        <?php
+                            echo strtoupper(esc_html( $category->name ));
+                        ?>
+                        </div>
                     </div>
                 </a>
             <?php    

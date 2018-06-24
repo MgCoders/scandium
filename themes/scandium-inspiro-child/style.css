@@ -950,6 +950,23 @@ ul.portfolio-archive-taxonomies li:hover {
 }
 
 
+/* Pruebo con algo nuevo **/
+.cat_container {
+  position: relative;
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+}
+
+.cat_centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.7rem;
+}
+
+
 .cat-img-fi {
   background-size: contain;
   background-position: 50%; 
@@ -985,7 +1002,9 @@ ul.portfolio-archive-taxonomies li:hover {
   position: absolute;
   width: 100%;
   text-align: center;
-  top: 45%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .my_entry-thumbnail-popover p, .card-title .proyect-title {
