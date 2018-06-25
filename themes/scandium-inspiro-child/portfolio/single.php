@@ -24,7 +24,7 @@ $slide_counter = 0;
         print_r($value);
         echo "<!!".$locale_str;
 
-
+ 
 ?>
     <h3>La posta</h3>
     <p>
@@ -50,7 +50,7 @@ $slide_counter = 0;
         <?php the_field('cf_fp_sow_en'); ?>        
     </p>
 
-*/
+*/ 
      ?>
 
     <?php while ( have_posts() ) : the_post();
@@ -270,7 +270,10 @@ $slide_counter = 0;
 
                     <div class="col-12 col-md-8 order-1 order-md-2">
                         <div class="entry-cover">
-                            <?php $entryCoverBackground = get_the_image( array( 'size' => 'entry-cover', 'format' => 'array' ) ); ?>
+                            <?php //$entryCoverBackground = get_the_image( array( 'size' => 'entry-cover', 'format' => 'array' ) ); 
+                                $entryCoverBackground = get_field('cf_fp_main_img');
+                                //echo "as: ".print_r(get_field('cf_fp_main_img'))." :asd";
+                            ?>
 
                             <?php 
 
@@ -321,9 +324,12 @@ $slide_counter = 0;
                                 </div>
 
                             <?php */ 
-                                if( isset( $entryCoverBackground['src'] ) ) : ?>
+                                if( isset( $entryCoverBackground['url']  ) ) :  //para la featured Img era SRC ?>
 
-                                <div class="entry-cover-image" style="background-image: url('<?php echo $entryCoverBackground['src'] ?>');"></div>
+                                <div class="entry-cover-image" style="
+                                        background-image: url('<?php echo $entryCoverBackground['url'] ?>');">
+                                        
+                                </div>
 
                             <?php else: ?>
                                 <div class="entry-cover-image" style="
