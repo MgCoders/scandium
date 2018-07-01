@@ -24,7 +24,7 @@ $slide_counter = 0;
         print_r($value);
         echo "<!!".$locale_str;
 
- 
+
 ?>
     <h3>La posta</h3>
     <p>
@@ -50,7 +50,7 @@ $slide_counter = 0;
         <?php the_field('cf_fp_sow_en'); ?>        
     </p>
 
-*/ 
+ */ 
      ?>
 
     <?php while ( have_posts() ) : the_post();
@@ -65,10 +65,68 @@ $slide_counter = 0;
 
      ?>
 
+
+
+
+
+
+<?php 
+//Pongo la barra arriba!
+?>
+
+
+
+
+            
+
+
+
+
+
+
+<?php
+//Termino con la barra de arriba
+?>
+
+
+
+
+
+
         <article id="post-<?php the_ID(); ?>" <?php post_class( ( has_post_thumbnail() || $hasSlider ) ? ' has-post-cover' : '' ); ?>>
-            <div class="container-fluid no-padding">
+            <div class="container-fluid no-padding max-size-screen">
                 <div class="row no-gutters">
                     <div class="col-12 col-md-4 info-panel order-2 order-md-1">
+
+
+                        <div class="container">
+                            <div class="row slider-portfolio slider-sup">
+                                <div class="col-1 ar-left">
+                                    
+
+                                    <?php
+                                    //La url se setea con Js, y el procedimeinto está en el footer
+                                    ?>
+                                    <a id="arrow_sup_left" href="">
+                                        <i class="arrow left">
+                                            
+                                        </i>
+                                    </a>
+                                    
+                                </div>
+                                
+                                <div class="col-1 ar-right">
+                                    
+                                    <a id="arrow_sup_right" href="">
+                                        <i class="arrow right">
+                                            
+                                        </i>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div> 
+
                         <div class="card-info">
                             <div class="card-title">
                                 <span class="proyect-title hyphenate">
@@ -197,14 +255,16 @@ $slide_counter = 0;
 
                                         //El scope of work es distinto dependiendo del lenguaje
                                         $cats = get_field('cf_fp_sow'.$ext);
+                                        $choi = get_field_object('cf_fp_sow'.$ext)['choices'];
                                         //echo 'cf_fp_sow'.$ext;
-                                        //echo '>'.print_r($cats).'<';
+                                        //echo '<pre>'.print_r($cats).'</pre>';
 
                                         $sow = "";
 
                                         if ($cats) {                                        
                                             foreach ($cats as $key => $val){
-                                                $sow .= $val.'<br>';
+                                                //echo "key: ".$key.", val:".$val;
+                                                $sow .= $choi[$val].'<br>';
                                             }
 
                                             if ($sow) {
@@ -595,7 +655,7 @@ if ($cant_posts > 1){
             <?php
             if ($last_url != ""){
             ?>
-            <a href="<?php
+            <a id="arrow_inf_left" href="<?php
                         echo "".$last_url;
                     ?>">
                 <i class="arrow left">
@@ -658,7 +718,7 @@ if ($cant_posts > 1){
             <?php
             if ($next_url != ""){
             ?>
-            <a href="<?php
+            <a id="arrow_inf_right" href="<?php
                         echo "".$next_url;
                     ?>">
                 <i class="arrow right">
@@ -745,3 +805,14 @@ if ($cant_posts > 1){
 </main><!-- #main -->
 
 <?php get_footer(); ?>
+
+<script type="text/javascript">
+    
+    var asl = document.getElementById('arrow_sup_left');
+    var asr = document.getElementById('arrow_sup_right');
+    var ail = document.getElementById('arrow_inf_left');
+    var air = document.getElementById('arrow_inf_right');
+
+    asl.href = ail.getAttribute("href");
+    asr.href = air.getAttribute("href");
+</script>
