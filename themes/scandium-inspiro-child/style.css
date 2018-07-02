@@ -1079,6 +1079,10 @@ ul.portfolio-archive-taxonomies li:hover {
   text-transform: uppercase;
 }
 
+.row.portfolio-grid a{
+  max-height: 400px;
+}
+
 .my_portfolio_item {
     /*width: 31.33% !important;
     margin: 1% !important;*/
