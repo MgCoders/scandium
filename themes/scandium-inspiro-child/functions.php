@@ -959,15 +959,16 @@ class ClientesDesc extends WP_Widget {
                 $ext = "_".$current_lang;
             }
 
-
+            //echo '<pre>'; print_r($$arr_cli); echo '</pre>';
 
             $arr_cli = array('lc_logo'=> get_field('lc_logo')['url'],
                             'lc_name'=> get_field('lc_name'.$ext),
                             //'lc_type'=> get_field('lc_type'),
                             'lc_url'=> get_field('lc_url'),
                             'lc_location'=> get_field('lc_location'.$ext) );
+             //echo '<pre>'; print_r($arr_cli); echo '</pre>';
 
-            $arr_categ[get_field('lc_type')][get_field('lc_name'.$ext)] = $arr_cli;
+            $arr_categ[get_field('lc_type'.$ext)][get_field('lc_name'.$ext)] = $arr_cli;
 
 
         }
