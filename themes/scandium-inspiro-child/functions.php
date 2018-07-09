@@ -133,6 +133,7 @@ function wpb_load_widget() {
     register_widget( 'wpb_widget2' );
     register_widget( 'ClientesDesc' );
     register_widget( 'ClientesDescMin' );
+    register_widget( 'AsesoresMin' );
 
 }
 add_action( 'widgets_init', 'wpb_load_widget' );
@@ -322,7 +323,7 @@ class wpb_widget2 extends WP_Widget {
                 <div class="container">
                     <div class="row">
                             
-                        <div id="div_slick_testimonial" class= "col-12 col-md-8 offset-md-2">
+                        <div id="div_slick_testimonial" class= "col-10 offset-1 col-md-8 offset-md-2">
                             
 
             <?php
@@ -382,13 +383,13 @@ class wpb_widget2 extends WP_Widget {
 
 
                             <div class= "row" style="display:flex;">
-                                <div class= "col-md-4 col-4 offset-md-1">
+                                <div class= "col-md-4 col-6 offset-3 offset-md-1">
                                     <div class="client-pic"
                                         style="background-image: url('<?php  echo get_field('profile-image')['url']; ?>')"
                                     >
                                     </div>
                                 </div>
-                                <div class= "col-md-6 col-8">
+                                <div class= "col-md-6 col-12">
                                     <article id="testimonial-<?php the_ID(); ?>" >
                                         <div class="client-name">
                                             <h3> 
@@ -1069,7 +1070,7 @@ class ClientesDesc extends WP_Widget {
 add_action( 'init', 'logos_post_type' );
 function logos_post_type() {
     $labels = array(
-        'name' => 'logos',
+        'name' => 'Logos',
         'singular_name' => 'logo',
         'add_new' => 'Ingresar nuevo',
         'add_new_item' => 'Agregar nuevo logo',
@@ -1281,6 +1282,372 @@ function logo_shortcode( $atts ) {
  
     return get_logo( $posts_per_page, $orderby, $logo_id );
 }
+
+
+
+//Termino con los logos de los clientes
+
+
+
+
+
+
+
+
+
+//Arranca la sección para los logos de los asesores
+
+
+
+
+
+
+
+
+
+// *** PEGO DESDE INTERNET **  ///
+
+add_action( 'init', 'asesores_post_type' );
+function asesores_post_type() {
+    $labels = array(
+        'name' => 'Asesores',
+        'singular_name' => 'asesor',
+        'add_new' => 'Ingresar nuevo',
+        'add_new_item' => 'Agregar nuevo asesor',
+        'edit_item' => 'Editar asesor',
+        'new_item' => 'Nuevo asesor',
+        'view_item' => 'Ver asesor',
+        'search_items' => 'Buscar asesores',
+        'not_found' =>  'No hay asesores',
+        'not_found_in_trash' => 'No hay asesores en la papelera',
+        'parent_item_colon' => '',
+    );
+ 
+    register_post_type( 'asesores', array(
+        'labels' => $labels,
+        'public' => true,
+        'publicly_queryable' => true,
+        'show_ui' => true,
+        'exclude_from_search' => true,
+        'query_var' => true,
+        'rewrite' => true,
+        'capability_type' => 'post',
+        'has_archive' => true,
+        'hierarchical' => false,
+        'menu_position' => 10,
+        'supports' => array( 'editor' ),
+        'register_meta_box_cb' => 'asesores_meta_boxes', // Callback function for custom metaboxes
+    ) );
+}
+
+
+
+function asesores_meta_boxes() {
+    add_meta_box( 'asesores_form', 'asesor Details', 'asesores_form', 'asesores', 'normal', 'high' );
+}
+ 
+function asesores_form() {
+    $post_id = get_the_ID();
+    $asesor_data = get_post_meta( $post_id, '_asesor', true );
+    $client_name = ( empty( $asesor_data['client_name'] ) ) ? '' : $asesor_data['client_name'];
+    $source = ( empty( $asesor_data['source'] ) ) ? '' : $asesor_data['source'];
+    $link = ( empty( $asesor_data['link'] ) ) ? '' : $asesor_data['link'];
+ 
+    wp_nonce_field( 'asesores', 'asesores' );
+    ?>
+    <p>
+        <label>Nombre del Cliente (OBLIGATORIO)</label><br />
+        <input type="text" value="<?php echo $client_name; ?>" name="asesor[client_name]" size="40" />
+    </p>
+    <!--p>
+        <label>Emrpesa / Cargo (optional)</label><br />
+        <input type="text" value="<?php echo $source; ?>" name="asesor[source]" size="40" />
+    </p-->
+    <!--p>
+        <label>Link (optional)</label><br />
+        <input type="text" value="<?php echo $link; ?>" name="asesor[link]" size="40" />
+    </p-->
+    <?php
+}
+
+
+add_action( 'save_post', 'asesores_save_post' );
+function asesores_save_post( $post_id ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+        return;
+ 
+    if ( ! empty( $_POST['asesores'] ) && ! wp_verify_nonce( $_POST['asesores'], 'asesores' ) )
+        return;
+ 
+    if ( ! empty( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
+        if ( ! current_user_can( 'edit_page', $post_id ) )
+            return;
+    } else {
+        if ( ! current_user_can( 'edit_post', $post_id ) )
+            return;
+    }
+ 
+    if ( ! wp_is_post_revision( $post_id ) && 'asesores' == get_post_type( $post_id ) ) {
+        remove_action( 'save_post', 'asesores_save_post' );
+ 
+        wp_update_post( array(
+            'ID' => $post_id,
+            'post_title' => 'asesor - ' . $post_id
+        ) );
+ 
+        add_action( 'save_post', 'asesores_save_post' );
+    }
+ 
+    if ( ! empty( $_POST['asesor'] ) ) {
+        $asesor_data['client_name'] = ( empty( $_POST['asesor']['client_name'] ) ) ? 'SIN INGRESAR' : sanitize_text_field( $_POST['asesor']['client_name'] );
+        $asesor_data['source'] = ( empty( $_POST['asesor']['source'] ) ) ? '' : sanitize_text_field( $_POST['asesor']['source'] );
+        $asesor_data['link'] = ( empty( $_POST['asesor']['link'] ) ) ? '' : esc_url( $_POST['asesor']['link'] );
+ 
+        update_post_meta( $post_id, '_asesor', $asesor_data );
+    } else {
+        delete_post_meta( $post_id, '_asesor' );
+    }
+}
+
+
+add_filter( 'manage_edit-asesores_columns', 'asesores_edit_columns' );
+function asesores_edit_columns( $columns ) {
+    $columns = array(
+        'cb' => '<input type="checkbox" />',
+        'title' => 'Title',
+        'asesor' => '',
+        'asesor-client-name' => 'Nombre',
+        /*'lc_type' => 'Tipo',*/
+        'asesor-source' => '',
+        'asesor-link' => '',
+        'author' => 'Posted by',
+        'date' => 'Date'
+    );
+ 
+    return $columns;
+
+
+
+
+}
+ 
+add_action( 'manage_posts_custom_column', 'asesores_columns', 10, 2 );
+function asesores_columns( $column, $post_id ) {
+    $asesor_data = get_post_meta( $post_id, '_asesor', true );
+    switch ( $column ) {
+        case 'asesor':
+            the_excerpt();
+            break;
+        case 'asesor-client-name':
+            if ( ! empty( $asesor_data['client_name'] ) )
+                echo $asesor_data['client_name'];
+            break;
+        case 'lc_type':
+            if ( ! empty( $asesor_data['lc_type'] ) )
+                echo get_field($post_id, 'lc_type');
+            break;
+        case 'asesor-source':
+            if ( ! empty( $asesor_data['source'] ) )
+                echo $asesor_data['source'];
+            break;
+        case 'asesor-link':
+            if ( ! empty( $asesor_data['link'] ) )
+                echo $asesor_data['link'];
+            break;
+    }
+}
+
+
+
+
+/**
+ * Display a asesores
+ *
+ * @param  int $post_per_page  The number of asesores you want to display
+ * @param  string $orderby  The order by setting  https://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters
+ * @param  array $asesor_id  The ID or IDs of the asesor(s), comma separated
+ *
+ * @return  string  Formatted HTML
+ */
+function get_asesor( $posts_per_page = 1, $orderby = 'none', $asesor_id = null ) {
+    $args = array(
+        'posts_per_page' => (int) $posts_per_page,
+        'post_type' => 'asesores',
+        'orderby' => $orderby,
+        'no_found_rows' => true,
+    );
+    if ( $asesor_id )
+        $args['post__in'] = array( $asesor_id );
+ 
+    $query = new WP_Query( $args  );
+ 
+    $asesores = '';
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) : $query->the_post();
+            $post_id = get_the_ID();
+            $asesor_data = get_post_meta( $post_id, '_asesor', true );
+            $client_name = ( empty( $asesor_data['client_name'] ) ) ? '' : $asesor_data['client_name'];
+            $source = ( empty( $asesor_data['source'] ) ) ? '' : ' - ' . $asesor_data['source'];
+            $link = ( empty( $asesor_data['link'] ) ) ? '' : $asesor_data['link'];
+            $cite = ( $link ) ? '<a href="' . esc_url( $link ) . '" target="_blank">' . $client_name . $source . '</a>' : $client_name . $source;
+ 
+            $asesors .= '<aside class="asesor">';
+            $asesors .= '<span class="quote">&ldquo;</span>';
+            $asesors .= '<div class="entry-content">';
+            $asesors .= '<p class="asesor-text">' . get_the_content() . '<span></span></p>';
+            $asesors .= '<p class="asesor-client-name"><cite>' . $cite . '</cite>';
+            $asesors .= '</div>';
+            $asesors .= '</aside>';
+ 
+        endwhile;
+        wp_reset_postdata();
+    }
+ 
+    return $asesores;
+}
+
+
+add_shortcode( 'asesor', 'asesor_shortcode' );
+/**
+ * Shortcode to display asesores
+ *
+ * [asesor posts_per_page="1" orderby="none" asesor_id=""]
+ */
+function asesor_shortcode( $atts ) {
+    extract( shortcode_atts( array(
+        'posts_per_page' => '1',
+        'orderby' => 'none',
+        'asesor_id' => '',
+    ), $atts ) );
+ 
+    return get_asesor( $posts_per_page, $orderby, $asesor_id );
+}
+
+
+
+// Creating the widget 
+class AsesoresMin extends WP_Widget {
+ 
+    function __construct() {
+        parent::__construct(
+         
+        // Base ID of your widget
+        'AsesoresMin', 
+         
+        // Widget name will appear in UI
+        __('AsesoresMin', 'AsesoresMin_domain'), 
+         
+        // Widget description
+        array( 'description' => __( 'Logos Asesores', 'AsesoresMin_domain' ), ) 
+        );
+    }
+     
+    // Creating widget front-end
+     
+    public function widget( $args, $instance ) {
+        $title = apply_filters( 'widget_title', $instance['title'] );
+         
+        // before and after widget arguments are defined by themes
+        echo $args['before_widget'];
+        if ( ! empty( $title ) )
+        echo $args['before_title'] . $title . $args['after_title'];
+         
+        
+        $related = new WP_Query(
+                            array(
+                                //'category__in'   => wp_get_post_categories( $post->ID ),
+                                'posts_per_page' => 5,
+                                //'terms' => get_the_terms($post->ID, 'portfolio')['0']->term_id,
+                                //'post__not_in'   => array( $post->ID )
+                                'post_type' => 'asesores',
+                                //'paged'=> $paged,
+                                
+                            )
+                        );
+
+
+        //echo '<pre>'; print_r($related); echo '</pre>';
+
+        $arr_cli = array( );
+        
+        while ( $related->have_posts() )  {
+            echo $related->the_post(); 
+            //echo "asd".the_post().print_r(the_post())."asd";
+            $testimonial = get_post( get_the_ID());
+            //echo "asd>".get_the_ID()."<-asd";
+
+            $testimonial_data = get_post_meta(get_the_ID(), '_asesor', true);
+            //echo '<pre>1'; print_r($testimonial); echo '</pre>';
+            //echo '<pre>2'; print_r($testimonial_data); echo '</pre>';
+
+            array_push($arr_cli, get_field('lc_logo')['url'] );
+
+            //$arr_categ[get_field('lc_type')][get_field('lc_name')] = $arr_cli;
+
+
+        }
+
+        //echo '<pre>'; print_r($arr_categ); echo '</pre>';
+
+        ?>                
+
+            <div id="div_clients-logos_min">
+                <div class="container">
+                    <div id="div_slick_asesores_min">
+
+
+                        <?php
+                    
+    //                           echo "<h3>".$nomCateg."</h3>";
+                            foreach ($arr_cli as $clien) {
+                            ?>
+                                <div class= "">
+                                    <div class="client-logo"
+                                        style="background-image: url('<?php  echo $clien; ?>')"
+                                    >
+                                    </div>
+                                    
+                                </div> 
+                            <?php
+                            }
+                            echo "</div>";
+                        
+                        ?>
+                         
+                    </div>
+                </div>
+            </div>
+
+        
+    <?php
+
+    echo $args['after_widget'];
+    }
+             
+    // Widget Backend 
+    public function form( $instance ) {
+        if ( isset( $instance[ 'title' ] ) ) {
+            $title = $instance[ 'title' ];
+        }
+        else {
+            $title = __( 'Asesores con foto', 'AsesoresMin_domain' );
+        }
+        // Widget admin form
+        ?>
+        <!--p>
+            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+        </p-->
+    <?php 
+    }
+         
+    // Updating widget replacing old instances with new
+    public function update( $new_instance, $old_instance ) {
+        $instance = array();
+        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+        return $instance;
+    }
+} // Class AsesoresMin ends here
 
 
 

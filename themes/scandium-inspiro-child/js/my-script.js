@@ -58,7 +58,9 @@ jQuery(document).ready(function( $ ) {
     slidesToShow: 1,
     adaptiveHeight: true,
     arrows: true,
-    variableWidth: false
+    variableWidth: false,
+    nextArrow: '<i class="myArrow fa fa-angle-right"></i>',
+    prevArrow: '<i class="myArrow fa fa-angle-left"></i>',
   }) : '';
 
 
@@ -89,6 +91,19 @@ jQuery(document).ready(function( $ ) {
     arrows: false,
     variableWidth: false
   }) : '';
+
+  $('#div_slick_asesores_min') ? $('#div_slick_asesores_min').slick({
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 300,
+    arrows: false,
+    slidesToShow: 1,
+    centerMode: true,
+    variableWidth: true
+  }) : '';
+
 
 
 });

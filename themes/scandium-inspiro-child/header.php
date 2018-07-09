@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="profile" href="http://gmpg.org/xfn/11">
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
 
     <?php wp_head(); ?>
 </head>
@@ -22,7 +24,7 @@
                 <?php
                     //pll_the_languages(array('show_flags'=>1,'show_names'=>0));
                     //print_r(pll_the_languages(array('raw'=>1))); 
-
+/*
                     $arr_lenguajes = pll_the_languages(array('raw'=>1));
                     foreach( $arr_lenguajes as $id_leng => $leng ): ?>
                         <div style="float: right;" class="idioma <?php echo ($leng['current_lang']) ? 'selected': ''; ?> ">
@@ -30,8 +32,22 @@
                                 <?php echo $leng['slug']; ?>
                             </a>
                         </div>
+                    <?php endforeach;*/
+
+                    $arr_lenguajes = pll_the_languages(array('raw'=>1));
+                    foreach( $arr_lenguajes as $id_leng => $leng ): ?>
+                        <div style="float: right;" class="idioma">
+                            <a href="<?php echo $leng['url']; ?>">
+                                <?php
+                                    $slug = $leng['slug'];
+                                    $tipo = ($leng['current_lang']) ? '01': '02';
+                                ?>
+                                <img src="/wp-content/uploads/2018/07/<?php echo $slug.$tipo ?>.gif"/>
+                            </a>
+                        </div>
                     <?php endforeach;
 
+                //'http://localhost/wp-content/uploads/2018/07/en01.gif'
 
                 /*
                 <h3>La posta</h3>

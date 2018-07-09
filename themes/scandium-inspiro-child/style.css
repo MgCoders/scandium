@@ -233,13 +233,18 @@ main {
 
 /*******Header*********/
 
+.navbar-nav{
+  padding: 38px 0 14px;
+}
+
+
 .navbar .wrap {
   max-width: unset !important;
   padding: 0px 25px 0px 25px;
 }
 
 .logo-bg{
-  height: 46px!important;
+  height: 60px!important;
 }
 
 .row-language {
@@ -272,8 +277,13 @@ main {
 
 
 
-.idioma a {
+p, .idioma a {
   color: #808080 !important;
+}
+
+.idioma img {
+  height: 100%;
+  width: 100%;
 }
 
 #slider {
@@ -354,7 +364,7 @@ a {
     display: block;
     content: " ";
     width: 60px;
-    height: 3px;
+    height: 2px;
     background: #808080;
     margin: 10px auto 48px;
 }
@@ -398,10 +408,14 @@ a {
 
 /* form contacto footer*/
 
+.footer-widgets {
+    padding: 48px 15px 48px;
+}
+
 .wpcf7 input[type='submit']{
   background-color: transparent;
   color: #fff;
-  border: 1px solid;
+  border: 1px solid #fff;
   text-align: center;
   margin-left: 37.5%;
   width: 25%;
@@ -411,12 +425,29 @@ a {
 .wpcf7 input:not([type='submit']), .wpcf7 textarea{
   background-color: transparent;
   border: 0;
+  color: #fff;
   border-bottom: 1px solid;
   width: 100%;
   max-width: 100%;
   max-height: 70px;
   padding: 0px !important;
 }
+
+
+
+.wpcf7 input:not([type='submit'])::placeholder, .wpcf7 textarea::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bbb;
+    opacity: 1; /* Firefox */
+}
+
+.wpcf7 input:not([type='submit']):-ms-input-placeholder, .wpcf7 textarea:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #bbb;
+}
+
+.wpcf7 input:not([type='submit'])::-ms-input-placeholder, .wpcf7 textarea::-ms-input-placeholder { /* Microsoft Edge */
+    color: #bbb;
+}
+
 
 .wpcf7 .ajax-loader {
   display: none;
@@ -555,7 +586,8 @@ ul.slides .li-wrap {
 
 ul.sf-menu a:hover {
   /*font-weight: 600;*/
-  color: #444;
+  /*color: #444;*/
+  opacity: 0.5;
   /*transition: font-weight 2s;*/
 }
 
@@ -912,6 +944,14 @@ ul.portfolio-archive-taxonomies li:hover {
   }
 }
 
+@media (min-width: 576px) and (max-width: 640px) {
+
+  ul.slides .li-wrap {
+    /*Para el título del slider*/
+    top: 85% !important;
+  }
+}
+
 @media (min-width: 576px) and (max-width: 768px) {
   .home .widgetized-section > :nth-of-type(1) .textwidget {
       width: 100%;
@@ -924,6 +964,11 @@ ul.portfolio-archive-taxonomies li:hover {
   ul.slides .li-wrap {
     /*Para el título del slider*/
     top: 70%;
+  }
+
+  .client-pic {
+    height: 100px!important;
+    width: 100px!important;
   }
 
   .zoom-social-icons-widget {
@@ -956,6 +1001,11 @@ ul.portfolio-archive-taxonomies li:hover {
       padding: 0 15px;
       margin-top: 60px;
   }
+
+    .client-pic {
+    height: 150px!important;
+    width: 150px!important;
+  }
   
   .navbar .wrap {
     padding: 0px 25px 0px 0px;
@@ -980,6 +1030,11 @@ ul.portfolio-archive-taxonomies li:hover {
 
   .widget_media_image img {
     margin: 0 55% !important; 
+  }
+
+  ul.slides .li-wrap {
+    /*Para el título del slider*/
+    top: 78%;
   }
 }
 
@@ -1080,7 +1135,7 @@ ul.portfolio-archive-taxonomies li:hover {
 }
 
 .row.portfolio-grid a{
-  max-height: 400px;
+  max-height: 300px;
 }
 
 .my_portfolio_item {
@@ -1201,10 +1256,10 @@ hr {
 
 .client-pic {
   height: 200px;
+  width: 200px;
   background-repeat: no-repeat;
   background-position-x: 100%;
   background-size: cover;
-  width: 95%;
   border-radius: 50%;
   margin: 20px auto 0px;
 }
@@ -1291,4 +1346,33 @@ hr {
 
 .client-logo-text p span {
   font-size: 1.2rem;
+}
+
+
+
+
+
+
+/* Flechitas */
+
+.myArrow {
+    font-size: 60px!important;
+    position: absolute;
+    color: #aaa;
+    top: 50%;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.fa-angle-right{
+    right: -25px;
+}
+.fa-angle-left {
+    left: -25px;
 }
