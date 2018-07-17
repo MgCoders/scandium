@@ -11,7 +11,7 @@ get_header(); ?>
 
         <h2 class="section-title"><?php the_title(); ?></h2>
 
-        <nav class="portfolio-archive-taxonomies">
+        <nav class="bordered_li portfolio-archive-taxonomies">
             <ul class="portfolio-taxonomies">
                 <?php wp_list_categories( array( 'title_li' => '', 'hierarchical' => true,  'taxonomy' => 'portfolio', 'depth' => 1 ) ); ?>
             </ul>

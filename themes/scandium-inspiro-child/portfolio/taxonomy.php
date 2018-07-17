@@ -53,9 +53,9 @@ get_header(); ?>
 
         <?php //print("<pre>".print_r($wp_query,true)."</pre>"); ?>
 
-        <h2 class="section-title"><?php echo $taxonomy_nice_name; ?></h2>
+        <!--h2 class="section-title"><?php echo $taxonomy_nice_name; ?></h2-->
 
-        <nav class="portfolio-archive-taxonomies">
+        <nav class="bordered_li no_title portfolio-archive-taxonomies">
             <ul>
             
                 <?php wp_list_categories( array( 'title_li' => '', 'hierarchical' => true,  'taxonomy' => 'portfolio', 'depth' => 1 ) ); ?>
