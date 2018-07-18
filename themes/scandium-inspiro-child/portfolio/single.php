@@ -219,6 +219,10 @@ $slide_counter = 0;
                                                     $content = get_field($param);
                                                     if ( $content ) {
                                                         echo "<td>";
+                                                        $separador = ($ext == '_en') ? "," : ".";
+                                                        if($param == 'cf_fp_area'){
+                                                            $content = number_format($content, 0, ',', $separador);
+                                                        }
                                                         echo $content;
                                                         echo "</td>";
                                                     }
@@ -240,16 +244,18 @@ $slide_counter = 0;
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-main-content">
+                            <!--div class="card-main-content">
                                 <?php
                                     //Contenido principal 
                                     the_content(); 
                                 ?>
-                            </div>
+                            </div-->
                             <div class="card-content">
-                                <span class="card">
-
-                                
+                                    <?php
+                                        //Contenido principal 
+                                        the_content(); 
+                                    ?>
+                                <p>
                                     <?php
 
 
@@ -269,13 +275,13 @@ $slide_counter = 0;
 
                                             if ($sow) {
                                                 $sw = get_field_object( 'cf_fp_sow'.$ext );
-                                                echo "<b>".$sw['label']."</b> <br>";
-                                                echo $sow."<br>";
+                                                echo "<b class='b_subtitle'>".$sw['label']."</b> <br>";
+                                                echo $sow."";
                                             }
                                         }
                                           
                                     ?>
-
+                                </p>
 
 
 
@@ -315,15 +321,14 @@ $slide_counter = 0;
                                             if ( $sw ) {
                                                 $content = get_field($param.$ext);
                                                 if ( $content ) {
-                                                    echo "<b>".$sw['label']."</b> <br>";
+                                                    echo "<p><b class='b_subtitle'>".$sw['label']."</b> <br>";
                                                     echo $content;
-                                                    echo "<br> <br>";
+                                                    echo "<br></p>";
                                                 }
                                             }
                                         }
                                     ?>
-                                    
-                                </span>
+
                             </div>  
                         </div>    
                     </div>

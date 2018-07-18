@@ -638,12 +638,19 @@ ul.sf-menu li {
   overflow-y: auto;
 }
 
+.card-content p {
+  line-height: 18px;
+}
+
 .card-main-content {
   margin-top: 15px;
   max-height: 100px;
   overflow-y: scroll;
 }
 
+.b_subtitle {
+  margin-top: 5px;
+}
 
 .info-panel span.proyect-title {
   color: #8a8a8a;
