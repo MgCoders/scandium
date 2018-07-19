@@ -13,8 +13,11 @@ if ( is_array( $portfolios ) ) {
         <article style="width: 100%; height: 100%" id="post-<?php the_ID(); ?>" class="my_portfolio_item" <?php //post_class( $articleClass ); ?> >
 
 
+            <?php $img_principal = get_field('cf_fp_main_img')['url']; ?>
+
+
             <div class="my_entry-thumbnail-popover">
-                <?php if(has_post_thumbnail()) {
+                <?php if($img_principal) {
                 ?>
                 <span> <b><?php echo strtoupper( get_the_title()) ; ?></b> </span>
                 <?php
@@ -28,7 +31,6 @@ if ( is_array( $portfolios ) ) {
 
 
 
-            <?php $img_principal = get_field('cf_fp_main_img')['url']; ?>
             <?php 
 
                 
@@ -37,7 +39,7 @@ if ( is_array( $portfolios ) ) {
                 <?php //the_post_thumbnail( 'portfolio_item-thumbnail' ); ?>
                 <div class="div_cat_fi_list"
                      style="background-image: url('<?php echo $img_principal; ?>');>">
-                    <img style="opacity: 0" src="<?php echo get_field('cf_fp_main_img')['url']; ?>">
+                    <img style="opacity: 0" src="<?php echo $img_principal; ?>">
                 </div>
             <?php else: ?>
 

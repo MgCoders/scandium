@@ -609,6 +609,54 @@ ul.sf-menu li {
 }
 
 
+ul.sf-menu {
+  display: flex;
+}
+
+div.asl_m .probox .promagnifier {
+  order: 0!important;
+  -webkit-order: 0!important;
+}
+
+.asl_res_url {
+  color: #000 !important;
+  font-size: 13px!important
+}
+
+.asl_content{
+  background-color: #fff!important;
+}
+
+
+ul.sf-menu li:nth-child(1) {
+  order: 2;
+}
+ul.sf-menu li:nth-child(2) {
+  order: 3;
+}
+ul.sf-menu li:nth-child(3) {
+  order: 4;
+}
+ul.sf-menu li:nth-child(4) {
+  order: 1;
+}
+
+
+/*Barra de busqueda / search*/
+.astm-search-menu {
+  color: #808080;
+}
+
+.astm-search-menu .search-form input {
+  border: 0px solid #afafaf;
+  border-bottom: 1px solid #afafaf;
+  height: 20px;
+}
+
+.astm-search-menu .search-form input:hover {
+  opacity: 0.5;
+}
+
 .entry-container-fluid {
     width: 100%!important;
     padding-right: 0px !important;
@@ -922,9 +970,7 @@ ul.portfolio-archive-taxonomies li:hover {
 
 .widgetizedAreaStudio1 .stage {
     margin: auto;
-    background-color: #f7f7f7;
     border-radius: 50%;
-    border: 20px solid #fff;
     width: 200px;
     height: 200px;
     display: flex;
