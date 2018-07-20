@@ -104,7 +104,7 @@
                             wp_nav_menu( array(
                                 'menu_class'     => 'nav navbar-nav dropdown sf-menu',
                                 'theme_location' => 'primary',
-                                'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s'.'<li>'."</li>" . diamond_wc_menu_cartitem() . '</ul>',
+                                'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s'. diamond_wc_menu_cartitem() . '</ul>',
                                 'container'      => false
                             ) );
                             ?>

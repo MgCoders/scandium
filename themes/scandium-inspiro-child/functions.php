@@ -264,11 +264,8 @@ function special_nav_class ($classes, $item) {
 
 add_filter('wp_nav_menu_items', 'add_admin_link', 10, 2);
 function add_admin_link($items, $args){
-
-    if( $args->theme_location == 'primary' ){
-        $items .= '<li>'.do_shortcode('[wpdreams_ajaxsearchlite]').'</li>';
-    }
-    return $items;
+     $items .= '<li>'.do_shortcode('[wpdreams_ajaxsearchlite]').'</li>';
+     return $items;
 }
 
 

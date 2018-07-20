@@ -9,8 +9,8 @@ get_header(); ?>
 
     <section class="portfolio-archive">
 
-        <h2 class="section-title"><?php the_title(); ?></h2>
-
+        <!--h2 class="section-title"><?php //the_title(); ?></h2-->
+<br>
         <nav class="bordered_li portfolio-archive-taxonomies">
             <ul class="portfolio-taxonomies">
                 <?php wp_list_categories( array( 'title_li' => '', 'hierarchical' => true,  'taxonomy' => 'portfolio', 'depth' => 1 ) ); ?>

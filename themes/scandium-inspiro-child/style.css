@@ -1329,6 +1329,11 @@ ul.portfolio-archive-taxonomies li:hover {
 
 
 
+/* slick de la home*/
+#div_clients-logos_min h3 {
+  display: none;
+}
+
 
 /*Botones para el slick*/
 .slick-slide{
