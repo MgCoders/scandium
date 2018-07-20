@@ -967,16 +967,24 @@ ul.portfolio-archive-taxonomies li:hover {
   text-align: center;
 }
 
+.row_stage > :nth-of-type(1) {
+  text-align: right;
+  left: 0.6%;
+}
 
-.widgetizedAreaStudio1 .stage {
-    margin: auto;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    font-weight: bold;
+.row_stage > :nth-of-type(3) {
+  text-align: left;
+  right: 0.4%;
+}
+
+.row_stage div {
+  padding: 0!important;
+}
+
+
+.widgetizedAreaStudio1 .stage img {
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .smls-grid-container-template-3 .smls-grid-pad-container img {
@@ -1314,7 +1322,7 @@ ul.portfolio-archive-taxonomies li:hover {
 }
 
 .page .entry-content, .single .entry-content {
-  max-width: 90%;
+  max-width: calc(100% - 60px);
 }
 
 

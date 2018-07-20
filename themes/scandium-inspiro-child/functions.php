@@ -262,6 +262,16 @@ function special_nav_class ($classes, $item) {
 }
 
 
+add_filter('wp_nav_menu_items', 'add_admin_link', 10, 2);
+function add_admin_link($items, $args){
+
+    if( $args->theme_location == 'primary' ){
+        $items .= '<li>'.do_shortcode('[wpdreams_ajaxsearchlite]').'</li>';
+    }
+    return $items;
+}
+
+
 function my_theme_scripts() {
     wp_enqueue_script( 'my-script', get_stylesheet_directory_uri().'/js/my-script.js', array( 'jquery' ), '1.0.0', true );
     wp_enqueue_script( 'slick', get_stylesheet_directory_uri().'/js/slick.min.js', array( 'jquery' ), '1.0.0', true );

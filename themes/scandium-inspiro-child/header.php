@@ -98,10 +98,13 @@
                         <div class="navbar-collapse collapse col-md-7">
                             
                             <?php
+
+                            
+
                             wp_nav_menu( array(
                                 'menu_class'     => 'nav navbar-nav dropdown sf-menu',
                                 'theme_location' => 'primary',
-                                'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s'.'<li>'.do_shortcode('[wpdreams_ajaxsearchlite]')."</li>" . diamond_wc_menu_cartitem() . '</ul>',
+                                'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s'.'<li>'."</li>" . diamond_wc_menu_cartitem() . '</ul>',
                                 'container'      => false
                             ) );
                             ?>
