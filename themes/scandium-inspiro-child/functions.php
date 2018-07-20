@@ -246,10 +246,29 @@ public function update( $new_instance, $old_instance ) {
 add_filter('nav_menu_css_class' , 'special_nav_class' , 10 , 2);
 
 function special_nav_class ($classes, $item) {
-    if (in_array('current-post-ancestor', $classes) || in_array('current-page-ancestor', $classes) || in_array('current-menu-item', $classes) ){
+
+    $item_str = implode(" ", (array)$item);
+    if (in_array('current-post-ancestor', $classes) || in_array('current-page-ancestor', $classes) || in_array('current-menu-item', $classes) 
+        //Necesito que la URL sea portfolio y que el elemento sea PROYECTO
+        //el item es así
+        /*menu-item menu-item-type-post_type menu-item-object-page menu-item-32 active-menu 32 1 2018-05-15 17:50:39 2018-05-15 17:50:39  PROYECTOS  publish closed closed  32   2018-06-06 20:05:55 2018-06-06 20:05:55  0 http://localhost/2018/05/15/32/ 1 nav_menu_item  0 raw 32 0 28 page post_type Página http://localhost/proyectos/ PROYECTOS*/
+        || (preg_match('/portfolio/',$_SERVER['REQUEST_URI']) 
+                && ( preg_match('/PROYECTOS/',$item_str)
+                        || preg_match('/PROJECTS/',$item_str) ) ) ) {
         $classes[] = 'active-menu ';
     }
+    //print_r();
     return $classes;
+}
+
+
+add_filter('wp_nav_menu_items', 'add_admin_link', 10, 2);
+function add_admin_link($items, $args){
+
+    if( $args->theme_location == 'primary' ){
+        $items .= '<li>'.do_shortcode('[wpdreams_ajaxsearchlite]').'</li>';
+    }
+    return $items;
 }
 
 

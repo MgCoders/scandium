@@ -101,7 +101,7 @@ $slide_counter = 0;
 
                         <div class="container">
                             <div class="row slider-portfolio slider-sup">
-                                <div class="col-1 ar-left">
+                                <div class="slider_arrow col-1 ar-left">
                                     
 
                                     <?php
@@ -115,7 +115,7 @@ $slide_counter = 0;
                                     
                                 </div>
                                 
-                                <div class="col-1 ar-right">
+                                <div class="slider_arrow col-1 ar-right">
                                     
                                     <a id="arrow_sup_right" href="">
                                         <i class="arrow right">
@@ -219,6 +219,10 @@ $slide_counter = 0;
                                                     $content = get_field($param);
                                                     if ( $content ) {
                                                         echo "<td>";
+                                                        $separador = ($ext == '_en') ? "," : ".";
+                                                        if($param == 'cf_fp_area'){
+                                                            $content = number_format($content, 0, ',', $separador);
+                                                        }
                                                         echo $content;
                                                         echo "</td>";
                                                     }
@@ -240,16 +244,18 @@ $slide_counter = 0;
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-main-content">
+                            <!--div class="card-main-content">
                                 <?php
                                     //Contenido principal 
                                     the_content(); 
                                 ?>
-                            </div>
+                            </div-->
                             <div class="card-content">
-                                <span class="card">
-
-                                
+                                    <?php
+                                        //Contenido principal 
+                                        the_content(); 
+                                    ?>
+                                <p>
                                     <?php
 
 
@@ -269,13 +275,13 @@ $slide_counter = 0;
 
                                             if ($sow) {
                                                 $sw = get_field_object( 'cf_fp_sow'.$ext );
-                                                echo "<b>".$sw['label']."</b> <br>";
-                                                echo $sow."<br>";
+                                                echo "<b class='b_subtitle'>".$sw['label']."</b> <br>";
+                                                echo $sow."";
                                             }
                                         }
                                           
                                     ?>
-
+                                </p>
 
 
 
@@ -315,15 +321,14 @@ $slide_counter = 0;
                                             if ( $sw ) {
                                                 $content = get_field($param.$ext);
                                                 if ( $content ) {
-                                                    echo "<b>".$sw['label']."</b> <br>";
+                                                    echo "<p><b class='b_subtitle'>".$sw['label']."</b> <br>";
                                                     echo $content;
-                                                    echo "<br> <br>";
+                                                    echo "<br></p>";
                                                 }
                                             }
                                         }
                                     ?>
-                                    
-                                </span>
+
                             </div>  
                         </div>    
                     </div>
@@ -651,7 +656,7 @@ if ($cant_posts > 1){
    ?> 
 
     <div class="row slider-portfolio">
-        <div class="col-1">
+        <div class="slider_arrow col-lg-1 col-6 col-xl-2">
             <?php
             if ($last_url != ""){
             ?>
@@ -666,7 +671,22 @@ if ($cant_posts > 1){
             }   
             ?>
         </div>
-        <div class="col-10">
+        <div class="slider_arrow order-lg-2 col-lg-1 col-6 col-xl-2">
+            <?php
+            if ($next_url != ""){
+            ?>
+            <a id="arrow_inf_right" href="<?php
+                        echo "".$next_url;
+                    ?>">
+                <i class="arrow right">
+                    
+                </i>
+            </a>
+            <?php
+            }   
+            ?>
+        </div>
+        <div class="col-12 col-lg-10 col-xl-8">
             <span class="portfolio-term">
 
                 <nav class="portfolio-archive-taxonomies">
@@ -684,7 +704,7 @@ if ($cant_posts > 1){
                             //print("<pre>".print_r($categ,true)."</pre>");
                             if ($categ->term_id == get_the_terms($post->ID, 'portfolio')['0']->term_id ) { 
                             ?>
-                            <li class="cat-item current-cat">
+                            <li class="border_stuff cat-item current-cat">
                                 <a href="<?php echo $idioma ; ?>/portfolio/<?php echo $categ->slug ; ?>/">
                                     <?php echo $categ->name ; ?>                                        
                                 </a>
@@ -692,7 +712,7 @@ if ($cant_posts > 1){
                             <?php
                             } else {
                             ?>
-                            <li class="cat-item">
+                            <li class="border_stuff cat-item">
                                 <a href="<?php echo $idioma ; ?>/portfolio/<?php echo $categ->slug ; ?>/">
                                     <?php echo $categ->name ; ?>                                        
                                 </a>
@@ -714,21 +734,7 @@ if ($cant_posts > 1){
                 ?>
             </span>
         </div>
-        <div class="col-1">
-            <?php
-            if ($next_url != ""){
-            ?>
-            <a id="arrow_inf_right" href="<?php
-                        echo "".$next_url;
-                    ?>">
-                <i class="arrow right">
-                    
-                </i>
-            </a>
-            <?php
-            }   
-            ?>
-        </div>
+       
         <?php
 }
 ?>
