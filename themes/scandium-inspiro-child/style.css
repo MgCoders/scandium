@@ -550,7 +550,18 @@ p>input[type='submit'] {
 }
 
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
+
+  .row_stage > :nth-of-type(1) {
+    text-align: right;
+    left: 0.6%;
+  }
+
+  .row_stage > :nth-of-type(3) {
+    text-align: left;
+    right: 0.4%;
+  }
+
   .entry-cover-image {
     height: 400px;
   }
@@ -967,15 +978,6 @@ ul.portfolio-archive-taxonomies li:hover {
   text-align: center;
 }
 
-.row_stage > :nth-of-type(1) {
-  text-align: right;
-  left: 0.6%;
-}
-
-.row_stage > :nth-of-type(3) {
-  text-align: left;
-  right: 0.4%;
-}
 
 .row_stage div {
   padding: 0!important;
