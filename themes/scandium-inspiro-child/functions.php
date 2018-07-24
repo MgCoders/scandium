@@ -263,8 +263,8 @@ function special_nav_class ($classes, $item) {
 
 
 add_filter('wp_nav_menu_items', 'add_admin_link', 10, 2);
-function add_admin_link($items, $args){
-     $items .= '<li>'.do_shortcode('[wpdreams_ajaxsearchlite]').'</li>';
+function add_admin_link($items, $args)
+  {   $items .= '<li>'.do_shortcode('[wpdreams_ajaxsearchlite]').'</li>';
      return $items;
 }
 
@@ -1003,13 +1003,7 @@ class ClientesDesc extends WP_Widget {
                         foreach ($arr_categ as $nomCateg => $categ) {
                         ?>
                             <div class="row clientes_banner" id="">
-                              <div class= "col-12 sec_title_cat_logo">
-                                <h3>
-                                    <?php
-                                        echo $nomCateg;
-                                    ?>
-                                </h3>
-                              </div>  
+                              
                             <?php
     //                           echo "<h3>".$nomCateg."</h3>";
                             foreach ($categ as $clieNom => $clien) {
@@ -1025,18 +1019,26 @@ class ClientesDesc extends WP_Widget {
                                             <span class="client-logo-name">
                                                 <?php echo $clien['lc_name']; ?>
                                                 <?php echo $clien['lc_type']; ?>
-                                            </span> <br>
-                                            <?php echo $clien['lc_url']; ?>   <br>
+                                            </span>
+                                            <?php /*echo $clien['lc_url']; */?>   <br>
                                             <?php echo $clien['lc_location']; ?>
                                         </p>
                                     </div>
                                 </div> 
                             <?php
                             }
-                            echo "</div>";
+                            ?>
+                            <div class= "col-12 sec_title_cat_logo">
+                                <h3>
+                                    <?php
+                                        /*echo $nomCateg;*/
+                                    ?>
+                                </h3>
+                              </div>  
+                            </div>
+                        <?php
                         }
-                        ?>
-                         
+                        ?>                         
                     </div>
                 </div>
             </div>

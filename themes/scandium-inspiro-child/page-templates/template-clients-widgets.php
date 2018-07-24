@@ -6,7 +6,7 @@
 get_header(); ?>
 <main id="main" class="site-main" role="main">
 
-    <!--h2 class="section-title"><?php //the_title(); ?></h2-->
+    <h2 class="section-title"><?php the_title(); ?></h2>
 <?php /*
     $logo_data = get_post_meta( 5946, '_logo', true );
     echo '<pre>'; print_r($logo_data) ; echo '</pre>';

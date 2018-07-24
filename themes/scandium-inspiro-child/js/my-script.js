@@ -66,7 +66,7 @@ jQuery(document).ready(function( $ ) {
 
   
 
-  $('#div_slick_logos') ? $('#div_slick_logos').slick({
+  /*$('#div_slick_logos') ? $('#div_slick_logos').slick({
     dots: false,
     infinite: true,
     autoplay: true,
@@ -76,7 +76,7 @@ jQuery(document).ready(function( $ ) {
     adaptiveHeight: true,
     arrows: false,
     variableWidth: false
-  }) : '';
+  }) : '';*/
 
 
 
