@@ -104,6 +104,30 @@ jQuery(document).ready(function( $ ) {
     variableWidth: true
   }) : '';
 
+/*
+
+*/ 
+
+  $( document ).ready(function() {
+    console.log("hola");
+
+      $('.innericon').click( function() {
+        console.log('innericon');
+        return false;
+      });
+
+      $('.innericon svg').click(function() {
+        console.log('svg');
+        return false;
+      });
+
+      $('.promagnifier').click(function() {
+        console.log('promagnifier');
+        return false;
+      });
+  });
+
+
 
 
 });
