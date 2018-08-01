@@ -253,8 +253,12 @@ function special_nav_class ($classes, $item) {
         //el item es así
         /*menu-item menu-item-type-post_type menu-item-object-page menu-item-32 active-menu 32 1 2018-05-15 17:50:39 2018-05-15 17:50:39  PROYECTOS  publish closed closed  32   2018-06-06 20:05:55 2018-06-06 20:05:55  0 http://localhost/2018/05/15/32/ 1 nav_menu_item  0 raw 32 0 28 page post_type Página http://localhost/proyectos/ PROYECTOS*/
         || (preg_match('/portfolio/',$_SERVER['REQUEST_URI']) 
-                && ( preg_match('/PROYECTOS/',$item_str)
-                        || preg_match('/PROJECTS/',$item_str) ) ) ) {
+                && ( preg_match('/PROYECTOS/',$item_str)  //elemento li del menú
+                        || preg_match('/PROJECTS/',$item_str) ) )
+        || (preg_match('/\/project\//',$_SERVER['REQUEST_URI'])
+                && ( preg_match('/PROYECTOS/',$item_str) //elemento li del menú
+                        || preg_match('/PROJECTS/',$item_str) ) )
+                         ) {
         $classes[] = 'active-menu ';
     }
     //print_r();
@@ -1008,7 +1012,7 @@ class ClientesDesc extends WP_Widget {
     //                           echo "<h3>".$nomCateg."</h3>";
                             foreach ($categ as $clieNom => $clien) {
                             ?>
-                                <div class= "col-12 col-sm-6 col-md-4">
+                                <div class= "col-12 col-sm-6 col-md-3">
                                     <div class="client-logo"
                                         style="background-image: url('<?php  echo $clien['lc_logo']; ?>')"
                                     >

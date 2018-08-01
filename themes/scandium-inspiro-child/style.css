@@ -543,6 +543,12 @@ p>input[type='submit'] {
   background-position: 50%;
 }
 
+
+.full-entry-cover-image {
+
+  margin-bottom: 10px;
+}
+
 .max-size-screen{
   max-width: 1920px;
 }
@@ -837,6 +843,18 @@ i {
 }
 
 
+
+@media screen and (min-width: 1200px) {
+  #arrow_inf_left{
+    margin-right: 35%;
+  }
+
+  #arrow_inf_right{
+    margin-left: 35%;
+  }
+}
+
+
 .row.no-gutters{
   background-color: #aaa;
 }
@@ -1022,6 +1040,15 @@ ul.portfolio-archive-taxonomies li:hover {
 
 @media (max-width: 575px) {
 
+
+  .row.portfolio-grid a{
+    max-height: 240px!important;
+  }
+
+  .tiles-photo-details {
+    max-width: 100%!important;
+  }
+
   .twocol .ccchildpage,
   .threecol .ccchildpage,
   .fourcol .ccchildpage {
@@ -1082,6 +1109,10 @@ ul.portfolio-archive-taxonomies li:hover {
 
 @media (min-width: 576px) and (max-width: 640px) {
 
+  .tiles-photo-details {
+    max-width: 100%!important;
+  }
+
   ul.slides .li-wrap {
     /*Para el título del slider*/
     top: 85% !important;
@@ -1089,6 +1120,11 @@ ul.portfolio-archive-taxonomies li:hover {
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
+  
+  .tiles-photo-details {
+    max-width: 100%!important;
+  }
+
   .home .widgetized-section > :nth-of-type(1) .textwidget {
       width: 100%;
       margin: 0 auto;
@@ -1126,6 +1162,12 @@ ul.portfolio-archive-taxonomies li:hover {
 
 
 @media  (min-width: 768px) and (max-width: 992px) {
+
+
+  .tiles-photo-details {
+    max-width: 100%!important;
+  }
+
   .home .widgetized-section > :nth-of-type(1) .textwidget {
       width: 60%;
       margin: 0 auto;
@@ -1309,8 +1351,12 @@ ul.portfolio-archive-taxonomies li:hover {
 
 .tiles-photo-details {
   text-align: center;
-  max-width: calc(70% + 60px);
+  max-width: calc(80% + 60px);
   margin: 0 auto;
+}
+
+.tiles-photo-details .col-12{
+  padding: 0!important;
 }
 
 .tiles-photo-details a {
