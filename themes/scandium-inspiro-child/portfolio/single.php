@@ -77,6 +77,265 @@ $slide_counter = 0;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <?php
+
+                    //Imprimo los tipos de porfolio
+                    //$terms = get_terms( 'portfolio');
+                    //print_r($terms);
+                    //echo "<br> <br>";
+
+                    //imprimo el porfolo del post actual
+                    //print_r(get_the_terms($post->ID, 'portfolio'));
+                    $prot_term = get_the_terms($post->ID, 'portfolio');
+                    $taxonomy_obj_port = $prot_term['0'];
+                    //print_r($taxonomy_obj_port);
+                    $order_str = $taxonomy_obj_port->slug;
+                    if($taxonomy_obj_port->slug == "residential") {
+                        $order_str = "residencial";
+                    } else if($taxonomy_obj_port->slug == "offices-and-hotels") {
+                        $order_str = "oficinas-y-hoteles";
+                    } else if($taxonomy_obj_port->slug == "infrastructure") {
+                        $order_str = "infraestructura";
+                    } else if($taxonomy_obj_port->slug == "cultural-es" or $taxonomy_obj_port->slug == "cultural-en") {
+                        $order_str = "cultural";
+                    }
+
+                    
+                    $related = new WP_Query(
+                                            array(
+                                                //'category__in'   => wp_get_post_categories( $post->ID ),
+                                                'posts_per_page' => 500,
+                                                //'terms' => get_the_terms($post->ID, 'portfolio')['0']->term_id,
+                                                //'post__not_in'   => array( $post->ID )
+                                                'post_type' => 'portfolio_item',
+                                                'meta_key' => 'order_value_num_'.$order_str,
+                                                'orderby' => 'meta_value_num',
+                                                'order' => 'ASC',
+                                                //'paged'=> $paged,
+                                                'tax_query' => array(
+                                                                    array(
+                                                                        'taxonomy' => 'portfolio',
+                                                                        'field' => 'term_id',
+                                                                        'terms' => get_the_terms($post->ID, 'portfolio')['0']->term_id
+                                                                         )
+                                                                    )
+                                            )
+                                        );
+                    //wp_get_post_terms( $post->ID, 'my_taxonomy', array("fields" => "all" )
+echo "<br> <br>";
+//print("<pre>".print_r($related,true)."</pre>");
+
+
+//echo $related->have_posts();
+
+/*
+foreach ($related as $key => $value) {
+    # code...
+    
+    echo $key.": ";
+    foreach ($value as $key2 => $value2) {
+        # code...
+        
+        echo ">".$key2.": ";
+        print_r($value2);
+        echo "<br>";
+    }
+    echo "<br>";
+    echo "<br>";
+}*/
+
+if( $related->have_posts() ) { 
+    //echo "string";
+    $last_url = "";
+    $next_url = "";
+    $finded = false;
+    $cant_posts = 0;
+    $categorías_posts = get_terms('portfolio');
+
+    $first="";
+
+
+    while( $related->have_posts() and $next_url == "") { 
+        
+
+
+        /*echo "last_url: ".$last_url."<br>";
+        echo "next_url: ".$next_url."<br>";
+        echo "finded: ".$finded."<br>";
+        echo "cant_posts: ".$cant_posts."<br>";
+        echo "first: ".$first."<br> <br>";
+        echo "categorías_posts: ".$categorías_posts."<br> <br>"; */
+
+
+
+        //Seteo el post para trabajar con el
+        echo $related->the_post(); 
+
+        //Me guardo el primero para la circular
+        if($first==""){
+            $first= get_permalink();
+        }
+
+        //$categorías_posts =
+
+        //print("<pre>".print_r(get_terms('portfolio'),true)."</pre>");
+        $cant_posts++;
+
+        //si ya encontré, asigno el que sigue y salgo.
+        if ($finded) {
+             $next_url = get_permalink();
+        }
+
+        //me voy guardando el actual para el siguiente
+        if (!$finded && $idOfPost != get_the_ID()) {
+            $last_url = get_permalink();
+        }
+
+        //cuando me encuentro, preparo para salir
+        if (!$finded && $idOfPost == get_the_ID()) {
+            $finded = true;
+        }
+
+        //the_title();
+        /*whatever you want to output*/
+        
+    }
+
+    if($next_url == ""){
+        $next_url = $first;
+    }
+
+    if($last_url == ""){
+       while( $related->have_posts() ) { 
+        
+            //Seteo el post para trabajar con el
+            echo $related->the_post(); 
+            //Recorro hasta el último
+            $last_url= get_permalink();
+       
+        }
+    }
+
+    wp_reset_postdata();
+}
+
+if ($cant_posts > 1){
+
+   ?> 
+
+    <div class="row slider-portfolio slider-portfolio_sup d-none d-lg-flex">
+        <div class="slider_arrow col-lg-1 col-6 col-xl-2">
+            <?php
+            if ($last_url != ""){
+            ?>
+            <a id="arrow_inf_left" href="<?php
+                        echo "".$last_url;
+                    ?>">
+                <i class="arrow left">
+                    
+                </i>
+            </a>
+            <?php
+            }   
+            ?>
+        </div>
+        <div class="slider_arrow order-lg-2 col-lg-1 col-6 col-xl-2">
+            <?php
+            if ($next_url != ""){
+            ?>
+            <a id="arrow_inf_right" href="<?php
+                        echo "".$next_url;
+                    ?>">
+                <i class="arrow right">
+                    
+                </i>
+            </a>
+            <?php
+            }   
+            ?>
+        </div>
+        <div class="col-12 col-lg-10 col-xl-8">
+            <span class="portfolio-term">
+
+                <nav class="portfolio-archive-taxonomies">
+                    <ul class="portfolio-taxonomies">
+                        <?php
+
+                        $idioma = "";
+
+                        if ($ext == "_en") {
+                            $idioma = "/en";
+                        }
+
+
+                        foreach ($categorías_posts as $key => $categ) {
+                            //print("<pre>".print_r($categ,true)."</pre>");
+                            if ($categ->term_id == get_the_terms($post->ID, 'portfolio')['0']->term_id ) { 
+                            ?>
+                            <li class="border_stuff cat-item current-cat">
+                                <a href="<?php echo $idioma ; ?>/portfolio/<?php echo $categ->slug ; ?>/">
+                                    <?php echo $categ->name ; ?>                                        
+                                </a>
+                            </li>
+                            <?php
+                            } else {
+                            ?>
+                            <li class="border_stuff cat-item">
+                                <a href="<?php echo $idioma ; ?>/portfolio/<?php echo $categ->slug ; ?>/">
+                                    <?php echo $categ->name ; ?>                                        
+                                </a>
+                            </li>
+                            <?php
+                            }
+                        }
+                        ?>
+                        
+                    </ul>
+                </nav>
+
+                <?php
+                //print("<pre>".print_r($categorías_posts,true)."</pre>");
+
+                
+
+                //echo strtoupper(get_the_terms($post->ID, 'portfolio')['0']->name);
+                ?>
+            </span>
+        </div>
+
+    </div>
+       
+        <?php
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
             
 
 
@@ -99,7 +358,7 @@ $slide_counter = 0;
                     <div class="col-12 col-md-4 info-panel order-2 order-md-1">
 
 
-                        <div class="container">
+                        <div class="container d-none">
                             <div class="row slider-portfolio slider-sup">
                                 <div class="slider_arrow col-1 ar-left">
                                     
