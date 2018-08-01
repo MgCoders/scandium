@@ -691,7 +691,8 @@ ul.sf-menu li:nth-child(4) {
 }
 
 .card-info {
-  padding: 0px 40px 20px;
+  /*padding: 0px 40px 20px;*/
+  padding: 20px 40px;
   font-size: 1.3rem;
   font-weight: 100;
 }
@@ -808,6 +809,11 @@ i {
 .down {
     transform: rotate(45deg) skew(-10deg,-10deg) scale(0.4);
     -webkit-transform: rotate(45deg) skew(-10deg,-10deg) scale(0.4);
+}
+
+
+.slider-portfolio_sup {
+  height: 50px;
 }
 
 .slider-portfolio *:not(.slider_arrow) {
