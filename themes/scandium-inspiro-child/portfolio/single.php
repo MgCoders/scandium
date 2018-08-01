@@ -469,6 +469,20 @@ $slide_counter = 0;
                         $ri = $NOIMAGE;
                     } 
 
+                    if ( isset( $entryCoverBackground['url']  ) ) {  
+                    //para la featured Img era SRC 
+                    ?>
+                        <div class="row full-entry-cover-image d-block d-md-none">
+                            <div class="col-12">
+                            <img 
+                                src="<?php echo $entryCoverBackground['url']; ?>" />
+                            </div>
+                        </div>
+                    <?php
+                    }
+
+
+
                 ?>
 
 
