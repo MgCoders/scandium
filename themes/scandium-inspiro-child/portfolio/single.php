@@ -355,7 +355,7 @@ if ($cant_posts > 1){
         <article id="post-<?php the_ID(); ?>" <?php post_class( ( has_post_thumbnail() || $hasSlider ) ? ' has-post-cover' : '' ); ?>>
             <div class="container-fluid no-padding max-size-screen">
                 <div class="row no-gutters">
-                    <div class="col-12 col-md-4 info-panel order-2 order-md-1">
+                    <div class="col-sm-12 col-md-5 col-lg-4 info-panel order-2 order-md-1">
 
 
                         <div class="container d-none">
@@ -592,7 +592,7 @@ if ($cant_posts > 1){
                         </div>    
                     </div>
 
-                    <div class="col-12 col-md-8 order-1 order-md-2">
+                    <div class="col-sm-12 col-md-7 col-lg-8 order-1 order-md-2">
                         <div class="entry-cover">
                             <?php //$entryCoverBackground = get_the_image( array( 'size' => 'entry-cover', 'format' => 'array' ) ); 
                                 $entryCoverBackground = get_field('cf_fp_main_img');
@@ -933,7 +933,7 @@ if ($cant_posts > 1){
             <?php
             if ($last_url != ""){
             ?>
-            <a id="arrow_inf_left" href="<?php
+            <a id="arrow_inf2_left" href="<?php
                         echo "".$last_url;
                     ?>">
                 <i class="arrow left">
@@ -948,7 +948,7 @@ if ($cant_posts > 1){
             <?php
             if ($next_url != ""){
             ?>
-            <a id="arrow_inf_right" href="<?php
+            <a id="arrow_inf2_right" href="<?php
                         echo "".$next_url;
                     ?>">
                 <i class="arrow right">
@@ -1086,12 +1086,21 @@ if ($cant_posts > 1){
 <?php get_footer(); ?>
 
 <script type="text/javascript">
-    
-    var asl = document.getElementById('arrow_sup_left');
-    var asr = document.getElementById('arrow_sup_right');
-    var ail = document.getElementById('arrow_inf_left');
-    var air = document.getElementById('arrow_inf_right');
+    document.addEventListener("DOMContentLoaded", function(event) {
 
-    asl.href = ail.getAttribute("href");
-    asr.href = air.getAttribute("href");
+        console.log("ASda");
+
+        var asl = document.getElementById('arrow_sup_left');
+        var asr = document.getElementById('arrow_sup_right');
+        var ail = document.getElementById('arrow_inf_left');
+        var air = document.getElementById('arrow_inf_right');
+        var ail2 = document.getElementById('arrow_inf2_left');
+        var air2 = document.getElementById('arrow_inf2_right');
+
+        asl.href = ail.getAttribute("href");
+        asr.href = air.getAttribute("href");
+        ail.href = ail2.getAttribute("href");
+        air.href = air2.getAttribute("href");
+    });
+
 </script>
