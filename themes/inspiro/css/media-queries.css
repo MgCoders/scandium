@@ -85,7 +85,7 @@ custom.css and it will override the style in this file.
 }
 
 /* Tablet Portrait */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
 
     body { font-size: 14px; line-height: 1.8; }
 

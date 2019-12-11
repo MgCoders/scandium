@@ -88,13 +88,20 @@
 
                     <?php if ( has_nav_menu( 'primary' ) || is_active_sidebar( 'sidebar' ) ) : ?>
 
-                        <button type="button" class="col-2 col-md-7 navbar-toggle">
-                            <span class="sr-only"><?php _e( 'Toggle sidebar &amp; navigation', 'wpzoom' ); ?></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
+                        <div class="col-2 col-md-7 d-lg-none nav-box-toggle">
 
+                            <div class="navbar-toggle icon-menu-nav" >&#9776;</div>
+
+                            <?php /*
+                            <button type="button" class="navbar-toggle">
+                                <span class="sr-only"><?php _e( 'Toggle sidebar &amp; navigation', 'wpzoom' ); ? ></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            */
+                            ?>
+                        </div>
                         <div class="navbar-collapse collapse col-md-7">
                             
                             <?php

@@ -129,7 +129,7 @@ a.wpz-sc-button.silver {
 .last{clear:right;margin-right:0 !important;}
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
 
     .twocol-one,.threecol-one,.threecol-two,.fourcol-one,.fourcol-two,.fourcol-three,.fivecol-one,.fivecol-two,.fivecol-three,.fivecol-four,.sixcol-one,.sixcol-two,.sixcol-three,.sixcol-four,.sixcol-five {
         width: 100%;
