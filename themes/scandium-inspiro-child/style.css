@@ -312,7 +312,7 @@ a {
 
 * {
   /*debug*/
-  /* border: 1px solid #f00; */
+  /* border: 1px solid #f00;*/
 }
 
 
@@ -1249,7 +1249,7 @@ ul.portfolio-archive-taxonomies li:hover {
 }
 
 .wrap .navbar-toggle {
-  margin: 0!important; 
+  margin: 0!important;
 }
 
 
@@ -1618,11 +1618,20 @@ hr {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 0;
+    /*padding-right: 0;*/
 }
 
 
+.navbar-header{
+    display: flex;
+}
 
+.nav-box-toggle .navbar-toggle{
+    margin: 0 15px 0;
+}
 
-
-
+.simple-row{
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}

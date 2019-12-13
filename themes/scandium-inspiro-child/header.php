@@ -70,7 +70,7 @@
         </div>
         <div class="row">
             <nav class="navbar <?php if (inspiro_maybeWithCover()) echo 'page-with-cover'; ?> " role="navigation">
-                <div class="wrap row">
+                <div class="simple-row">
                      <div class="col-10 col-md-5 navbar-header">
 
                         <div class="navbar-brand">

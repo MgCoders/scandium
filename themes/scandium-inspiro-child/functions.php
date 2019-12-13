@@ -741,7 +741,7 @@ class ClientesDescMin extends WP_Widget {
         $related = new WP_Query(
                             array(
                                 //'category__in'   => wp_get_post_categories( $post->ID ),
-                                'posts_per_page' => 5,
+                                'posts_per_page' => 5000,
                                 //'terms' => get_the_terms($post->ID, 'portfolio')['0']->term_id,
                                 //'post__not_in'   => array( $post->ID )
                                 'post_type' => 'logos',
@@ -920,7 +920,7 @@ class ClientesDesc extends WP_Widget {
         $related = new WP_Query(
                             array(
                                 //'category__in'   => wp_get_post_categories( $post->ID ),
-                                'posts_per_page' => 5,
+                                'posts_per_page' => 5000,
                                 //'terms' => get_the_terms($post->ID, 'portfolio')['0']->term_id,
                                 //'post__not_in'   => array( $post->ID )
                                 'post_type' => 'logos',
@@ -994,7 +994,7 @@ class ClientesDesc extends WP_Widget {
 
         }
 
-        //echo '<pre>'; print_r($arr_categ); echo '</pre>';
+        echo '<pre>'; print_r($arr_categ); echo '</pre>';
 
         ?>                
 
