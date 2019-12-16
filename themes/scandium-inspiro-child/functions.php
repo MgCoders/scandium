@@ -994,7 +994,7 @@ class ClientesDesc extends WP_Widget {
 
         }
 
-        echo '<pre>'; print_r($arr_categ); echo '</pre>';
+//         echo '<pre>'; print_r($arr_categ); echo '</pre>';
 
         ?>                
 
