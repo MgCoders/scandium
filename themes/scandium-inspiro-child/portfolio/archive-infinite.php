@@ -42,17 +42,19 @@ get_header(); ?>
                     wpz_pagingURL = '<?php the_permalink(); ?>page/';
             </script>
 
-            <div class="row portfolio-grid">
+            <div class="container-fluid">
+                <div class="row portfolio-grid">
 
-                <?php while ( $wp_query->have_posts() ) : $wp_query->the_post();
+                    <?php while ( $wp_query->have_posts() ) : $wp_query->the_post();
 
-                    //$testimonial_data = get_post_meta(get_the_ID());
-                    //echo '<pre>'; print_r($testimonial_data['order_value_num']) ; echo '</pre>';
- ?>
-                    <?php get_template_part( 'portfolio/content' ); ?>
+                        //$testimonial_data = get_post_meta(get_the_ID());
+                        //echo '<pre>'; print_r($testimonial_data['order_value_num']) ; echo '</pre>';
+     ?>
+                        <?php get_template_part( 'portfolio/content' ); ?>
 
-                <?php endwhile; ?>
+                    <?php endwhile; ?>
 
+                </div>
             </div>
 
             <?php get_template_part( 'pagination' ); ?>
