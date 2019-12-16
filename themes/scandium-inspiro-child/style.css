@@ -1311,12 +1311,14 @@ ul.portfolio-archive-taxonomies li:hover {
 
 
 .my_entry-thumbnail-popover {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .my_entry-thumbnail-popover p, .card-title .proyect-title {
@@ -1538,6 +1540,10 @@ hr {
 .client-logo-name {
   font-weight: bold;
   text-transform: uppercase;
+}
+
+.clientes_banner:nth-child(1){
+    margin-top: 30px;
 }
 
 .clientes_banner {
