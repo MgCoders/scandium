@@ -32,7 +32,7 @@ get_header(); ?>
 
         <?php if ( $wp_query->have_posts() ) : ?>
 
-            <div class="row portfolio-grid">
+            <div class="row"> <?php /*row portfolio-grid*/?>
 
                 <?php while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
 

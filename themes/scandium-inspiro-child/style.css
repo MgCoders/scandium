@@ -299,13 +299,13 @@ a {
     margin: 1% !important;*/
 }
 
-.portfolio-grid {
-  /*margin: 0 2%;*/
-}
+/*.portfolio-grid {*/
+/*  !*margin: 0 2%;*!*/
+/*}*/
 
-.portfolio-grid a {
-  margin-bottom: 20px;
-}
+/*.portfolio-grid a {*/
+/*  margin-bottom: 20px;*/
+/*}*/
 
 
 
@@ -1322,6 +1322,10 @@ ul.portfolio-archive-taxonomies li:hover {
     text-align: center;
 }
 
+.my_entry-thumbnail-popover span {
+    text-align: center;
+}
+
 
 .cat-img-fi_a:hover{
     text-decoration: none !important;
@@ -1337,9 +1341,12 @@ ul.portfolio-archive-taxonomies li:hover {
     }
 }
 
-.row.portfolio-grid a{
-  max-height: 300px;
+.row.portfolio-grid a, .portfolio-grid-item{
+    max-height: 300px;
+    margin-bottom: 20px;
 }
+
+
 
 .my_portfolio_item {
     /*width: 31.33% !important;
@@ -1630,7 +1637,15 @@ hr {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    /*padding-right: 0;*/
+
+    flex-wrap: wrap;
+    -ms-flex-pack: end;
+
+    display: -webkit-flex;
+    -webkit-flex-wrap: wrap;
+    -webkit-justify-content: flex-end;
+    -webkit-align-items: center;
+
 }
 
 
@@ -1646,4 +1661,11 @@ hr {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+}
+
+
+@media (min-width: 1025px) {
+    .inspiro-d-lg-none {
+        display: none !important;
+    }
 }

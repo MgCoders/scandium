@@ -88,7 +88,7 @@
 
                     <?php if ( has_nav_menu( 'primary' ) || is_active_sidebar( 'sidebar' ) ) : ?>
 
-                        <div class="col-2 col-md-7 d-lg-none nav-box-toggle">
+                        <div class="col-2 col-md-7 inspiro-d-lg-none nav-box-toggle">
 
                             <div class="navbar-toggle icon-menu-nav" >&#9776;</div>
 
